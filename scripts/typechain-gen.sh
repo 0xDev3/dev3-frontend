@@ -2,11 +2,11 @@
 
 rm -rf abis
 rm -rf types/ethers-contracts
-rm -rf contracts/tokenizer-prototype
+rm -rf contracts/dev3-tokenizer-library
 rm -rf cache
 
-mkdir -p contracts/tokenizer-prototype
-cp -rf tokenizer-prototype/contracts contracts/tokenizer-prototype
+mkdir -p contracts/dev3-tokenizer-library
+cp -rf dev3-tokenizer-library/contracts contracts/dev3-tokenizer-library
 hardhat compile
 
 cp -rf artifacts/contracts abis

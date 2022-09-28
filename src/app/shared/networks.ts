@@ -2,7 +2,7 @@ import { providers } from 'ethers'
 import {
   Matic as TPMatic,
   Mumbai as TPMumbai,
-} from '../../../tokenizer-prototype/deployments'
+} from '../../../dev3-tokenizer-library/deployments'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export enum ChainID {

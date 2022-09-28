@@ -47,7 +47,7 @@ Thumbs.db
 
 /abis
 /types/ethers-contracts
-contracts/tokenizer-prototype
+contracts/dev3-tokenizer-library
 artifacts
 cache
 

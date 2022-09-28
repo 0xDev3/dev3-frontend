@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*", "tokenizer-prototype/**/*"],
+  "ignorePatterns": ["projects/**/*", "dev3-tokenizer-library/**/*"],
   "overrides": [
     {
       "files": ["*.ts"],
