@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, delay, filter, map, tap } from 'rxjs';
-import { ContractManifestService, FunctionManifest } from 'src/app/shared/services/backend/contract-manifest.service';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { BehaviorSubject, delay, filter, map, tap } from 'rxjs'
+import { ContractManifestService, FunctionManifest } from 'src/app/shared/services/backend/contract-manifest.service'
 
 @Component({
   selector: 'app-array-tuple-smart-input',

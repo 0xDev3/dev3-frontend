@@ -17,7 +17,8 @@ export enum ChainID {
   MOONRIVER = 1285,
   OASIS_EMERALD = 42262,
   // CELO_MAINNET = 42220,
-  GNOSIS_NETWORK = 100
+  GNOSIS_NETWORK = 100,
+  FANTOM_NETWORK = 250,
 }
 
 export interface Network {
@@ -440,7 +441,7 @@ export const MoonriverNetwork: Network = {
     'https://moonriver.public.blastapi.io'
   ],
   wssRpcURLs: [
-    'wss://moonriver.public.blastapi.io'
+    'wss://wss.api.moonriver.moonbeam.network'
   ],
   explorerURLs: ['https://moonriver.moonscan.io/'],
   tokenizerConfig: {
@@ -464,6 +465,46 @@ export const MoonriverNetwork: Network = {
     campaignFeeManager: '',
     defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     defaultStableCoin: '0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D', // custom stablecoin issued by filip
+  },
+}
+
+export const FantomNetwork: Network = {
+  chainID: ChainID.FANTOM_NETWORK,
+  name: 'Fantom Opera',
+  shortName: 'fantom',
+  nativeCurrency: {
+    name: 'FTM',
+    symbol: 'FTM',
+  },
+  maxGasPrice: 20,
+  rpcURLs: [
+    'https://rpc.ankr.com/fantom/'
+  ],
+  wssRpcURLs: [
+    'wss://wsapi.fantom.network/'
+  ],
+  explorerURLs: ['https://ftmscan.com'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
+    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
+    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
+    defaultStableCoin: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', // custom stablecoin issued by filip
   },
 }
 
@@ -519,7 +560,8 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.MOONRIVER]: MoonriverNetwork,
   [ChainID.OASIS_EMERALD]: OasisEmeraldChain,
   // [ChainID.CELO_MAINNET]: CeloChain,
-  [ChainID.GNOSIS_NETWORK]: GnosisNetwork
+  [ChainID.GNOSIS_NETWORK]: GnosisNetwork,
+  [ChainID.FANTOM_NETWORK]: FantomNetwork,
 }
 
 const getEthersNetwork = (network: Network): providers.Network => ({

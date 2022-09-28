@@ -143,7 +143,7 @@ import { ArraySmartInputComponent } from './shared/components/smart-input/array-
 import { FunctionCallExecEnvComponent } from './dashboard/function-call-exec-env/function-call-exec-env.component'
 import { WorkflowsComponent } from './dashboard/workflows/workflows.component'
 import { ContractFunctionInteractionItemComponent } from './dashboard/contracts/contract-function-interaction-item/contract-function-interaction-item.component'
-import { WorkflowActionItemComponent } from './dashboard/workflows/workflow-action-item/workflow-action-item.component';
+import { WorkflowActionItemComponent } from './dashboard/workflows/workflow-action-item/workflow-action-item.component'
 import { ArrayTupleSmartInputComponent } from './shared/components/smart-input/array-tuple-smart-input/array-tuple-smart-input.component'
 
 @NgModule({
