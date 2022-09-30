@@ -15,7 +15,7 @@
     </option>
   </select> -->
 
-  <div class="rounded-lg bg-violet-100 cursor-pointer px-4 py-2 text-xs"
+  <div class="rounded-lg bg-violet-100 hover:bg-violet-200 cursor-pointer px-4 py-2 text-xs"
    *ngFor="let network of networks"
    (click)="networkChanged(network)"
    [class.!bg-violet-700]="currentNetwork === network"

@@ -14,7 +14,9 @@ import { PreferenceStore } from '../../../preference/state/preference.store'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectNetworkComponent {
-  networks = Object.values(Networks)
+  networks = Object.values(Networks).sort((x,y) => {
+    return (x.name > y.name) ? 1 : -1
+  })
   currentNetwork = Networks[this.preferenceQuery.getValue().chainID]
   isNetworkFixed = !!environment.fixed.chainID
 
