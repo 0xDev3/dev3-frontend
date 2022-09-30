@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { ChainID, Networks } from '../../networks'
+import { ChainID, Network, Networks } from '../../networks'
 import { environment } from '../../../../environments/environment'
 import { PreferenceQuery } from '../../../preference/state/preference.query'
 import { PreferenceStore } from '../../../preference/state/preference.store'
@@ -23,9 +23,9 @@ export class SelectNetworkComponent {
     private preferenceQuery: PreferenceQuery
   ) {}
 
-  networkChanged(e: Event): void {
-    const chainID = Number((e.target as HTMLSelectElement).value) as ChainID
-    this.currentNetwork = Networks[chainID]
+  networkChanged(network: Network): void {
+    this.currentNetwork = network
+    let chainID = network.chainID
     this.preferenceStore.update({ chainID })
   }
 }
