@@ -25,12 +25,14 @@ import {
 } from '../../shared/services/blockchain/erc20.service'
 import { PhysicalInputService } from '../../shared/services/physical-input.service'
 import { ProjectService } from 'src/app/shared/services/backend/project.service'
+import { easeInOutAnimation } from 'src/app/shared/utils/animations'
 
 @Component({
   selector: 'app-admin-issuer-new',
   templateUrl: './admin-issuer-new.component.html',
   styleUrls: ['./admin-issuer-new.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: easeInOutAnimation
 })
 export class AdminIssuerNewComponent {
   createForm: FormGroup

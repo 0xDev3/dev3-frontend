@@ -12,12 +12,14 @@ import { ChainID } from '../shared/networks'
 import { PreferenceQuery } from '../preference/state/preference.query'
 import { PreferenceService } from '../preference/state/preference.service'
 import { SessionQuery } from '../session/state/session.query'
+import { easeInOutAnimation } from '../shared/utils/animations'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: easeInOutAnimation
 })
 export class HomeComponent implements OnInit {
   featuredMappings: { [key in ChainID]?: string[] } = {

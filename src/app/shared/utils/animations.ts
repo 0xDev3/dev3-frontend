@@ -8,7 +8,7 @@ export const easeInOutAnimation = [
           ':enter', 
           [
             style({ opacity: 0 }),
-            animate('0.15s', 
+            animate('0.25s', 
                     style({ opacity: 1 }))
           ]
         ),

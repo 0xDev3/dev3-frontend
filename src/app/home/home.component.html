@@ -41,8 +41,13 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
           </svg>
           
-          <div>
-            Apps on <span class="text-violet-700">{{networkAndAddress[0].name}}</span> 
+          <div class="flex flex-row items-center">
+
+            <span>My apps on</span>  
+            <span class="text-violet-700 ml-2 flex flex-row items-center">
+              <img class="mr-1 h-4 w-4 rounded-full" [src]="networkAndAddress[0].iconURL" alt="">
+              <div>{{networkAndAddress[0].name}}</div>
+            </span> 
 
           </div>
         </div>
@@ -58,10 +63,10 @@
         </button>
       </div>
 
-      <div *ngIf="myIssuers$ | async as myIssuersRes" class="mt-2 border border-gray-200 rounded-lg">
+      <div [@inOutAnimation] *ngIf="myIssuers$ | async as myIssuersRes" class="mt-2 border border-gray-200 rounded-lg">
         <ng-container *ngIf="myIssuersRes.value as myIssuers">
-          <div class="flex flex-col" *ngIf="myIssuers.length > 0">
-            <div class="flex flex-row w-full justify-start items-center bg-white shadow-sm border-b"
+          <div [@inOutAnimation] class="flex flex-col" *ngIf="myIssuers.length > 0">
+            <div [@inOutAnimation] class="flex flex-row w-full justify-start items-center bg-white shadow-sm border-b"
               *ngFor="let issuer of myIssuers; let i = index" [class.rounded-t-lg]="i === 0"
               [class.rounded-b-lg]="i === (myIssuers.length - 1)">
               <div class="relative w-40 pl-4 border-r">
@@ -89,7 +94,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="myIssuers.length === 0"
+          <div [@inOutAnimation] *ngIf="myIssuers.length === 0"
             class="mt-4 text-sm py-16 flex flex-row font-medium text-center text-gray-500 justify-center leading-loose">
             <div *ngIf="networkAndAddress$ | async as networkAndAddress">
               You haven't created any apps on {{networkAndAddress[0].name}}.
@@ -115,7 +120,7 @@
 </div>
 
 <ng-template #notLoggedIn>
-  <div class="w-full h-full py-16">
+  <div [@inOutAnimation] class="w-full h-full py-16">
     <app-info-snippet [content]="{ title: 'You are not logged in', sections: [
         'Please log in to use Dev3'
       ] }"></app-info-snippet>
