@@ -4,8 +4,11 @@ import { PreferenceQuery } from '../../../preference/state/preference.query'
 import { WalletConnectSubsignerService } from '../../../shared/services/subsigners/walletconnect-subsigner.service'
 import { MaticNetwork, MumbaiNetwork } from '../../../shared/networks'
 import { UserService } from 'src/app/shared/services/user.service'
-import { finalize, map } from 'rxjs'
+import { finalize, map, Observable, tap } from 'rxjs'
 import { Router } from '@angular/router'
+import { SignerService } from 'src/app/shared/services/signer.service'
+import { AppLayoutStore } from '../../state/app-layout.store'
+import { SessionQuery } from 'src/app/session/state/session.query'
 
 @Component({
   selector: 'app-wallet-button',
@@ -28,12 +31,24 @@ export class WalletButtonComponent {
     mumbai: MumbaiNetwork.chainID,
   }
 
+  isLoggedIn$ = this.sessionQuery.isLoggedIn$
+
+
   constructor(
     private preferenceQuery: PreferenceQuery,
     public walletConnectSubsignerService: WalletConnectSubsignerService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private signerService: SignerService,
+    private appLayoutStore: AppLayoutStore,
+    private sessionQuery: SessionQuery
   ) {}
+
+  login(): Observable<unknown> {
+    return this.signerService.ensureAuth.pipe(
+      tap(() => this.appLayoutStore.closeDropdownMenu())
+    )
+  }
 
   logout() {
     this.userService
