@@ -24,6 +24,7 @@ export enum ChainID {
 export interface Network {
   chainID: ChainID
   name: string
+  iconURL?: string
   shortName: string
   nativeCurrency: {
     name: string
@@ -69,6 +70,7 @@ export const MaticNetwork: Network = {
   chainID: ChainID.MATIC_MAINNET,
   name: 'Polygon',
   shortName: 'matic',
+  iconURL: 'https://cdn.iconscout.com/icon/free/png-256/polygon-token-4086725-3379855.png',
   nativeCurrency: {
     name: 'MATIC',
     symbol: 'MATIC',
@@ -104,8 +106,9 @@ export const MaticNetwork: Network = {
 
 export const MumbaiNetwork: Network = {
   chainID: ChainID.MUMBAI_TESTNET,
-  name: 'Mumbai (Polygon Testnet)',
+  name: 'Mumbai Testnet',
   shortName: 'mumbai',
+  iconURL: 'https://cdn.iconscout.com/icon/free/png-256/polygon-token-4086725-3379855.png',
   nativeCurrency: {
     name: 'MATIC',
     symbol: 'MATIC',
@@ -139,8 +142,9 @@ export const MumbaiNetwork: Network = {
 
 export const GoerliNetwork: Network = {
   chainID: ChainID.GOERLI_TESTNET,
-  name: 'Goerli (Ethereum Testnet)',
+  name: 'Goerli Testnet',
   shortName: 'goerli',
+  iconURL: 'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ethereum-ETH-icon.png',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
@@ -174,8 +178,9 @@ export const GoerliNetwork: Network = {
 
 export const AuroraNetwork: Network = {
   chainID: ChainID.AURORA_MAINNET,
-  name: 'Aurora (on NEAR)',
+  name: 'Aurora',
   shortName: 'aurora',
+  iconURL: 'https://dynamic-assets.coinbase.com/04a9730129d20e0748b2319425853c788b5121350e77f68458dd421c92106e11c1ab2fa1dc92a6b697eb2b149ffee8b2ed5346914e2aa6a44e28d91296875375/asset_icons/542a05514a97115aa9eaad25e1905909e19874cc0abdbf43add5267904b19c55.png',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
@@ -210,8 +215,9 @@ export const AuroraNetwork: Network = {
 
 export const OasisEmeraldChain: Network = {
   chainID: ChainID.OASIS_EMERALD,
-  name: 'Emerald ParaTime (on Oasis)',
+  name: 'Oasis Emerald',
   shortName: 'oasis_emerald',
+  iconURL: 'https://www.defined.fi/static/media/oasis.a137ca7a.png',
   nativeCurrency: {
     name: 'ROSE',
     symbol: 'ROSE',
@@ -284,6 +290,7 @@ export const BSCNetwork: Network = {
   chainID: ChainID.BSC,
   name: 'Binance Smart Chain',
   shortName: 'bsc',
+  iconURL: 'https://pbs.twimg.com/profile_images/1394323505907437570/nP6b3IGJ_400x400.png',
   nativeCurrency: {
     name: 'BSC',
     symbol: 'BSC',
@@ -318,8 +325,9 @@ export const BSCNetwork: Network = {
 
 export const AvalancheNetwork: Network = {
   chainID: ChainID.AVALANCHE,
-  name: 'Avalanche Network',
+  name: 'Avalanche',
   shortName: 'avalanche',
+  iconURL: 'https://glacier-api.avax.network/proxy/chain-assets/main/chains/43114/token-logo.png',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
@@ -354,8 +362,9 @@ export const AvalancheNetwork: Network = {
 
 export const OptimismNetwork: Network = {
   chainID: ChainID.OPTIMISM,
-  name: 'Optimistic Ethereum',
+  name: 'Optimism',
   shortName: 'optimism',
+  iconURL: 'https://gateway.optimism.io/static/media/optimism.caeb9392.svg',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
@@ -390,8 +399,9 @@ export const OptimismNetwork: Network = {
 
 export const ArbitrumNetwork: Network = {
   chainID: ChainID.ARBITRUM,
-  name: 'Arbitrum One',
+  name: 'Arbitrum',
   shortName: 'arbitrum',
+  iconURL: 'https://www.xdefi.io/wp-content/uploads/2022/05/logo-9.png',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
@@ -430,8 +440,9 @@ export const ArbitrumNetwork: Network = {
 
 export const MoonriverNetwork: Network = {
   chainID: ChainID.MOONRIVER,
-  name: 'Moonriver (on KSM)',
+  name: 'Moonriver',
   shortName: 'moonriver',
+  iconURL: 'https://dynamic-assets.coinbase.com/802dc36a9152a022f9d9159f16fa0f4ee70985496d621df163f35373e91d3634fc9697b884062cdd48070503efed726f9e545f2c27cc9eccc72777a80484893e/asset_icons/16c95ff455a193d937c96685c18a3ace93ec68fb22f7d62e761f7a3101293cfd.png',
   nativeCurrency: {
     name: 'MOVR',
     symbol: 'MOVR',
@@ -472,6 +483,7 @@ export const FantomNetwork: Network = {
   chainID: ChainID.FANTOM_NETWORK,
   name: 'Fantom Opera',
   shortName: 'fantom',
+  iconURL: 'https://pbs.twimg.com/profile_images/1292932673384714241/_BSnTr5s_400x400.png',
   nativeCurrency: {
     name: 'FTM',
     symbol: 'FTM',
@@ -512,6 +524,7 @@ export const GnosisNetwork: Network = {
   chainID: ChainID.GNOSIS_NETWORK,
   name: 'Gnosis/xDai',
   shortName: 'gnosis',
+  iconURL: 'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/256/Gnosis-icon.png',
   nativeCurrency: {
     name: 'xDai',
     symbol: 'xDai',

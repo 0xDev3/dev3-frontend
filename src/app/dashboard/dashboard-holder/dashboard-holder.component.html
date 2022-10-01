@@ -74,7 +74,10 @@
               >
                 <div class="flex flex-row py-2">
                   <span class="font-normal mr-1">Project network: </span>
-                  {{ currentNetwork.name }}
+                  <div class="flex flex-row items-center">
+                    <img [src]="currentNetwork.iconURL" class="w-4 h-4 mr-2 ml-2" alt="">
+                    <div>{{ currentNetwork.name }}</div>
+                  </div>
                 </div>
               </div>
             </div>

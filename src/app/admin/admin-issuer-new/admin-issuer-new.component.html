@@ -13,7 +13,9 @@
     <app-info-snippet
       [content]="{ title: 'Getting started with Dev3', sections: [
         'A Dev3 project is an abstraction over a single Web3 application. It is the first step in building your app with Dev3.'
-      ]}"></app-info-snippet>
+      ]}"
+      [actionLinkButton]="{ title: 'Read the docs', href: 'https://docs.dev3.sh' }" 
+      ></app-info-snippet>
   </div>
   <div *ngIf="balance$ | async as balance" class="rounded-2xl mt-2">
     <div *ngIf="balance.eq(0)">

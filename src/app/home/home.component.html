@@ -15,11 +15,19 @@
 
 
       <div class="flex flex-row justify-start items-center w-full">
-        <h2 class="text-sm uppercase flex mb-2 flex-col items-center text-gray-700 font-semibold">
-          <div class="flex flex-row items-center w-full justify-between mt-5">
-            <div>Select network</div>
+        <h2 class="text-sm flex mb-2 flex-col items-center text-gray-700">
+          <div class="flex flex-row items-center uppercase font-semibold w-full justify-between mt-5">
+            <div class="flex flex-row items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a.809.809 0 001.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 001.528-1.732l.146-.292M6.115 5.19A9 9 0 1017.18 4.64M6.115 5.19A8.965 8.965 0 0112 3c1.929 0 3.716.607 5.18 1.64" />
+              </svg>
+              
+              <div>
+                Select network
+              </div>              
+            </div>
           </div>
-          <div class="mt-4">
+          <div class="mt-4 font-medium">
             <app-select-network></app-select-network>
           </div>
 
@@ -28,16 +36,23 @@
       </div>
 
       <div class="w-full flex flex-row items-center justify-between mt-4">
-        <div class="uppercase text-sm font-semibold text-gray-700" *ngIf="networkAndAddress$ | async as networkAndAddress">
-          Projects on <span class="text-violet-700">{{networkAndAddress[0].name}}</span> 
+        <div class="uppercase text-sm flex flex-row items-center gap-2 font-semibold text-gray-700" *ngIf="networkAndAddress$ | async as networkAndAddress">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
+          </svg>
+          
+          <div>
+            Apps on <span class="text-violet-700">{{networkAndAddress[0].name}}</span> 
+
+          </div>
         </div>
         <button class="app-button flex flex-row items-center !px-8 !font-medium" (click)="openCreateNewIssuer()">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
             stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
           </svg>
-          <div class="ml-2 text-xs uppercase">
-            Create a new project
+          <div *ngIf="networkAndAddress$ | async as networkAndAddress" class="ml-2 text-xs uppercase">
+            New {{networkAndAddress[0].name}} app
   
           </div>
         </button>
@@ -75,9 +90,10 @@
             </div>
           </div>
           <div *ngIf="myIssuers.length === 0"
-            class="mt-4 text-sm py-16 flex flex-row font-medium text-center text-gray-700 justify-center leading-loose">
-            You haven't created any projects on this network. <br> Try changing the network (top left corner) or create
-            a new project!
+            class="mt-4 text-sm py-16 flex flex-row font-medium text-center text-gray-500 justify-center leading-loose">
+            <div *ngIf="networkAndAddress$ | async as networkAndAddress">
+              You haven't created any apps on {{networkAndAddress[0].name}}.
+            </div>
           </div>
         </ng-container>
 

@@ -41,7 +41,7 @@ import { SignerLoginOpts, Subsigner } from '../signer-login-options'
 export class MagicSubsignerService implements Subsigner<MagicLoginOpts> {
   subprovider: (SDKBase & OAuthSDK) | undefined
 
-  DEFAULT_API_KEY = ""
+  DEFAULT_API_KEY = "pk_live_2675FA67C83167F9"
 
   apiKey$: Observable<string> = of(this.DEFAULT_API_KEY)
 

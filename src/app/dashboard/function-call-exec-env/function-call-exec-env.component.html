@@ -5,7 +5,7 @@
         <div class="leading-6 text-sm font-medium text-center">
             <span *ngIf="request.status === 'PENDING'" class="text-violet-700">{{issuer.infoData.name}}</span>
             <div *ngIf="request.status === 'PENDING'" class="text-gray-500 font-normal">
-                is requesting you to execute the following transaction
+                is requesting you to execute the following transaction 
             </div>
             <div *ngIf="request.status === 'SUCCESS'" class="text-green-700 bg-green-50 rounded-lg my-2 
             py-2 flex flex-row justify-center items-center font-medium uppercase">
