@@ -16,7 +16,7 @@ export enum ChainID {
   BSC = 56,
   MOONRIVER = 1285,
   OASIS_EMERALD = 42262,
-  // CELO_MAINNET = 42220,
+  CELO_MAINNET = 42220,
   GNOSIS_NETWORK = 100,
   FANTOM_NETWORK = 250,
 }
@@ -142,7 +142,7 @@ export const MumbaiNetwork: Network = {
 
 export const GoerliNetwork: Network = {
   chainID: ChainID.GOERLI_TESTNET,
-  name: 'Goerli Testnet',
+  name: 'Görli Testnet',
   shortName: 'goerli',
   iconURL: 'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ethereum-ETH-icon.png',
   nativeCurrency: {
@@ -250,41 +250,42 @@ export const OasisEmeraldChain: Network = {
   },
 }
 
-// export const CeloChain: Network = {
-//   chainID: ChainID.CELO_MAINNET,
-//   name: 'Celo',
-//   shortName: 'celo',
-//   nativeCurrency: {
-//     name: 'CELO',
-//     symbol: 'CELO',
-//   },
-//   maxGasPrice: 20,
-//   rpcURLs: ['https://icy-morning-tree.celo-mainnet.quiknode.pro/8ed0d34e8954249bcd847e85e7a721cbf7a3f464'],
-//   wssRpcURLs: ['wss://icy-morning-tree.celo-mainnet.quiknode.pro/8ed0d34e8954249bcd847e85e7a721cbf7a3f464'],
-//   explorerURLs: ['https://explorer.celo.org/'],
-//   tokenizerConfig: {
-//     apxRegistry: '',
-//     issuerFactory: {
-//       basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
-//     },
-//     assetFactory: {
-//       basic: '',
-//       transferable: '',
-//       simple: '',
-//     },
-//     cfManagerFactory: {
-//       basic: '',
-//       vesting: '',
-//     },
-//     queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
-//     payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
-//     payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
-//     nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
-//     campaignFeeManager: '',
-//     defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
-//     defaultStableCoin: '0x73a210637f6F6B7005512677Ba6B3C96bb4AA44B', // custom stablecoin issued by filip
-//   },
-// }
+export const CeloChain: Network = {
+  chainID: ChainID.CELO_MAINNET,
+  name: 'Celo',
+  shortName: 'celo',
+  iconURL: 'https://styles.redditmedia.com/t5_i05sx/styles/communityIcon_86ltnuoxy9541.png?width=256&s=ccd45317381cc1a1db9b3b90f301409d11d3a379',
+  nativeCurrency: {
+    name: 'CELO',
+    symbol: 'CELO',
+  },
+  maxGasPrice: 20,
+  rpcURLs: ['https://icy-morning-tree.celo-mainnet.quiknode.pro/8ed0d34e8954249bcd847e85e7a721cbf7a3f464'],
+  wssRpcURLs: ['wss://icy-morning-tree.celo-mainnet.quiknode.pro/8ed0d34e8954249bcd847e85e7a721cbf7a3f464'],
+  explorerURLs: ['https://explorer.celo.org/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
+    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
+    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
+    defaultStableCoin: '0x73a210637f6F6B7005512677Ba6B3C96bb4AA44B', // custom stablecoin issued by filip
+  },
+}
 
 export const BSCNetwork: Network = {
   chainID: ChainID.BSC,
@@ -572,7 +573,7 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.BSC]: BSCNetwork,
   [ChainID.MOONRIVER]: MoonriverNetwork,
   [ChainID.OASIS_EMERALD]: OasisEmeraldChain,
-  // [ChainID.CELO_MAINNET]: CeloChain,
+  [ChainID.CELO_MAINNET]: CeloChain,
   [ChainID.GNOSIS_NETWORK]: GnosisNetwork,
   [ChainID.FANTOM_NETWORK]: FantomNetwork,
 }

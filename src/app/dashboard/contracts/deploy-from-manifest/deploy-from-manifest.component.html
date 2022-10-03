@@ -78,7 +78,7 @@
           <div *ngIf="contract.constructors[0].inputs[0].solidity_type !== 'tuple'">
             <div class="mb-6 flex flex-col" *ngFor="let input of contract.constructors[0].inputs">
               <div class="font-semibold text-gray-700">{{input.name}}</div>
-              <small class="text-xs text-gray-500 w-2/3">{{input.description}}</small>
+              <small class="text-xs text-gray-500 w-full">{{input.description}}</small>
               <app-smart-input inputType="TEXT" [rootForm]="deployContractForm"
                 [formFinishedLoadingSub]="finishedLoadingFormSub"
                 [solidityType]="input.solidity_type"
@@ -93,7 +93,7 @@
         <ng-container *ngIf="contract.constructors.at(0)?.inputs?.at(0)?.solidity_type === 'tuple'">
           <div class="mb-6 flex flex-col" *ngFor="let input of contract.constructors[0].inputs[0].parameters">
             <div class="font-semibold">{{input.name}}</div>
-            <small class="w-2/3 mb-1 text-gray-500 text-xs">{{input.description}}</small>
+            <small class="w-full mb-1 text-gray-500 text-xs">{{input.description}}</small>
             <app-smart-input [rootForm]="deployContractForm"
               [recommendedTypes]="input.recommended_types"
               [solidityType]="input.solidity_type"

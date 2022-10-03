@@ -83,6 +83,7 @@ text-gray-700 uppercase border-b-4 border-transparent">
 
   </div>
 
+  <!-- DEPLOY TAB -->
   <ng-container *ngIf="activeTab === tabType.Add">
 
     <div [@inOutAnimation] *ngIf="deployableContracts$ | async as deployableContracts; else loading">
@@ -91,10 +92,57 @@ text-gray-700 uppercase border-b-4 border-transparent">
           [content]="{ title: 'Writing your own smart contracts?', sections: [
         'Dev3 allows you to import & use your own smart contracts.', 'This feature is under development and will be released soon!'] }"></app-info-snippet>
       </div>
+      <div class="w-full px-6 py-4 text-sm bg-amber-50 text-amber-800 border">
+        This is a community curated repository of pre-built smart contracts. Dev3 doesn't give any guarantees for any contract that is not audited. 
+        You can recognize audited contracts by the blue checkmark to the left of their name. <br><br>
+        This is an open source library - check out the repository <a target="_blank" class=" font-semibold underline" href="https://github.com/0xDev3/dev3-contracts">here</a>
+      </div>
+
+      <div class="flex flex-row border-gray-200 border-x border-b">
+        <div class="w-10/12 flex flex-row">
+          <div class="w-1/12 border-r flex flex-row items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+            class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            
+          </div>
+          <form class="w-11/12 flex flex-row">
+            <input (input)="onSearchChange($event.target)"
+              class="w-full border-none py-2 text-sm px-4" placeholder="Search contracts" type="text">
+          </form>
+        </div>
+        <div class="w-2/12 flex flex-row items-center justify-center border-l">         
+          <div class="mr-2 ml-2 text-sm uppercase text-gray-500">Only audited</div>
+          <input (change)="onlyAuditedCheckChange($event.target)" type="checkbox" name="" class="w-4 h-4 text-violet-700 bg-gray-100 rounded border-gray-300" id="">
+        </div>
+      </div>
 
       <div *ngFor="let contract of deployableContracts" class="border-gray-100 border-x border-b p-4 flex flex-row">
-        <div class="w-3/12 font-medium text-gray-700 text-sm flex flex-col justify-center">
-          {{ contract.name }}
+        <div class="w-3/12 font-medium text-gray-700 text-sm flex flex-row items-center">
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" 
+          class="w-4 h-4 text-amber-600">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+          </svg>           -->
+          <svg *ngIf="contract.audited" [matTooltip]="'Audited'" 
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-green-600">
+            <path fill-rule="evenodd" d="M9.661 2.237a.531.531 0 01.678 0 11.947 11.947 0 007.078 2.749.5.5 0 01.479.425c.069.52.104 1.05.104 1.59 0 5.162-3.26 9.563-7.834 11.256a.48.48 0 01-.332 0C5.26 16.564 2 12.163 2 7c0-.538.035-1.069.104-1.589a.5.5 0 01.48-.425 11.947 11.947 0 007.077-2.75zm4.196 5.954a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+          </svg>
+          
+          <svg *ngIf="!contract.audited"
+           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-violet-700">
+            <path fill-rule="evenodd" d="M10.339 2.237a.532.532 0 00-.678 0 11.947 11.947 0 01-7.078 2.75.5.5 0 00-.479.425A12.11 12.11 0 002 7c0 5.163 3.26 9.564 7.834 11.257a.48.48 0 00.332 0C14.74 16.564 18 12.163 18 7.001c0-.54-.035-1.07-.104-1.59a.5.5 0 00-.48-.425 11.947 11.947 0 01-7.077-2.75zM10 6a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 6zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+          </svg>
+          
+          
+          
+                  
+          <div class="ml-2 flex flex-col">
+            <div class="text-xs text-gray-500 font-light">{{ contract.splitID[0] }}</div>
+            <div class="font-medium">
+              {{ contract.name }}
+            </div>
+          </div>          
         </div>
         <div class="w-7/12 text-sm flex flex-col justify-start pr-4 text-gray-500">
           <div class="flex flex-col h-full text-sm flex-wrap justify-start">
@@ -102,7 +150,7 @@ text-gray-700 uppercase border-b-4 border-transparent">
               {{contract.description}}
             </div>
             <div class="flex flex-row">
-              <div class="pr-1 text-xs mt-1" *ngFor="let tag of contract.tags">
+              <div class="pr-1 text-xs mt-1 text-violet-400" *ngFor="let tag of contract.tags">
                 #{{tag}}
               </div>
             </div>
@@ -125,6 +173,7 @@ text-gray-700 uppercase border-b-4 border-transparent">
 
   </ng-container>
 
+  <!-- PENDING TAB -->
   <ng-container *ngIf="activeTab === tabType.Pending">
     <div [@inOutAnimation] *ngIf="pendingContractDeploymentRequests$ | async as requests; else loading" >
       <app-info-snippet [hasInfoToggle]="true" [hasRoundedCorners]="false" [content]="{
@@ -135,11 +184,11 @@ text-gray-700 uppercase border-b-4 border-transparent">
           title: 'Read the docs',
           href: 'https://google.com'
       }"></app-info-snippet>
-  <div class="border-gray-100 text-gray-700 border-2 p-4 flex flex-row bg-gray-100 rounded-tr-lg">
-    <div class="w-3/12 text-sm uppercase font-semibold">Alias</div>
-    <div class="w-4/12 text-sm uppercase font-semibold">Contract Type</div>
-    <div class="w-2/12 text-sm uppercase font-semibold">Created at</div>
-    <div class="w-3/12 text-sm uppercase font-semibold flex flex-ro rounded-lg items-center justify-center">
+  <div class=" text-violet-700 border-x border-b text-xs p-4 flex flex-row bg-violet-50">
+    <div class="w-3/12 uppercase font-semibold">Alias</div>
+    <div class="w-4/12 uppercase font-semibold">Contract Type</div>
+    <div class="w-2/12 uppercase font-semibold">Created at</div>
+    <div class="w-3/12 uppercase font-semibold flex flex-ro rounded-lg items-center justify-center">
     </div>
   </div>
 
@@ -181,6 +230,7 @@ text-gray-700 uppercase border-b-4 border-transparent">
 
   </ng-container>
 
+  <!-- MY CONTRACTS TAB -->
   <ng-container *ngIf="activeTab === tabType.Manage">
     <div [@inOutAnimation]  *ngIf="deployedContracts$ | async as deployedContracts; else loading">
       <app-info-snippet [hasInfoToggle]="true" [hasRoundedCorners]="false" [content]="{
@@ -189,11 +239,11 @@ text-gray-700 uppercase border-b-4 border-transparent">
         'There are three ways to interact with a contract - deploy a contract from our pre-built library, import a contract you already deployed or browse and select deployed contracts from popular protocols and apps!']
       }"></app-info-snippet>
       <ng-container>
-        <div class="border-gray-100 border-2 p-4 text-gray-700
-         flex flex-row bg-gray-100 rounded-tr-lg">
-          <div class="w-3/12 text-sm uppercase font-semibold">Alias</div>
-          <div class="w-5/12 text-sm uppercase font-semibold">Contract Type ID</div>
-          <div class="w-2/12 text-sm uppercase font-semibold">Address</div>
+        <div class="border-x p-4
+         flex flex-row bg-violet-50 text-violet-700 text-xs">
+          <div class="w-3/12 uppercase font-semibold">Alias</div>
+          <div class="w-5/12 uppercase font-semibold">Contract Type ID</div>
+          <div class="w-2/12 uppercase font-semibold">Address</div>
         </div>
   
         <ng-container *ngIf="deployedContracts.length > 0; else emptyList">
@@ -257,10 +307,6 @@ text-gray-700 uppercase border-b-4 border-transparent">
     </form>
 
 
-    <div *ngFor="let item of manageItems"
-      class="border-gray-100 hover:bg-violet-100 border-2 p-4 flex flex-row cursor-pointer">
-
-    </div>
   </ng-container>
 </div>
 

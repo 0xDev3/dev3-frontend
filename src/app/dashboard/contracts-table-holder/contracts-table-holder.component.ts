@@ -3,7 +3,7 @@ import { Location } from '@angular/common'
 import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { BehaviorSubject, filter, forkJoin, map, mergeMap, switchMap, tap, toArray } from 'rxjs'
+import { BehaviorSubject, combineLatest, filter, forkJoin, map, mergeMap, reduce, switchMap, tap, toArray } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
 import { ProjectService } from 'src/app/shared/services/backend/project.service'
@@ -46,11 +46,42 @@ export class ContractsTableHolderComponent implements OnInit {
     this.contractService.getContractDeploymentRequests(this.projectService.projectID, true)
       .pipe(map(result => result.requests))
 
-  deployableContracts$ = this.manifestService.getAll()
+  searchQuerySub = new BehaviorSubject("")
+  searchQuery$ = this.searchQuerySub.asObservable()
+
+  onlyAuditedCheckSub = new BehaviorSubject(false)
+  onlyAuditedCheck$ = this.onlyAuditedCheckSub.asObservable()
+
+  deployableContracts$ = combineLatest([this.manifestService.getAll(), this.searchQuery$, this.onlyAuditedCheck$])
       .pipe(
-        map((result) => { 
+        map(([result, search, onlyAudited]) => { 
           return result.deployable_contracts.map(contract => {
-            return {...contract, splitID: contract.id.split('.') }})}))
+            return {...contract, splitID: contract.id.split('.'), audited: contract.id.includes('openzeppelin') }
+          }).filter(predicate => {
+            if(search !== '') {  
+
+              const lowercasedPredicate = predicate.name.toLowerCase()
+              const lowercasedSearch = search.toLowerCase()
+              const nameIncludes = lowercasedPredicate.includes(lowercasedSearch)
+
+              const tagsInclude = predicate.tags.some(x => { 
+                const lowercaseTag = x.toLowerCase()
+                return lowercaseTag.includes(search)
+              })
+
+              const lowercasedID = predicate.id.toLocaleLowerCase()
+
+              const idIncludes = lowercasedID.includes(search)
+
+              const includes = nameIncludes || tagsInclude || idIncludes
+              if(onlyAudited) { return includes && predicate.audited }
+              return includes
+            } else {
+              return onlyAudited ? predicate.audited : true
+            }
+          })
+        })
+  )
 
   importContractForm = new FormGroup({
     alias: new FormControl('', [Validators.required]),
@@ -97,6 +128,14 @@ export class ContractsTableHolderComponent implements OnInit {
           this.changeTab(Tab.Add)
         } 
       })
+    }
+
+    onSearchChange(searchValue: any) {
+      this.searchQuerySub.next(searchValue.value)
+    }
+
+    onlyAuditedCheckChange(searchValue: any) {
+      this.onlyAuditedCheckSub.next(searchValue.checked)
     }
 
     refreshRequests() {
