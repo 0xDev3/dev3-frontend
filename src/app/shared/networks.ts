@@ -114,11 +114,9 @@ export const MumbaiNetwork: Network = {
     symbol: 'MATIC',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://matic-mumbai.chainstacklabs.com'],
+  rpcURLs: ['https://convincing-bitter-firefly.matic-testnet.quiknode.pro/46db006faa171bdbc51fa9a478e7ac27fb559a4f'],
   wssRpcURLs: [
-    'wss://ws-nd-673-584-255.p2pify.com/6eba79da2c02fb3ca5985cc6e95ebd53',
-    'wss://polygon-mumbai.g.alchemy.com/v2/w8tKRA88CQYBQEwGO2HlKKHtSD_qHOoU',
-    'wss://ws-matic-mumbai.chainstacklabs.com',
+    'wss://convincing-bitter-firefly.matic-testnet.quiknode.pro/46db006faa171bdbc51fa9a478e7ac27fb559a4f'
   ],
   explorerURLs: ['https://mumbai.polygonscan.com/'],
   tokenizerConfig: {
