@@ -3,14 +3,14 @@
         <div class="w-2/3 px-4 border-r pt-4 border-gray-200">
             <form id="wallet-address" [formGroup]="newAuthRequestForm">
 
-                <label for="wallet-address"
+                <label
                 class="font-semibold text-gray-700">Before authorization message</label>
                 <small class="text-gray-500 block">Message to be displayed in the Dev3 execution environment before the user authorizes themselves</small>
 
                 <input class="rounded-lg border-gray-200 mt-1 mb-4 text-sm w-full" 
                 formControlName="beforeMessage" type="text">
 
-                <label for="wallet-address"
+                <label
                 class="font-semibold text-gray-700">After authorization message</label>
                 <small class="text-gray-500 block">Message to be displayed after the user finishes authorization. This can be used to prompt the user to a following action or to thank for the authorization.</small>
 

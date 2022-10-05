@@ -20,7 +20,6 @@ export class AuthorizationNewComponent {
 
 
   newAuthRequestForm = new FormGroup({
-    walletAddress: new FormControl(),
     beforeMessage: new FormControl(),
     afterMessage: new FormControl()
   })
@@ -34,8 +33,11 @@ export class AuthorizationNewComponent {
 
   submitClicked() {
     return () => {
+      const beforeMessage = this.newAuthRequestForm.controls.beforeMessage.value
+      const afterMessage = this.newAuthRequestForm.controls.afterMessage.value
+
       return this.authSerivice.generateMessagePayload().pipe(
-        switchMap(result => this.authSerivice.createWalletAuthRequest(result.payload)),
+        switchMap(result => this.authSerivice.createWalletAuthRequest(result.payload, beforeMessage, afterMessage)),
         tap(_ => this.dialogService.success({ message: "Successfully created a new authorization request." }))
       )
     }

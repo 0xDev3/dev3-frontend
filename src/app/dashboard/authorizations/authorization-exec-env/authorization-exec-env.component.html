@@ -1,5 +1,5 @@
 <div *ngIf="issuer$ | async as issuer" class="w-full h-full flex flex-row items-center text-gray-700 justify-center">
-    <div *ngIf="authRequest$ | async as authRequest" class=" bg-white p-8 rounded-2xl shadow-sm flex flex-col items-center">
+    <div *ngIf="authRequest$ | async as authRequest" class=" bg-white max-w-md p-8 rounded-2xl shadow-sm flex flex-col items-center">
         <img class="mt-4 h-14 w-14" [src]="issuer.infoData.logo | toUrlIPFS" alt="">
 
         <!-- BEFORE AUTH -->
@@ -10,10 +10,22 @@
                 is requesting you to authorize yourself.
             </div>
             <div *ngIf="address$ | async as address" class="mt-4 text-sm">
-                <div class="text-center text-xs uppercase font-medium leading-6 text-gray-500">{{issuer.infoData.name}} will get the <br> following information about you:</div>
                 <ng-container [ngTemplateOutlet]="addressHolder"></ng-container>
                 
+                <div *ngIf="authRequest.screen_config" class="p-4 w-full bg-violet-50 rounded-lg mt-2 flex flex-col">
+                    <div class="text-xs uppercase font-semibold text-violet-700 flex flex-row items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                          </svg>
+                          <div class="ml-2">
+                            Message from {{issuer.infoData.name}}</div>
+
+                          </div>                          
+                    <div class="ml-7 mt-1">{{authRequest.screen_config.before_action_message ?? ''}}</div>
+                </div>
             </div>
+
+
             <button [onClick]="authorizeButtonClicked(authRequest).bind(this)" *ngIf="address$ | async" app-action-button 
             text="Confirm authorization"
              class="px-16 mt-8 bg-violet-700 hover:bg-violet-900 rounded-full text-xs py-2 text-white uppercase font-semibold">
@@ -22,10 +34,23 @@
 
         <!-- AFTER AUTH -->
         <div class="flex flex-col items-center" *ngIf="authRequest.status === 'SUCCESS'">
-            <div class="text-sm text-gray-500 text-center mt-4">You have successfully authorized yourself
+            <div class="bg-green-50 text-green-700 font-medium border-green-200 mt-4 text-sm uppercase py-2 w-full text-center rounded-lg">Success</div>
+            <div class="text-xs text-gray-500 text-center mt-4 uppercase font-medium mb-2" >You have successfully authorized yourself
             </div>
-            <div class="text-xs uppercase font-medium text-gray-500 mt-4 text-center leading-6">{{issuer.infoData.name}} received the following <br> info about you</div>
+            <div *ngIf="authRequest.screen_config" class="p-4 w-full bg-violet-50 rounded-lg mt-2 flex flex-col">
+                <div class="text-xs uppercase font-semibold text-violet-700 flex flex-row items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                      </svg>
+                      <div class="ml-2">
+                        Message from {{issuer.infoData.name}}</div>
+
+                      </div>                          
+                <div class="ml-7 mt-1 text-sm">{{authRequest.screen_config.after_action_message ?? ''}}</div>
+            </div>
+            <div class="text-xs uppercase font-medium text-gray-500 mt-4 text-center leading-6">{{issuer.infoData.name}} received the following info about you</div>
             <ng-container [ngTemplateOutlet]="addressHolder"></ng-container>
+            
             <button (click)="closeTabClicked()"
              class="px-12 py-2 bg-violet-700 mt-8 hover:bg-violet-900 rounded-full text-xs text-white uppercase font-semibold">
                 Close tab
@@ -41,8 +66,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
               </svg>
-            <div>Wallet address</div>                  
+            <div>Your wallet address</div>                  
         </div>
-        <div class="mt-1 text-sm font-medium text-gray-700">{{address}}</div>  
+        <div class="mt-1 ml-7 text-sm font-medium text-gray-700">{{address}}</div>  
     </div>
 </ng-template>

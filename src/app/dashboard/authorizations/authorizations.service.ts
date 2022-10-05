@@ -19,10 +19,14 @@ export class AuthorizationsService {
     private preferenceStore: PreferenceStore
   ) {}
 
-  createWalletAuthRequest(messageToSign: string) {
+  createWalletAuthRequest(messageToSign: string, beforeActionMessage: string, afterActionMessage: string) {
         return this.http.post<WalletAuthData>(`${this.path}`, 
             {
-                message_to_sign: messageToSign
+                message_to_sign: messageToSign,
+                screen_config: {
+                  before_action_message: beforeActionMessage,
+                  after_action_message: afterActionMessage
+                }
             }, false, true, true)
   }
 
@@ -70,4 +74,5 @@ export interface WalletAuthData {
     wallet_address: string,
     message_to_sign: string
     signed_message: string
+    screen_config: ScreenConfig
 }
