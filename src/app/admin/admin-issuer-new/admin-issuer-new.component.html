@@ -12,7 +12,8 @@
   <div class="shadow-sm rounded-2xl mt-8">
     <app-info-snippet
       [content]="{ title: 'Getting started with Dev3', sections: [
-        'A Dev3 project is an abstraction over a single Web3 application. It is the first step in building your app with Dev3.'
+        'A Dev3 app is a Web3 app. It contains all application smart contracts, authorizations, payment requests, ...',  'Creating a Dev3 app gives you access to the Dev3 SDK & API.',
+        'Read the Docs to learn more!'
       ]}"
       [actionLinkButton]="{ title: 'Read the docs', href: 'https://docs.dev3.sh' }" 
       ></app-info-snippet>
@@ -23,7 +24,7 @@
         <app-info-snippet
         type="WARNING"
         [content]="{ title: 'You\'re out of gas!', sections: [
-          'You don\'t have any gas tokens. In order to use Dev3 - you need to have tokens to pay for writing to blockchain!',
+          'You don\'t have any gas tokens. In order to use Dev3 - you need to have \'gas\' tokens to pay for writing to blockchain!',
           'Want to try Dev3 for free? You can get free gas tokens if you make your project on the Mumbai Network. Switch the project netowrk (below) to Mumbai!'
         ]}"></app-info-snippet>
         <div *ngIf="network$ | async as network">

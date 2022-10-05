@@ -145,6 +145,7 @@ import { WorkflowsComponent } from './dashboard/workflows/workflows.component'
 import { ContractFunctionInteractionItemComponent } from './dashboard/contracts/contract-function-interaction-item/contract-function-interaction-item.component'
 import { WorkflowActionItemComponent } from './dashboard/workflows/workflow-action-item/workflow-action-item.component'
 import { ArrayTupleSmartInputComponent } from './shared/components/smart-input/array-tuple-smart-input/array-tuple-smart-input.component'
+import { AuthorizationExecEnvComponent } from './dashboard/authorizations/authorization-exec-env/authorization-exec-env.component'
 
 @NgModule({
   declarations: [
@@ -267,6 +268,7 @@ import { ArrayTupleSmartInputComponent } from './shared/components/smart-input/a
     ContractFunctionInteractionItemComponent,
     WorkflowActionItemComponent,
     ArrayTupleSmartInputComponent,
+    AuthorizationExecEnvComponent,
   ],
   imports: [
     BrowserModule,

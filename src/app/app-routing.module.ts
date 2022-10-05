@@ -55,6 +55,7 @@ import { DeployFromManifestComponent } from './dashboard/contracts/deploy-from-m
 import { InteractWithContractsComponent } from './dashboard/contracts/interact-with-contracts/interact-with-contracts.component'
 import { FunctionCallExecEnvComponent } from './dashboard/function-call-exec-env/function-call-exec-env.component'
 import { WorkflowsComponent } from './dashboard/workflows/workflows.component'
+import { AuthorizationExecEnvComponent } from './dashboard/authorizations/authorization-exec-env/authorization-exec-env.component'
 
 const appRoutes: Routes = [
   { path: 'callback', component: AuthMagicOauthComponent },
@@ -65,6 +66,7 @@ const appRoutes: Routes = [
   { path: 'offers/:id/invest', component: InvestComponent },
   { path: 'transfer', component: TransferComponent },
   { path: 'swap', component: SwapComponent },
+  { path: 'request-authorization/:id/action', component: AuthorizationExecEnvComponent },
   { path: 'deploy-contract/:id', component: ContractDeployExecEnvComponent }, 
   { path: 'request-function-call/:id/action', component: FunctionCallExecEnvComponent},
   { path: 'connect/:id', component: RequestWalletActionComponent },

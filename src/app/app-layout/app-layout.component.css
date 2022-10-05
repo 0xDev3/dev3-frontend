@@ -1,5 +1,6 @@
 .layout-bg {
-  background: linear-gradient(180deg, rgb(242, 247, 255) 25%, rgba(255,255,255,0) 100%);
+  /* background: linear-gradient(180deg, rgb(242, 247, 255) 25%, rgba(255,255,255,0) 100%); */
+  background: rgb(242, 247, 255);
 }
 
 .bg-scrolled {

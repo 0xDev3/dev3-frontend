@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
-import { switchMap } from 'rxjs'
+import { BehaviorSubject, switchMap, tap } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { RequestBalanceService } from 'src/app/request-balance/request-balance.service'
 import { SendRequestStatus } from 'src/app/request-send/request-send.service'
 import { ProjectService } from 'src/app/shared/services/backend/project.service'
+import { AuthorizationsService } from './authorizations.service'
 
 @Component({
   selector: 'app-authorizations',
@@ -14,6 +15,7 @@ import { ProjectService } from 'src/app/shared/services/backend/project.service'
 export class AuthorizationsComponent implements OnInit {
 
   constructor(private requestBalanceService: RequestBalanceService,
+    private authorizationService: AuthorizationsService,
     private preferenceQuery: PreferenceQuery,
     private projectService: ProjectService) { }
 
@@ -22,8 +24,13 @@ export class AuthorizationsComponent implements OnInit {
 
   authRequestStatusType = SendRequestStatus
   
-  authRequests$ = this.projectService.getProjectIdByChainAndAddress().pipe(
-    switchMap(result => this.requestBalanceService.getRequestsForProject(result.id))
+  authRequests$ = this.authorizationService.fetchWalletAuthRequestsForProject(
+    this.projectService.projectID
+  )
+
+  changeTabSub = new BehaviorSubject<Tab>(Tab.Manage)
+  changeTab$ = this.changeTabSub.asObservable().pipe(
+    tap(newTab => this.activeTab = newTab)
   )
 
   ngOnInit(): void {
@@ -37,7 +44,7 @@ export class AuthorizationsComponent implements OnInit {
   }
 }
 
-enum Tab {
+export enum Tab {
   Manage, 
   New
 }
