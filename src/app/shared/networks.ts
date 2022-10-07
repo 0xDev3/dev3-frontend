@@ -77,13 +77,9 @@ export const MaticNetwork: Network = {
   },
   maxGasPrice: 1500,
   rpcURLs: [
-    'https://nd-159-625-174.p2pify.com/db285116493a92ba6e91417f43a942bd',
-    'https://polygon-rpc.com',
+    'https://convincing-hidden-road.matic.quiknode.pro/f58c6c37eb2ce3377edfcfd545a15bc825293eea/'
   ],
   wssRpcURLs: [
-    'wss://ws-nd-159-625-174.p2pify.com/db285116493a92ba6e91417f43a942bd',
-    'wss://ws-matic-mainnet.chainstacklabs.com',
-    'wss://polygon-mainnet.g.alchemy.com/v2/A8PZz3PJWwX_yQAW5q0JjqaNPPshI9Qg',
   ],
   explorerURLs: ['https://polygonscan.com/'],
   tokenizerConfig: {
@@ -116,7 +112,6 @@ export const MumbaiNetwork: Network = {
   maxGasPrice: 20,
   rpcURLs: ['https://convincing-bitter-firefly.matic-testnet.quiknode.pro/46db006faa171bdbc51fa9a478e7ac27fb559a4f'],
   wssRpcURLs: [
-    'wss://convincing-bitter-firefly.matic-testnet.quiknode.pro/46db006faa171bdbc51fa9a478e7ac27fb559a4f'
   ],
   explorerURLs: ['https://mumbai.polygonscan.com/'],
   tokenizerConfig: {
@@ -185,7 +180,7 @@ export const AuroraNetwork: Network = {
   },
   maxGasPrice: 20,
   rpcURLs: ['https://mainnet.aurora.dev'],
-  wssRpcURLs: ['wss://mainnet.aurora.dev'],
+  wssRpcURLs: [],
   explorerURLs: ['https://aurorascan.dev/'],
   tokenizerConfig: {
     apxRegistry: '',
@@ -259,7 +254,7 @@ export const CeloChain: Network = {
   },
   maxGasPrice: 20,
   rpcURLs: ['https://icy-morning-tree.celo-mainnet.quiknode.pro/8ed0d34e8954249bcd847e85e7a721cbf7a3f464'],
-  wssRpcURLs: ['wss://icy-morning-tree.celo-mainnet.quiknode.pro/8ed0d34e8954249bcd847e85e7a721cbf7a3f464'],
+  wssRpcURLs: [],
   explorerURLs: ['https://explorer.celo.org/'],
   tokenizerConfig: {
     apxRegistry: '',
@@ -296,7 +291,7 @@ export const BSCNetwork: Network = {
   },
   maxGasPrice: 20,
   rpcURLs: ['https://purple-falling-sea.bsc.quiknode.pro/f21a78dc70b5f15d92a70b1b84845e5c6c688a12'],
-  wssRpcURLs: ['wss://purple-falling-sea.bsc.quiknode.pro/f21a78dc70b5f15d92a70b1b84845e5c6c688a12'],
+  wssRpcURLs: [],
   explorerURLs: ['https://bscscan.com/'],
   tokenizerConfig: {
     apxRegistry: '',
@@ -370,7 +365,7 @@ export const OptimismNetwork: Network = {
   },
   maxGasPrice: 20,
   rpcURLs: ['https://weathered-white-lambo.optimism.quiknode.pro/651498cb8884a1093894a149d1d44004a45fb5a6/'],
-  wssRpcURLs: ['wss://weathered-white-lambo.optimism.quiknode.pro/651498cb8884a1093894a149d1d44004a45fb5a6/'],
+  wssRpcURLs: [],
   explorerURLs: ['https://optimistic.etherscan.io/'],
   tokenizerConfig: {
     apxRegistry: '',
@@ -410,7 +405,6 @@ export const ArbitrumNetwork: Network = {
     'https://weathered-bitter-panorama.arbitrum-mainnet.quiknode.pro/6263c3e3ab2a9c81efd17e687344d9d5d049de68'
   ],
   wssRpcURLs: [
-    'wss://weathered-bitter-panorama.arbitrum-mainnet.quiknode.pro/6263c3e3ab2a9c81efd17e687344d9d5d049de68'
   ],
   explorerURLs: ['https://optimistic.etherscan.io/'],
   tokenizerConfig: {
@@ -451,7 +445,6 @@ export const MoonriverNetwork: Network = {
     'https://moonriver.public.blastapi.io'
   ],
   wssRpcURLs: [
-    'wss://wss.api.moonriver.moonbeam.network'
   ],
   explorerURLs: ['https://moonriver.moonscan.io/'],
   tokenizerConfig: {
@@ -492,7 +485,6 @@ export const FantomNetwork: Network = {
     'https://rpc.ankr.com/fantom/'
   ],
   wssRpcURLs: [
-    'wss://wsapi.fantom.network/'
   ],
   explorerURLs: ['https://ftmscan.com'],
   tokenizerConfig: {
@@ -533,7 +525,6 @@ export const GnosisNetwork: Network = {
     'https://wider-flashy-telescope.xdai.quiknode.pro/3032827d979350ef930fbaf0b041ca1c5262f962/'
   ],
   wssRpcURLs: [
-    'wss://wider-flashy-telescope.xdai.quiknode.pro/3032827d979350ef930fbaf0b041ca1c5262f962/'
   ],
   explorerURLs: ['https://gnosisscan.io/'],
   tokenizerConfig: {

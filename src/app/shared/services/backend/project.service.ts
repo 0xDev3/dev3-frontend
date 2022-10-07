@@ -57,7 +57,7 @@ export class ProjectService {
   fetchApiKey(): Observable<ApiKeyModel> {
     return this.getProjectIdByChainAndAddress().pipe(
       switchMap((project) =>
-        this.http.get<ApiKeyModel>(`${this.path}/${project.id}/api-key`)
+        this.http.get<ApiKeyModel>(`${this.path}/${project.id}/api-key`, undefined, false, false, true)
       ),
       tap((response) => this.saveApiKey(response.api_key))
     )
