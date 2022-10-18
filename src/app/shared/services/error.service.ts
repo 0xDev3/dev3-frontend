@@ -32,6 +32,11 @@ export class ErrorService {
       let errorRes = err as HttpErrorResponse
       let action$: Observable<any> = throwError(err)
 
+      if(errorRes.status == 404) {
+        console.log("SI")
+        return of(undefined)
+      }
+
       if (!!(errorRes as any)?.code && (errorRes as any)?.code !== -32603) {
         errorRes = errorRes.error
       }

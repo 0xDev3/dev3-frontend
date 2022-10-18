@@ -59,7 +59,16 @@ export class ProjectService {
       switchMap((project) =>
         this.http.get<ApiKeyModel>(`${this.path}/${project.id}/api-key`, undefined, false, false, true)
       ),
-      tap((response) => this.saveApiKey(response.api_key))
+      switchMap(apiKey => {
+        if(apiKey === undefined) {
+          return this.getProjectIdByChainAndAddress().pipe(
+            switchMap(project => this.http.post<ApiKeyModel>(`${this.path}/${this.projectID}/api-key`, {}, false, true, false))
+          )
+        } else {
+          return of(apiKey)
+        }
+      }),
+      tap(apiKey => this.saveApiKey(apiKey.api_key))
     )
   }
 

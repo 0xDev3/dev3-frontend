@@ -41,12 +41,14 @@ export class DashboardHolderComponent {
   projectInfoHolderStateSub = new BehaviorSubject<ProjectInfoHolderState>('open')
   projectInfoHolderState$ = this.projectInfoHolderStateSub.asObservable()
 
+    projectID = this.projectService.projectID
+
   apiKey$ = this.refreshAPIKeySub.asObservable().pipe(
     switchMap(() => this.http.ensureAuth),
     switchMap(() => this.isBackendAuthorized$ ),
     switchMap(() => this.projectService.fetchApiKey()))
 
-  projectID = this.projectService.projectID
+
 
   constructor(
     private router: RouterService,

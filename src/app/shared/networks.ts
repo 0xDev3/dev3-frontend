@@ -290,7 +290,7 @@ export const BSCNetwork: Network = {
     symbol: 'BSC',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://purple-falling-sea.bsc.quiknode.pro/f21a78dc70b5f15d92a70b1b84845e5c6c688a12'],
+  rpcURLs: ['https://bscrpc.com'],
   wssRpcURLs: [],
   explorerURLs: ['https://bscscan.com/'],
   tokenizerConfig: {
