@@ -34,13 +34,16 @@
         <div *ngIf="activeTab === tabType.Manage">
             <div class="bg-violet-50 border-t border-x rounded-tr-lg flex flex-row py-3 text-violet-700 
             text-xs uppercase font-semibold">
-                <div class="w-7/12 text-center">
+                <div class="w-4/12 text-center">
                     Authorization ID
                 </div>
-                <div class="w-2/12 text-center">
+                <div class="w-5/12 text-center">
+                    Address
+                </div>
+                <div class="w-1/12 text-center">
                     Status
                 </div>
-                <div class="w-3/12 text-center">
+                <div class="w-2/12 text-center">
                     Actions
                 </div>
             </div>
@@ -48,14 +51,20 @@
                 <div *ngIf="authRequests.requests.length === 0; then emptyRequests"></div>
                 <div *ngFor="let authRequest of authRequests.requests" 
                 class="flex border-x flex-row items-center py-3 text-gray-700 text-sm font-medium border-b">
-                    <div class="w-7/12 text-center text-xs font-semibold flex flex-row justify-center items-center">
-                        <div>{{authRequest.id}}</div>
+                <div class="w-4/12 text-center text-xs font-semibold flex flex-row justify-center items-center">
+                    <div>{{authRequest.id}}</div>
+                    <div class="ml-2">
+                        <app-value-copy [value]="authRequest.id"></app-value-copy>
+                    </div>
+                </div>
+                    <div class="w-5/12 text-center text-xs font-semibold flex flex-row justify-center items-center">
+                        <div>{{authRequest.wallet_address}}</div>
                         <div class="ml-2">
-                            <app-value-copy [value]="authRequest.id"></app-value-copy>
+                            <app-value-copy [value]="authRequest.wallet_address"></app-value-copy>
                         </div>
                     </div>
 
-                    <div class="w-2/12 text-center">
+                    <div class="w-1/12 text-center">
                         <div 
                         *ngIf="authRequest.status === authRequestStatusType.Pending" 
                         class="rounded-lg bg-amber-100 text-amber-700 
@@ -69,7 +78,7 @@
                             Finalized 
                         </div>
                     </div>
-                    <div class="w-3/12 text-center px-2">
+                    <div class="w-2/12 text-center px-2">
                         <a target="_blank" [href]="authRequest.redirect_url" 
                         class="rounded-lg cursor-pointer bg-gray-200 uppercase py-2 text-xs flex flex-row justify-center items-center">
                             <div class="mr-2 font-semibold flex flex-col justify-center">Open Auth Link</div>

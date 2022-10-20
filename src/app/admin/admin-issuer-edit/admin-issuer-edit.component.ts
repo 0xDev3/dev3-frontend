@@ -92,10 +92,7 @@ export class AdminIssuerEditComponent {
             walletApproverAddress: issuer.issuerBasic?.walletApprover || '',
           })
 
-          this.updateOwnerAddressForm.reset()
-          this.updateOwnerAddressForm.setValue({
-            ownerAddress: issuer.owner || '',
-          })
+
         })
       )
     )

@@ -17,9 +17,10 @@ export class ContractManifestService {
     private projectService: ProjectService) {}
 
   getByID(id: string, projectID: string = "") {
-    return this.http.get<ContractManifestData>(`${this.path}/${id}`, { 
+    const res = this.http.get<ContractManifestData>(`${this.path}/${id}`, { 
       projectId: projectID
     }, true, false, true)
+    return res
   }
 
   getAll() {

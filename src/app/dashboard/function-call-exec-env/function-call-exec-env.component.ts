@@ -37,7 +37,10 @@ export class FunctionCallExecEnvComponent {
 
   functionManifest$ = zip(this.functionRequest$, this.manifest$).pipe(
     map(result => {
-      return result[1].functions.filter(func => { return func.solidity_name === result[0].function_name })
+      const res = result[1].functions.filter(func => { 
+        return func.solidity_name === result[0].function_name 
+      })
+      return res
     })
   )
 
