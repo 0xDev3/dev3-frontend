@@ -3,9 +3,9 @@
   <ng-container *ngIf="magicLinkAvailable$ | async">
     <form [formGroup]="emailForm">
 
-      <div class="h-12 w-full flex flex-row justify-center mb-6" *ngIf="issuer$ | async as issuer; else defaultImage">
+      <!-- <div class="h-12 w-full flex flex-row justify-center mb-6" *ngIf="issuer$ | async as issuer; else defaultImage">
         <img src="{{issuer.value?.infoData?.logo | toUrlIPFS }}" alt="" srcset="">
-      </div>
+      </div> -->
 
       <ng-template #defaultImage>
         <div class="h-12 w-full flex flex-row justify-center mb-6">
