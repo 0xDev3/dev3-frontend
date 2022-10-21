@@ -124,5 +124,13 @@
     <app-info-snippet [content]="{ title: 'You are not logged in', sections: [
         'Please log in to use Dev3'
       ] }"></app-info-snippet>
+      <div class="w-full flex flex-row justify-center items-center">
+        <button app-action-button
+        text="Log In" [onClick]="login.bind(this)"
+         class="w-52 py-2 bg-violet-100 mt-4 hover:bg-violet-200 uppercase border-violet-200 border rounded-full 
+        font-semibold text-sm flex flex-row items-center justify-center text-violet-700">
+         </button>
+      </div>
+      
   </div>
 </ng-template>

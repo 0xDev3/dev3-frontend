@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { combineLatest, Observable, of } from 'rxjs'
 import { WithStatus, withStatus } from '../shared/utils/observables'
-import { map, switchMap } from 'rxjs/operators'
+import { map, switchMap, tap } from 'rxjs/operators'
 import { RouterService } from '../shared/services/router.service'
 import {
   IssuerService,
@@ -13,6 +13,8 @@ import { PreferenceQuery } from '../preference/state/preference.query'
 import { PreferenceService } from '../preference/state/preference.service'
 import { SessionQuery } from '../session/state/session.query'
 import { easeInOutAnimation } from '../shared/utils/animations'
+import { SignerService } from '../shared/services/signer.service'
+import { AppLayoutStore } from '../app-layout/state/app-layout.store'
 
 @Component({
   selector: 'app-home',
@@ -35,6 +37,8 @@ export class HomeComponent implements OnInit {
   featuredAddrs$: Observable<string[]> = this.networkAndAddress$.pipe(
     map(([network, _address]) => this.featuredMappings[network.chainID] || [])
   )
+
+
 
   featuredIssuers$: Observable<WithStatus<IssuerItem[]>> =
     this.featuredAddrs$.pipe(
@@ -105,8 +109,17 @@ export class HomeComponent implements OnInit {
     private preferenceQuery: PreferenceQuery,
     private sessionQuery: SessionQuery,
     private preferenceService: PreferenceService,
-    private queryService: QueryService
+    private queryService: QueryService,
+    private signerService: SignerService,
+    private appLayoutStore: AppLayoutStore
   ) {}
+
+
+  login(): Observable<unknown> {
+    return this.signerService.ensureAuth.pipe(
+      tap(() => this.appLayoutStore.closeDropdownMenu())
+    )
+  }
 
   ngOnInit() {
     this.preferenceService.resetIssuer()
