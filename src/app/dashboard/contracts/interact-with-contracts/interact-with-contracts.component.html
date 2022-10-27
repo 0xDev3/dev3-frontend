@@ -117,38 +117,9 @@
 
         <div class="p-4 border border-gray-200 rounded-b-lg" *ngIf="(currentTab$ | async) === 'utilities'">
             <div class="w-full flex flex-col gap-2">
-                <div class="w-full p-4 bg-violet-50 rounded-lg flex flex-col">
-                    <div class="w-full text-sm font-semibold text-violet-700">
-                        Get contract ERC20 token balance
-                    </div>
-                    <div class="w-full text-xs text-gray-700">
-                        Fetch the balance of some ERC20 token on a this contract. Input the address of the ERC20 token in the field below
-                    </div>
-                    <div class="w-full flex flex-row gap-2 mt-2">
-                        <app-smart-input class="w-10/12"
-                           [recommendedTypes]="['traits.']"
-                           [rootForm]="contractTokenBalanceForm"
-                           [formFinishedLoadingSub]="formFinishedLoadingSubContractTokenBalance"
-                           [solidityType]="'address'" ></app-smart-input>
-                        <button class="w-2/12 bg-violet-700 rounded-full hover:bg-violet-900
-                         text-xs uppercase text-white font-medium">Read</button>
-                    </div>
-                </div>
-                <div class="w-full p-4 bg-violet-50 rounded-lg flex flex-row justify-between">
-                    <div class="flex flex-col">
-                        <div class="w-full text-sm font-semibold text-violet-700">
-                            Get contract ERC20 token balance
-                        </div>
-                        <div class="w-full text-xs text-gray-700">
-                            Get contract Ether balance
-                        </div>
-                    </div>
-                    <div class="w-2/12 flex flex-row justify-between gap-2 mt-2">
-                        <button class="w-full bg-violet-700 py-2 rounded-full hover:bg-violet-900
-                         text-xs uppercase text-white font-medium">Read</button>
-                    </div>
-                    
-                </div>
+               <app-contract-function-interaction-item
+                [functionManifest]="getERC20FunctionManifest"
+                [contractID]="'asd'"></app-contract-function-interaction-item>
             </div>
         </div>
         

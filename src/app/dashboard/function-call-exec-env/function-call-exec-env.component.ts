@@ -44,6 +44,13 @@ export class FunctionCallExecEnvComponent {
     })
   )
 
+  seeMoreDetailsToggledSub = new BehaviorSubject(false)
+  seeMoreDetails$ = this.seeMoreDetailsToggledSub.asObservable()
+
+  toggleSeeMoreDetails() {
+    this.seeMoreDetailsToggledSub.next(!this.seeMoreDetailsToggledSub.getValue())
+  }
+
   login() {
     return this.signerService.ensureAuth
   }

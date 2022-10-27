@@ -28,13 +28,38 @@ export class InteractWithContractsComponent {
 
   formFinishedLoadingSub = new BehaviorSubject(false)
 
-  currentTab = new BehaviorSubject<TabType>("utilities")
+  currentTab = new BehaviorSubject<TabType>("contracts")
   currentTab$ = this.currentTab.asObservable()
 
   contractTokenBalanceForm = new FormGroup({})
   formFinishedLoadingSubContractTokenBalance = new BehaviorSubject(false)
 
   deployedContract$ = this.deploymentService.getContractDeploymentRequest(this.contractDeploymentID)
+
+  getERC20FunctionManifest: FunctionManifest = {
+    name: 'Get ERC20 Balance of this contract',
+    description: 'Like addresses, contracts can be owners of ERC20 tokens. Use this utility function to find ERC20 balance of this smart contract',
+    inputs: [
+      { 
+        name: 'Token address', 
+        description: 'The address of the ERC20 token of which you are checking the balance',
+        recommended_types: ['traits.erc20'],
+        solidity_name: 'balance',
+        solidity_type: 'address'
+      }
+    ],
+    outputs: [
+      {
+        name: 'Token balance',
+        description: 'Balance of ERC20 tokens',
+        recommended_types: [],
+        solidity_name: '',
+        solidity_type: 'uint256'
+      }
+    ],
+    read_only: true,
+    solidity_name: 'balance'
+  }
   
   contract$ = this.deployedContract$.pipe(
     switchMap(res => {
@@ -65,6 +90,16 @@ export class InteractWithContractsComponent {
 
   changeTab(type: TabType) {
     this.currentTab.next(type)
+  }
+
+  checkContractERC20Balance(contractID: string, tokenAddress: string) {
+    this.deploymentService.callReadOnlyFunction(contractID, {
+      caller_address: this.preferenceQuery.getValue().address,
+      function_name: '',
+      function_params: [],
+      output_params: [],
+      block_number: 12
+    })
   }
 
   resultsBufferSub: BehaviorSubject<Map<string, string[]>> = new BehaviorSubject(new Map<string, string[]>())
