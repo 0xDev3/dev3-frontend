@@ -28,7 +28,11 @@ export class InteractWithContractsComponent {
 
   formFinishedLoadingSub = new BehaviorSubject(false)
 
- 
+  currentTab = new BehaviorSubject<TabType>("utilities")
+  currentTab$ = this.currentTab.asObservable()
+
+  contractTokenBalanceForm = new FormGroup({})
+  formFinishedLoadingSubContractTokenBalance = new BehaviorSubject(false)
 
   deployedContract$ = this.deploymentService.getContractDeploymentRequest(this.contractDeploymentID)
   
@@ -59,6 +63,10 @@ export class InteractWithContractsComponent {
     tap(_ => this.formFinishedLoadingSub.next(true))
   )
 
+  changeTab(type: TabType) {
+    this.currentTab.next(type)
+  }
+
   resultsBufferSub: BehaviorSubject<Map<string, string[]>> = new BehaviorSubject(new Map<string, string[]>())
   resultsBuffer$ = this.resultsBufferSub.asObservable()
 
@@ -87,3 +95,5 @@ export class InteractWithContractsComponent {
   }
 
 }
+
+type TabType = "contracts" | "utilities"

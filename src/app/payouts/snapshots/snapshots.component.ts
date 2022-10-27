@@ -19,6 +19,7 @@ export class SnapshotsComponent {
   snapshotStatus = SnapshotStatus
 
   constructor(private payoutService: PayoutService) {
+
     this.snapshots$ = withStatus(
       defer(() =>
         this.payoutService

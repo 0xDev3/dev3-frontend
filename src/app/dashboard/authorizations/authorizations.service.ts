@@ -38,7 +38,7 @@ export class AuthorizationsService {
 
   fetchWalletAuthRequest(id: string) {
     return this.http
-        .get<WalletAuthData>(`${this.path}/${id}`, undefined, false, true, true)
+        .get<WalletAuthData>(`${this.path}/${id}`, undefined, true, false, true)
   }
 
   generateMessagePayload() {
@@ -50,7 +50,7 @@ export class AuthorizationsService {
     return this.http.put(`${this.path}/${requestID}`, {
       wallet_address: address,
       signed_message: signedMessage
-    }, false, true)
+    }, true, true)
   }
 
 }
