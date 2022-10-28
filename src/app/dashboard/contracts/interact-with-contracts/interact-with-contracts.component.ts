@@ -37,8 +37,8 @@ export class InteractWithContractsComponent {
   deployedContract$ = this.deploymentService.getContractDeploymentRequest(this.contractDeploymentID)
 
   getERC20FunctionManifest: FunctionManifest = {
-    name: 'Get ERC20 Balance of this contract',
-    description: 'Like addresses, contracts can be owners of ERC20 tokens. Use this utility function to find ERC20 balance of this smart contract',
+    name: 'Get ERC20 balance of this contract',
+    description: 'Contracts can be owners of ERC20 tokens. Use this utility function to find ERC20 balance of this smart contract',
     inputs: [
       { 
         name: 'Token address', 

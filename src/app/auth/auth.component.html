@@ -29,7 +29,7 @@
            focus:ring-indigo-200 focus:ring-opacity-50 mt-2" placeholder="john.smith@email.com" inputmode="email"
           autocomplete="username email" formControlName="email" />
 
-        <button app-action-button class="app-button h-fullx !text-xs !rounded-md mt-2" text="Log In / Sign Up ->" loadingText="Logging in"
+        <button app-action-button class="app-button !rounded-full h-fullx !text-xs mt-2" text="Log In / Sign Up ->" loadingText="Logging in"
           [onClick]="connectMagic().bind(this)" [disabled]="!emailForm.valid"></button>
 
       </div>

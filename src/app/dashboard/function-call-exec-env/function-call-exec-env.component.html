@@ -1,4 +1,4 @@
-<div *ngIf="issuer$ | async as issuer" class="w-full h-full flex flex-col justify-center items-center text-gray-700">
+<div *ngIf="issuer$ | async as issuer" class="w-full h-full mt-8 flex flex-col justify-center items-center text-gray-700">
     <div *ngIf="functionRequest$ | async as request"
         class="bg-white flex flex-col rounded-2xl shadow-sm max-w-lg w-full px-6 pt-6 pb-4">
         <img class="mb-3 h-14 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
@@ -97,18 +97,36 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
 
-                <div class="ml-2">See advanced details</div>
+                <div *ngIf="seeMoreDetails$ | async; else hideDetails" class="ml-2">Hide advanced details</div>
+                <ng-template #hideDetails>
+                    <div class="ml-2">See advanced details</div>
+                </ng-template>
             </button>
 
             <ng-container *ngIf="seeMoreDetails$ | async">
-                <div class="w-full flex flex-row justify-center mt-2 items-center text-xs font-medium">
+
+                <div class="w-full flex flex-row justify-center mt-2 mb-2 items-center text-xs font-medium">
+                    <hr class="w-3/12 border-gray-100">
+                    <span class="mx-6 uppercase text-gray-500 font-semibold text-center">Transaction speed</span>
+                    <hr class="w-3/12 border-gray-100">
+                </div>
+                <div class="text-center text-gray-500 text-xs">Faster transactions are more expensive.</div>
+
+                <div class="w-full flex flex-row pb-2 justify-between text-xs gap-2 mt-3 text-center uppercase font-semibold">
+                    <div class="p-2 rounded-full border w-1/4 cursor-pointer hover:bg-violet-50">Slow</div>
+                    <div class="p-2 rounded-full border w-1/4 cursor-pointer !bg-violet-700 text-white hover:bg-violet-50">Normal</div>
+                    <div class="p-2 rounded-full border w-1/4 cursor-pointer hover:bg-violet-50">Fast</div>
+                    <div class="p-2 rounded-full border w-1/4 cursor-pointer hover:bg-violet-50">Instant</div>
+                </div>
+
+                <div class="w-full flex flex-row justify-center mt-4 items-center text-xs font-medium">
                     <hr class="w-3/12 border-gray-100">
                     <span class="mx-6 uppercase text-gray-500 font-semibold text-center">Contract</span>
                     <hr class="w-3/12 border-gray-100">
                 </div>
     
                 <div class="flex mb-4 flex-row justify-start items-start mt-5
-                rounded-lg text-sm font-medium text-gray-700 mb-2">
+                rounded-lg text-sm font-medium text-gray-700">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="w-6 h-6 text-violet-700">
@@ -118,11 +136,11 @@
                     </div>
     
                     <div class="text-gray-700 text-sm ml-4" *ngIf="manifest$ | async as contract; else detailsLoading">
-                        <div class="font-semibold mb-1">{{contract.name}}
-                            <span class="font-light text-gray-500">
+                        <div class="font-semibold mb-1">{{request.contract_address}}
+                            <!-- <span class="font-light text-gray-500">
                                 ({{request.contract_address | addrShort}})
                                 <app-explorer-link [value]="request.contract_address"></app-explorer-link>
-                            </span>
+                            </span> -->
                         </div>
                         <div class="font-light">{{contract.description}}</div>
                     </div>
@@ -161,7 +179,7 @@
 
         </div>
     </div>
-    <div class="max-w-md text-xs mt-4 text-gray-500 text-center">
+    <div class="max-w-md text-xs mt-4 mb-12 text-gray-500 text-center">
         <div>This is a state changing request. Make sure you trust {{issuer.infoData.name}} before proceeding with this
             action.</div>
     </div>

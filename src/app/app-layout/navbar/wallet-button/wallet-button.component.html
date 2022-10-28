@@ -7,8 +7,7 @@
         <span *ngIf="nativeToken$ | async as nativeToken" class="ml-1 font-bold">
           {{
           balance
-          | formatUnit: "token":18
-          | currencyDefault: "token":"real":nativeToken.symbol
+      
           }}
         </span>
         <span [routerLink]="'/deposit' | issuerPath" class="ml-2 hover:text-white font-semibold uppercase text-xs rounded-sm px-2
@@ -41,14 +40,14 @@
     </div>
   </span>
 
-  <button *ngIf="isLoggedIn$ | async; else notLoggedIn" (click)="logout()" class="h-full mx-6 text-xs uppercase font-semibold 
+  <button *ngIf="isLoggedIn$ | async" (click)="logout()" class="h-full mx-6 text-xs uppercase font-semibold 
   px-8 py-2 bg-violet-100 border-violet-200 border text-gray-700 rounded-full 
   hover:bg-violet-700 hover:text-white transition-all">Log out</button>
 
-  <ng-template #notLoggedIn>
+  <!-- <ng-template #notLoggedIn>
     <button app-action-button [onClick]="login.bind(this)" text="Log In" class="h-full mx-6 text-xs uppercase font-semibold 
   px-8 py-2 bg-violet-100 border-violet-200 border text-gray-700 rounded-full 
   hover:bg-violet-700 hover:text-white transition-all"></button>
-  </ng-template>
+  </ng-template> -->
 
 </div>

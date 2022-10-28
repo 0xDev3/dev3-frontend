@@ -54,37 +54,8 @@
         </div>
 
 
-        <div *ngIf="currentTab$ | async as currentTab" class="w-full mt-4 border-x
-        rounded-t-lg border-t flex flex-row justify-start">
-            <div (click)="changeTab('contracts')" 
-            [class.!border-violet-700]="currentTab === 'contracts'"
-            [class.!bg-violet-50]="currentTab === 'contracts'"
-            [class.!text-violet-700]="currentTab === 'contracts'"
-            class="py-3 text-sm uppercase font-semibold
-            text-gray-500 border-gray-300 p-2 border-b-[3px] hover:border-violet-200
-            hover:bg-violet-50 hover:text-violet-700 flex flex-row gap-2 items-center
-             px-8 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
-                class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                </svg>
-                <div>Execute functions</div>              
-            </div>
-            <div (click)="changeTab('utilities')"
-            [class.!border-violet-700]="currentTab === 'utilities'" 
-            [class.!text-violet-700]="currentTab === 'utilities'"
-            [class.!bg-violet-50]="currentTab === 'utilities'"
-            class="text-sm uppercase py-3 font-semibold text-gray-500 border-gray-300 border-b-[3px]
-            hover:border-violet-200 flex flex-row items-center gap-2
-            hover:bg-violet-50 hover:text-violet-700  px-8 cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
-              </svg>
-              <div>Check contract token balances</div>
-            </div>
-        </div>
 
-        <div class="p-4 border border-gray-200 rounded-b-lg rounded-tr-lg" *ngIf="(currentTab$ | async) === 'contracts'">
+        <div class="p-4 border mt-4 border-gray-100 rounded-b-lg" *ngIf="(currentTab$ | async) === 'contracts'">
             <div class="w-full flex flex-col justify-end pr-2 mb-2 bg-gray-50 rounded-lg p-4">
                 <div class="flex flex-row items-center text-violet-700">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -107,7 +78,15 @@
                     </div>
                 </div>
             </div>
-    
+
+            <div class="mb-4">
+                <div class="mb-2 ml-1 mt-4 font-semibold uppercase text-xs text-violet-700">Helper functions</div>
+                <app-contract-function-interaction-item
+                [functionManifest]="getERC20FunctionManifest"
+                [contractID]="'abd'"></app-contract-function-interaction-item>
+            </div>
+            
+            <div class="mb-2 ml-1 mt-4 font-semibold uppercase text-xs text-violet-700">Contract functions</div>
             <div *ngFor="let function of contract.functions" class="mb-1">
                 <app-contract-function-interaction-item 
                     [functionManifest]="function"
@@ -115,7 +94,7 @@
             </div>
         </div>
 
-        <div class="p-4 border border-gray-200 rounded-b-lg" *ngIf="(currentTab$ | async) === 'utilities'">
+        <div class="p-4 border border-gray-100 rounded-b-lg" *ngIf="(currentTab$ | async) === 'utilities'">
             <div class="w-full flex flex-col gap-2">
                <app-contract-function-interaction-item
                 [functionManifest]="getERC20FunctionManifest"
