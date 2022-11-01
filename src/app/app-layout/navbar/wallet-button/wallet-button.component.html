@@ -6,8 +6,7 @@
         <span class="font-medium text-gray-700 text-xs uppercase">Gas available:</span>
         <span *ngIf="nativeToken$ | async as nativeToken" class="ml-1 font-bold">
           {{
-          balance
-      
+          balance | formatUnit:'token':18
           }}
         </span>
         <span [routerLink]="'/deposit' | issuerPath" class="ml-2 hover:text-white font-semibold uppercase text-xs rounded-sm px-2
