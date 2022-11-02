@@ -15,7 +15,7 @@
         class="w-52 text-center border-b-4  flex flex-col justify-center text-sm uppercase cursor-pointer">
             Auth Requests</div>
         <div 
-        [class.bg-violet-700]="activeTab === tabType.New"
+        [class.!bg-violet-700]="activeTab === tabType.New"
         [class.text-white]="activeTab === tabType.New"
         (click)="changeTab(tabType.New)"
         class="text-center m-2 py-2 text-sm border-gray-300 bg-gray-100 rounded-full border px-4

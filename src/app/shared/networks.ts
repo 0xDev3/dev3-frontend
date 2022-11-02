@@ -210,7 +210,7 @@ export const OasisEmeraldChain: Network = {
   chainID: ChainID.OASIS_EMERALD,
   name: 'Oasis Emerald',
   shortName: 'oasis_emerald',
-  iconURL: 'https://www.defined.fi/static/media/oasis.a137ca7a.png',
+  iconURL: 'https://avatars.githubusercontent.com/u/52803776?s=280&v=4',
   nativeCurrency: {
     name: 'ROSE',
     symbol: 'ROSE',

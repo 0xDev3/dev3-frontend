@@ -64,20 +64,6 @@ text-gray-700 uppercase border-b-4 border-transparent cursor-pointer">
         </div>
       </div>
 
-
-      <div (click)="changeTab(tabType.Import)" class=" opacity-40 flex flex-row justify-center 
-items-center pb-2 text-center text-sm font-semibold 
-text-gray-700 uppercase border-b-4 border-transparent">
-
-        <div [class.text-white]="false" [class.!bg-violet-700]="false"
-          class="w-40 py-2 mx-1 bg-gray-50  border border-gray-200 rounded-full flex flex-row items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-          </svg>
-                  
-          <div class="ml-2">Browse</div>
-        </div>
-      </div>
     </div>
 
 
@@ -98,22 +84,22 @@ text-gray-700 uppercase border-b-4 border-transparent">
         This is an open source library - check out the repository <a target="_blank" class=" font-semibold underline" href="https://github.com/0xDev3/dev3-contracts">here</a>
       </div>
 
-      <div class="flex flex-row border-gray-200 border-x border-b">
+      <div class="flex flex-row border-violet-700 border-x border-t border-b">
         <div class="w-10/12 flex flex-row">
-          <div class="w-1/12 border-r flex flex-row items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
-            class="w-4 h-4">
+          <div class="w-1/12 border-r flex bg-violet-700 text-white flex-row items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" 
+            class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
             
           </div>
           <form class="w-11/12 flex flex-row">
             <input (input)="onSearchChange($event.target)"
-              class="w-full border-none py-2 text-sm px-4" placeholder="Search contracts" type="text">
+              class="w-full border-none py-3 text-sm px-4" placeholder="Search contracts" type="text">
           </form>
         </div>
-        <div class="w-2/12 flex flex-row items-center justify-center border-l">         
-          <div class="mr-2 ml-2 text-sm font-medium uppercase text-gray-500">Only audited</div>
+        <div class="w-2/12 flex flex-row items-center justify-center border-violet-700 border-l">         
+          <div class="mr-2 ml-2 text-sm font-medium text-gray-500">Only audited</div>
           <input (change)="onlyAuditedCheckChange($event.target)" type="checkbox" name="" class="w-4 h-4 text-violet-700 bg-gray-100 rounded border-gray-300" id="">
         </div>
       </div>
