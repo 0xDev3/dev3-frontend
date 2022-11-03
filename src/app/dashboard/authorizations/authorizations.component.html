@@ -48,7 +48,7 @@
                
                 </div>
                     <div class="w-5/12 text-center text-xs font-semibold flex flex-row justify-center items-center">
-                        <div>{{authRequest.wallet_address}}</div>
+                        <div>{{authRequest.wallet_address ?? 'Waiting for user to authorize themselves'}}</div>
                         <div *ngIf="authRequest.wallet_address" class="ml-2">
                             <app-value-copy [value]="authRequest.wallet_address"></app-value-copy>
                         </div>

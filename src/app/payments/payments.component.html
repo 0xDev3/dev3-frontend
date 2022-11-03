@@ -6,7 +6,7 @@
                 class="w-48 border-b-4 flex flex-col justify-end text-sm uppercase text-gray-700 font-semibold text-center
                  pb-4 cursor-pointer">
                 Payment Requests</div>
-            <div (click)="changeTab(TabType.CreateNew)" [class.bg-violet-700]="activeTab === TabType.CreateNew"
+            <div (click)="changeTab(TabType.CreateNew)" [class.!bg-violet-700]="activeTab === TabType.CreateNew"
                 [class.!text-white]="activeTab === TabType.CreateNew"
                 class="rounded-full px-4 bg-gray-100 border border-gray-200 mb-2 text-sm text-gray-700 flex flex-row
                 justify-center items-center uppercase font-semibold text-center py-2

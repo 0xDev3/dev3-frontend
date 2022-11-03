@@ -239,7 +239,7 @@ text-gray-700 uppercase border-b-4 border-transparent cursor-pointer">
             <div class="w-5/12 text-sm pr-4">
               {{ contract.contract_id }}
             </div>
-            <div class="w-2/12 text-sm">
+            <div class="w-3/12 text-sm">
               {{ contract.contract_address | addrShort}}
               <app-explorer-link class="ml-2" [value]="contract.contract_address"></app-explorer-link>
               <app-value-copy class="ml-2" [value]="contract.contract_address"></app-value-copy>
