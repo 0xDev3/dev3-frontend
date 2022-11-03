@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms'
 import { boolean } from 'hardhat/internal/core/params/argumentTypes'
 import { BehaviorSubject, combineLatest, delay, from, map, Observable, switchMap, tap } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
@@ -15,6 +15,8 @@ import { ContractDeploymentService, FunctionArgumentType, ReadOnlyFunctionRespon
 })
 export class ContractFunctionInteractionItemComponent implements OnInit {
 
+  BEFORE_MSG_IDENTIFIER = "utilities__beforeMessage"
+
   @Input() functionManifest!: FunctionManifest
   @Input() contractID!: string
   
@@ -27,6 +29,9 @@ export class ContractFunctionInteractionItemComponent implements OnInit {
   form = new FormGroup({})
 
   formFinishedSub = new BehaviorSubject(false)
+
+  beforeTxToggled = new BehaviorSubject(false)
+  afterTxToggled = new BehaviorSubject(false)
 
   resultSub = new BehaviorSubject<ReadOnlyFunctionResponse | null>(null)
   result$ = this.resultSub.asObservable()
@@ -65,7 +70,20 @@ export class ContractFunctionInteractionItemComponent implements OnInit {
     this.functionManifest.inputs.forEach(input => {
       this.form.addControl(input.solidity_name, new FormControl('', [Validators.required]))
     })
+    this.form.addControl(this.BEFORE_MSG_IDENTIFIER, new FormControl('', []))
     this.formFinishedSub.next(true)
+  }
+
+  toggleBeforeTx() {
+    this.beforeTxToggled.next(!this.beforeTxToggled.value)
+  }
+
+  toggleAfterTx() {
+    this.afterTxToggled.next(!this.afterTxToggled.value)
+  }
+
+  getBeforeMessageFormControl() : FormControl {
+    return this.form.get(this.BEFORE_MSG_IDENTIFIER)! as FormControl
   }
 
   toggle() {
@@ -115,13 +133,20 @@ export class ContractFunctionInteractionItemComponent implements OnInit {
 
   executeWriteFunction() {
     return () => {
+      let screenConfig: { before_action_message: string, after_action_message: string } | undefined = undefined
+      if(this.getBeforeMessageFormControl().value.length > 0) {
+        screenConfig = {
+          before_action_message: this.getBeforeMessageFormControl().value,
+          after_action_message: ""
+        }
+      }
       return this.deploymentService.createWriteFunctionCallRequest(this.contractID, {
         eth_amount: 0,
         function_name: this.functionManifest.solidity_name,
         function_params: this.functionManifest.inputs.map(input => { 
           return { type: input.solidity_type as FunctionArgumentType, value: this.form.get(input.solidity_name)?.value } 
         })
-      }).pipe(tap(result => this.writeResultSub.next(result.redirect_url) ))
+      }, screenConfig).pipe(tap(result => this.writeResultSub.next(result.redirect_url) ))
     }
   }
 

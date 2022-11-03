@@ -15,6 +15,7 @@ import { SessionQuery } from '../session/state/session.query'
 import { easeInOutAnimation } from '../shared/utils/animations'
 import { SignerService } from '../shared/services/signer.service'
 import { AppLayoutStore } from '../app-layout/state/app-layout.store'
+import { TailwindService } from '../shared/services/tailwind.service'
 
 @Component({
   selector: 'app-home',
@@ -102,6 +103,7 @@ export class HomeComponent implements OnInit {
     )
 
   isLoggedIn$ = this.sessionQuery.isLoggedIn$
+  screenSize$ = this.tailwindService
 
   constructor(
     private issuerService: IssuerService,
@@ -111,7 +113,8 @@ export class HomeComponent implements OnInit {
     private preferenceService: PreferenceService,
     private queryService: QueryService,
     private signerService: SignerService,
-    private appLayoutStore: AppLayoutStore
+    private appLayoutStore: AppLayoutStore,
+    private tailwindService: TailwindService
   ) {}
 
 

@@ -1,27 +1,6 @@
-<div class="ml-4 mt-2 flex flex-col bg-white shadow-sm rounded-t-lg px-8 py-4">
-    <div class="mt-2 text-sm text-gray-700">
-        <div class="flex flex-row pt-2 gap-4">
-            <div class="w-1/2 pr-2 border-r">
-                <app-info-snippet
-                [hasBorderAndBackground]="false"
-                [content]="{ title: 'Airdrops / Distribution of dividends', sections: [
-                    'Airdrops or dividend distributions are a way for you to' + 
-                    ' reward holders of any ERC-20 token by giving them new tokens in proportion to their current holdings',
-                ]}"></app-info-snippet>
-            </div>
-            <div class="w-1/2 pl-2">
-                <app-info-snippet
-                [hasBorderAndBackground]="false"
-                [content]="{ title: 'Token holder lists', sections: [
-                    'If you want to know who were the holders of a certain token at a certain point in time, snapshots are the tool for you.',
-                    'Start creating a new snapshot and choose the token you want to inspect and choose the date and time you want to check'
-                ]}"></app-info-snippet>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="ml-4 mt-2 flex flex-col bg-white shadow-sm rounded-t-lg">
+
+<div class="ml-4 mt-1 flex flex-col bg-white shadow-sm rounded-t-lg">
     <div class="mx-8">
         <div class="flex flex-row justify-between w-full mt-8">
             <div (click)="changeTab(TabType.ManageExisting)" 

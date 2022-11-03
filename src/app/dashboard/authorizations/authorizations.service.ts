@@ -75,4 +75,5 @@ export interface WalletAuthData {
     message_to_sign: string
     signed_message: string
     screen_config: ScreenConfig
+    created_at: string
 }

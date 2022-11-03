@@ -138,10 +138,11 @@ export class ContractDeploymentService {
         }, true, true, true)
     }
 
-    createWriteFunctionCallRequest(deployedContractID: string, functionCallData: FunctionCallData) {
+    createWriteFunctionCallRequest(deployedContractID: string, functionCallData: FunctionCallData, screenConfig?: { before_action_message: string, after_action_message: string }) {
         return this.http.post<FunctionCallRequestResponse>(`${this.path}/function-call`, {
             ...functionCallData,
-            deployed_contract_id: deployedContractID
+            deployed_contract_id: deployedContractID,
+            screen_config: screenConfig
         }, false, true, true)
     }
 
@@ -183,7 +184,11 @@ export interface FunctionCallData {
         type: FunctionArgumentType,
         value: string
     }[],
-    eth_amount: number
+    eth_amount: number,
+    screen_config?: {
+        before_action_message: string,
+        after_action_message: string,
+    }
 }
 
 export interface FunctionCallRequestResponse {

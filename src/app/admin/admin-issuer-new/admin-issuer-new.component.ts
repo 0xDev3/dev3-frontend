@@ -62,7 +62,7 @@ export class AdminIssuerNewComponent {
     this.createForm = this.fb.group({
       name: ['', Validators.required],
       slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9\-_]+$/)]],
-      logo: [undefined, Validators.required],
+      logo: [undefined],
       stablecoinAddress: [
         this.preferenceQuery.network.tokenizerConfig.defaultStableCoin,
         [Validators.required, Validators.pattern(/^0x[a-fA-F0-9]{40}$/)],
@@ -108,7 +108,7 @@ export class AdminIssuerNewComponent {
     return this.issuerService
       .uploadInfo({
         name: this.createForm.value.name,
-        logo: this.createForm.value.logo?.[0],
+        logo: undefined,
         magicLinkApiKey: '',
         rampApiKey: '',
         crispWebsiteId: '',

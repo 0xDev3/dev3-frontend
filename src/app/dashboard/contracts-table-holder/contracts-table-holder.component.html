@@ -1,4 +1,4 @@
-<div [@inOutAnimation] class="w-full bg-white shadow-sm p-8 mx-4 my-2 rounded-lg flex flex-col">
+<div [@inOutAnimation] class=" bg-white shadow-sm p-8 ml-4 mt-1 rounded-lg flex flex-col">
   <div class="flex flex-row justify-between">
 
     <div class="flex flex-row justify-start items-end">
@@ -84,9 +84,9 @@ text-gray-700 uppercase border-b-4 border-transparent cursor-pointer">
         This is an open source library - check out the repository <a target="_blank" class=" font-semibold underline" href="https://github.com/0xDev3/dev3-contracts">here</a>
       </div>
 
-      <div class="flex flex-row border-violet-700 border-x border-t border-b">
+      <div class="flex flex-row border-violet-500 border-x border-t border-b">
         <div class="w-10/12 flex flex-row">
-          <div class="w-1/12 border-r flex bg-violet-700 text-white flex-row items-center justify-center">
+          <div class="w-1/12 border-r flex bg-violet-500 text-white flex-row items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" 
             class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -98,7 +98,7 @@ text-gray-700 uppercase border-b-4 border-transparent cursor-pointer">
               class="w-full border-none py-3 text-sm px-4" placeholder="Search contracts" type="text">
           </form>
         </div>
-        <div class="w-2/12 flex flex-row items-center justify-center border-violet-700 border-l">         
+        <div class="w-2/12 flex flex-row items-center justify-center border-violet-500 border-l">         
           <div class="mr-2 ml-2 text-sm font-medium text-gray-500">Only audited</div>
           <input (change)="onlyAuditedCheckChange($event.target)" type="checkbox" name="" class="w-4 h-4 text-violet-700 bg-gray-100 rounded border-gray-300" id="">
         </div>
@@ -167,8 +167,8 @@ text-gray-700 uppercase border-b-4 border-transparent cursor-pointer">
         sections: [ 'This tab contains pending contract deployment transactions.',
         'You can execute these transactions yourself or share them with other people!' ]
       }" [actionLinkButton]="{
-          title: 'Read the docs',
-          href: 'https://google.com'
+          title: '📖 Read the docs',
+          href: 'https://docs.dev3.sh'
       }"></app-info-snippet>
   <div class=" text-violet-700 border-x border-b text-xs p-4 flex flex-row bg-violet-50">
     <div class="w-3/12 uppercase font-semibold">Alias</div>

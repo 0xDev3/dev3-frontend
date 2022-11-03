@@ -274,7 +274,7 @@ interface CreateIssuerData {
 
 interface IssuerUploadInfoData {
   name: string
-  logo: File
+  logo?: File
   rampApiKey: string
   magicLinkApiKey: string
   crispWebsiteId: string

@@ -1,10 +1,10 @@
 <div
-  class="bg-transparent flex max-w-7xl w-screen flex-col transition-all lg:flex-row lg:justify-center"
+  class="bg-transparent flex max-w-[1400px] pl-4 w-screen flex-col transition-all lg:flex-row lg:justify-center"
   [class.min-h-screen]="isDropdownOpen$ | async"
 >
   <!-- Navbar -->
   <div
-    class="w-full h-16 px-4 flex justify-between sticky max-w-7xl lg:h-20"
+    class="w-full h-16 px-4 flex justify-between sticky max-w-[1400px] lg:h-20"
     [class]="(isDropdownOpen$ | async) ? 'fixed' : ''"
   >
     <ng-container *ngIf="(isIssuerAvailable$ | async) === true">
