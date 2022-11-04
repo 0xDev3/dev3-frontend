@@ -131,7 +131,7 @@
                 [hidden]="(isWaitingForTx$ | async) === true">
                 <button app-action-button *ngIf="(deploymentRequest.status === 'PENDING')"
                     class="app-button uppercase w-full" [onClick]="deployContract(deploymentRequest).bind(this)"
-                    text="Deploy"></button>
+                    text="🚀 Deploy"></button>
             </div>
 
             <ng-template #loginButton>

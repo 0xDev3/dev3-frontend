@@ -176,6 +176,7 @@ export interface ReadOnlyFunctionResponse {
     output_params: any,
     timestamp: string,
     return_values: any[]
+    screen_config: ScreenConfig
 }
 
 export interface FunctionCallData {
@@ -217,6 +218,7 @@ export interface FunctionCallRequestResponse {
         block_confirmations: string,
         timestamp: string
     }
+    screen_config?: ScreenConfig
 
 }
 

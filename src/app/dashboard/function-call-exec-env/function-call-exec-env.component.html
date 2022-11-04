@@ -3,25 +3,76 @@
         class="bg-white flex flex-col rounded-2xl shadow-sm max-w-lg w-full px-6 pt-6 pb-4">
         <img class="mb-3 h-14 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
         <div class="leading-6 text-sm font-medium text-center">
+
+            
+
             <span *ngIf="request.status === 'PENDING'" class="text-violet-700">{{issuer.infoData.name}}</span>
+
+            
+
             <div *ngIf="request.status === 'PENDING'" class="text-gray-500 font-normal">
                 is requesting you to execute the following transaction
             </div>
+
+            <div *ngIf="(request.status === 'PENDING') && (request.screen_config?.before_action_message)">
+                <div class="w-full my-1 rounded-lg bg-sky-50 p-4 text-sm flex flex-col">
+                    <span class="text-xs text-sky-700 text-center font-semibold mb-1">
+                        <span class="flex flex-row items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                              
+                            Before confirming, read this message</span>
+                    </span>
+                    <div class="text-center font-light text-sm mt-1">
+                        {{request.screen_config?.before_action_message}}
+                    </div>
+                </div>
+            </div>
+
+            
+
             <div *ngIf="request.status === 'SUCCESS'" class="text-green-700 bg-green-50 rounded-lg my-2 
-            py-2 flex flex-row justify-center items-center font-medium uppercase">
+            py-3 flex flex-row justify-center items-center font-medium uppercase text-xs">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div class="ml-2">
-                    Success
+                    Transaction successfully executed
                 </div>
 
             </div>
-            <div *ngIf="request.status === 'SUCCESS'" class="text-gray-500 font-normal">
+            <!-- <div *ngIf="request.status === 'SUCCESS'" class="text-gray-500 font-normal">
                 You have successfully executed a transaction as requested by
                 <div class="text-violet-700 font-semibold">{{issuer.infoData.name}}</div>
+            </div> -->
+            <div *ngIf="(request.status === 'SUCCESS') && (request.screen_config?.after_action_message)">
+                <div class="w-full my-1 rounded-lg bg-sky-50 p-4 text-sm flex flex-col">
+                    <span class="text-xs text-sky-700 text-center font-semibold mb-1">
+                        <span class="flex flex-row items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                              
+                            Thank you for executing the transaction</span>
+                    </span>
+                    <div class="text-center font-light text-sm mt-1">
+                        {{request.screen_config?.before_action_message}}
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="request.status === 'SUCCESS'">
+                <button (click)="closeTab()" class="w-full mt-4 font-semibold rounded-full flex flex-row items-center justify-center
+                 py-2 text-xs uppercase bg-violet-700 hover:bg-violet-900 transition-all text-white text-center">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+                  </svg>
+                  Go back to {{issuer.infoData.name}}
+                </button>
             </div>
             <ng-template #contractSpinner>
                 <app-spinner></app-spinner>
@@ -30,66 +81,66 @@
         <div class="mt-4 flex flex-col">
 
             <!-- DISPLAY INFO ITEMS -->
-
-            <div class="w-full my-2 flex flex-row justify-center text-xs font-semibold uppercase text-gray-500"
-                *ngIf="request.status === 'SUCCESS'">Called function</div>
-
-            <div class="w-full flex flex-row items-start" *ngIf="functionManifest$ | async as functionManifest">
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-6 h-6 text-violet-700">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-                    </svg>
-                </div>
-
-                <div class="flex flex-col ml-4 text-sm">
-                    <div class="font-semibold">{{functionManifest[0].name}}</div>
-                    <div class="font-light">{{functionManifest[0].description}}</div>
-                </div>
-            </div>
-
-            <div *ngIf="request.function_params.length > 0">
-                <div class="w-full flex flex-row justify-center mt-4 items-center text-xs font-medium">
-                    <hr class="w-3/12 border-gray-100">
-                    <span class="mx-6 uppercase text-gray-500 font-semibold">with parameters</span>
-                    <hr class="w-3/12 border-gray-100">
-                </div>
-
-                <div *ngIf="functionManifest$ | async as manifest; else detailsLoading"
-                    class="w-full flex flex-row mt-4">
-                    <div class="mr-4">
+            <ng-container *ngIf="request.status === 'PENDING'">
+                <div class="w-full flex flex-row items-start" *ngIf="functionManifest$ | async as functionManifest">
+                    <div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="w-6 h-6 text-violet-700">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
                         </svg>
                     </div>
-                    <div class="flex flex-col">
-                        <div class="flex flex-col w-full text-sm mb-4"
-                            *ngFor="let param of request.function_params; let i = index">
-                            <div class="flex flex-row">
-                                <div class="flex-col">
-                                    <div class="font-semibold mr-1">{{manifest[0].inputs[i].name}}:</div>
-                                </div>
-                                <div class="overflow-x-auto">
-                                    <div *ngIf="param.type === 'address'; else regularParam">
-                                        {{param.value | addrShort}}
+    
+                    <div class="flex flex-col ml-4 text-sm">
+                        <div class="font-semibold">{{functionManifest[0].name}}</div>
+                        <div class="font-light">{{functionManifest[0].description}}</div>
+                    </div>
+                </div>
+    
+                <div *ngIf="request.function_params.length > 0">
+                    <div class="w-full flex flex-row justify-center mt-4 items-center text-xs font-medium">
+                        <hr class="w-3/12 border-gray-100">
+                        <span class="mx-6 uppercase text-gray-500 font-semibold">with parameters</span>
+                        <hr class="w-3/12 border-gray-100">
+                    </div>
+    
+                    <div *ngIf="functionManifest$ | async as manifest; else detailsLoading"
+                        class="w-full flex flex-row mt-4">
+                        <div class="mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="w-6 h-6 text-violet-700">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex flex-col w-full text-sm mb-4"
+                                *ngFor="let param of request.function_params; let i = index">
+                                <div class="flex flex-row">
+                                    <div class="flex-col">
+                                        <div class="font-semibold mr-1">{{manifest[0].inputs[i].name}}:</div>
                                     </div>
-                                    <ng-template #regularParam>
-                                        {{param.value}}
-                                    </ng-template>
+                                    <div class="overflow-x-auto">
+                                        <div *ngIf="param.type === 'address'; else regularParam">
+                                            {{param.value | addrShort}}
+                                        </div>
+                                        <ng-template #regularParam>
+                                            {{param.value}}
+                                        </ng-template>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                {{manifest[0].inputs[i].description}}
+                                <div class="text-sm text-gray-500">
+                                    {{manifest[0].inputs[i].description}}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </ng-container>
 
-            <button (click)="toggleSeeMoreDetails()" class="mt-2 mb-2 border rounded-full py-1 w-full transition-all tracking-wide
+            
+
+            <button *ngIf="request.status === 'PENDING'" (click)="toggleSeeMoreDetails()" class="mt-2 mb-2 border rounded-full py-1 w-full transition-all tracking-wide
                     text-gray-500 text-xxs hover:text-violet-800 hover:font-bold font-medium
                     uppercase flex flex-row items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -102,6 +153,8 @@
                     <div class="ml-2">See advanced details</div>
                 </ng-template>
             </button>
+
+            
 
             <ng-container *ngIf="seeMoreDetails$ | async">
 
@@ -154,8 +207,9 @@
 
             <div *ngIf="request.status === 'PENDING'" [class.!hidden]="(isWaitingForTx$ | async)"
                 class="flex flex-col w-full">
-                <button app-action-button text="Execute now" class="bg-violet-700 text-white font-semibold 
-                    py-3 w-full rounded-full hover:bg-violet-800 shadow-md hover:shadow-xl uppercase"
+                <button app-action-button text="✅ &nbsp; Confirm Transaction" 
+                    class="bg-violet-700 text-white font-semibold disabled:shadow-none disabled:bg-gray-300
+                    py-2 w-full rounded-full hover:bg-violet-800 shadow-md hover:shadow-xl uppercase"
                     [onClick]="executeFunction(request).bind(this)"
                     *ngIf="isLoggedIn$ | async; else notLoggedIn"></button>
 

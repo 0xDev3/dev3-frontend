@@ -55,6 +55,10 @@ export class FunctionCallExecEnvComponent {
     return this.signerService.ensureAuth
   }
 
+  closeTab() {
+    window.close()
+  }
+
   executeFunction(functionDeploymentRequest: FunctionCallRequestResponse) {
     return () => {
       return this.deploymentService.executeFunction(functionDeploymentRequest).pipe(

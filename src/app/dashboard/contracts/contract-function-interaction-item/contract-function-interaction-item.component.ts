@@ -16,6 +16,7 @@ import { ContractDeploymentService, FunctionArgumentType, ReadOnlyFunctionRespon
 export class ContractFunctionInteractionItemComponent implements OnInit {
 
   BEFORE_MSG_IDENTIFIER = "utilities__beforeMessage"
+  AFTER_MSG_IDENTIFIER = "utilities__afterMessage"
 
   @Input() functionManifest!: FunctionManifest
   @Input() contractID!: string
@@ -71,9 +72,10 @@ export class ContractFunctionInteractionItemComponent implements OnInit {
       this.form.addControl(input.solidity_name, new FormControl('', [Validators.required]))
     })
     this.form.addControl(this.BEFORE_MSG_IDENTIFIER, new FormControl('', []))
+    this.form.addControl(this.AFTER_MSG_IDENTIFIER, new FormControl('', []))
     this.formFinishedSub.next(true)
   }
-
+ 
   toggleBeforeTx() {
     this.beforeTxToggled.next(!this.beforeTxToggled.value)
   }
@@ -84,6 +86,10 @@ export class ContractFunctionInteractionItemComponent implements OnInit {
 
   getBeforeMessageFormControl() : FormControl {
     return this.form.get(this.BEFORE_MSG_IDENTIFIER)! as FormControl
+  }
+
+  getAfterMessageFromControl() : FormControl {
+    return this.form.get(this.AFTER_MSG_IDENTIFIER)! as FormControl
   }
 
   toggle() {
@@ -134,10 +140,12 @@ export class ContractFunctionInteractionItemComponent implements OnInit {
   executeWriteFunction() {
     return () => {
       let screenConfig: { before_action_message: string, after_action_message: string } | undefined = undefined
-      if(this.getBeforeMessageFormControl().value.length > 0) {
+      let beforeMessage = this.getBeforeMessageFormControl().value
+      let afterMessage = this.getAfterMessageFromControl().value
+      if((beforeMessage.length > 0) || (afterMessage.length > 0)) {
         screenConfig = {
-          before_action_message: this.getBeforeMessageFormControl().value,
-          after_action_message: ""
+          before_action_message: beforeMessage,
+          after_action_message: afterMessage
         }
       }
       return this.deploymentService.createWriteFunctionCallRequest(this.contractID, {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Observable, of, switchMap, tap } from 'rxjs'
+import { Observable, of, switchMap, take, tap } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { PreferenceStore } from 'src/app/preference/state/preference.store'
 import { environment } from '../../../../environments/environment'
@@ -59,17 +59,21 @@ export class ProjectService {
       switchMap((project) =>
         this.http.get<ApiKeyModel>(`${this.path}/${project.id}/api-key`, undefined, false, false, true)
       ),
+      take(1),
       switchMap(apiKey => {
         if(apiKey === undefined) {
-          return this.getProjectIdByChainAndAddress().pipe(
-            switchMap(project => this.http.post<ApiKeyModel>(`${this.path}/${this.projectID}/api-key`, {}, false, true, false))
-          )
+          return this.http.post<ApiKeyModel>(`${this.path}/${this.projectID}/api-key`, {}, false, false, false)
         } else {
+          this.saveApiKey(apiKey.api_key)
           return of(apiKey)
         }
-      }),
-      tap(apiKey => this.saveApiKey(apiKey.api_key))
+      })
     )
+  }
+
+  createApiKeySet() {
+     return this.getProjectIdByChainAndAddress().pipe(
+      switchMap(project => this.http.post<ApiKeyModel>(`${this.path}/${this.projectID}/api-key`, {}, false, true, false)))
   }
 
   saveApiKey(value: string) {
