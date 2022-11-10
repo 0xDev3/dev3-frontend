@@ -108,10 +108,10 @@ export class SmartInputComponent implements OnInit {
   }
 
   interpretAddressType(recommendedTypes: string[]): InputType {
-    const isContractCaller = recommendedTypes.some(res => res.startsWith('traits.contractCaller'))
+    const isContractCaller = recommendedTypes.some(res => res.startsWith('common.contract-caller'))
     if(isContractCaller) { return "ADDRESS_BOOK" }
-    const isContract = recommendedTypes.some(res => res.startsWith('traits.'))
-    return isContract ? "CONTRACT" : "ADDRESS_BOOK"
+    if(recommendedTypes.length > 0) { return "CONTRACT" }
+    return "ADDRESS_BOOK"
   }
 
   interpretNumberType(recommendedTypes: string[]): InputType {

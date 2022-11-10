@@ -2,9 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ethers } from 'ethers'
 import { BehaviorSubject, forkJoin, map, mergeMap, Observable, switchMap } from 'rxjs'
-import { ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
+import { ContractManifestData, ContractManifestsData, ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
 import { ProjectService } from 'src/app/shared/services/backend/project.service'
-import { ContractDeploymentRequestResponse, ContractDeploymentService } from 'src/app/shared/services/blockchain/contract-deployment.service'
+import { ContractDeploymentRequestResponse, ContractDeploymentRequests, ContractDeploymentService } from 'src/app/shared/services/blockchain/contract-deployment.service'
 import { easeInOutAnimation } from 'src/app/shared/utils/animations'
 import { SmartInputDisplayService } from '../smart-input-display.service'
 
@@ -15,22 +15,21 @@ import { SmartInputDisplayService } from '../smart-input-display.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: easeInOutAnimation
 })
-export class ContractSmartInputComponent {
+export class ContractSmartInputComponent implements OnInit {
 
   customInputForm = new FormGroup({
     customAddressInput: new FormControl('', [Validators.required])
   })
   confirmButtonLoadingSub = new BehaviorSubject(false)
   confirmButtonLoading$ = this.confirmButtonLoadingSub.asObservable()
+  @Input() recommendedTypes: string[] = []
 
-  contracts$ = this.projectService.getProjectIdByChainAndAddress().pipe(
-    switchMap(result => this.contractsService.getContractDeploymentRequests(result.id, true)))
+  contracts$!: Observable<ContractDeploymentRequests>
+  
+  // this.projectService.getProjectIdByChainAndAddress().pipe(
+  //   switchMap(result => this.contractsService.getContractDeploymentRequests(result.id, true)))
 
-  manifests$ = this.contracts$.pipe(
-    map(contracts => contracts.requests),
-    mergeMap(request => {
-      const manifests = request.map(req => this.manifestService.getByID(req.contract_id))
-      return forkJoin(manifests)}))
+  manifests$!: Observable<ContractManifestData[]>
 
   openTabSub = new BehaviorSubject<Tab>("MY_CONTRACTS")
   openTab$ = this.openTabSub.asObservable()
@@ -40,7 +39,17 @@ export class ContractSmartInputComponent {
   constructor(private projectService: ProjectService, 
     private contractsService: ContractDeploymentService,
     private manifestService: ContractManifestService,
-    private smartInputDisplayService: SmartInputDisplayService) { }
+    ) { }
+
+
+  ngOnInit(): void {
+    this.contracts$ = this.contractsService.getContractDeploymentRequests(this.projectService.projectID, true, this.recommendedTypes)
+    this.manifests$ = this.contracts$.pipe(
+      map(contracts => contracts.requests),
+      mergeMap(request => {
+        const manifests = request.map(req => this.manifestService.getByID(req.contract_id))
+        return forkJoin(manifests)}))
+  }
 
   isOpenTab(tabName: Tab) {
     return tabName === this.openTabSub.getValue()

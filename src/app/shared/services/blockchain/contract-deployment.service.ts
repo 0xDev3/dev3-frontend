@@ -76,6 +76,22 @@ export class ContractDeploymentService {
         }, false, true, true)
     }
 
+    fetchRecommendations(contractUUID: string) {
+        return this.http.get<ManifestsData>(`${this.path}/import-smart-contract/${contractUUID}/suggested-interfaces`)
+    }
+
+    addInterfacesToContractImport(contractUUID: string, interfaces: string[]) {
+        console.log("INTERFACES: ", interfaces)
+        console.log("PROJECTID", contractUUID)
+        return this.http.patch<string>(`${this.path}/import-smart-contract/${contractUUID}/add-interfaces`, {
+            interfaces: interfaces
+        }, false, true, true)
+    }
+
+    deleteContractDeploymentRequestID(id: string) {
+        return this.http.delete(`${this.path}/deploy/${id}`)
+    }
+
     attachTxInfoToRequest(requestId: string, txHash: string, deployer: string, txType: "CONTRACT" | "TRANSACTION" = "CONTRACT") {
         
         const pathSection = txType == "CONTRACT" ? "deploy" : "function-call"
@@ -224,6 +240,10 @@ export interface FunctionCallRequestResponse {
 
 export interface ContractDeploymentRequests {
     requests: ContractDeploymentRequestResponse[]
+}
+
+export interface ManifestsData {
+    manifests: { id: string }[]
 }
 
 export interface ContractDeploymentRequestResponse {

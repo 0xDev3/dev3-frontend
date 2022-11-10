@@ -53,8 +53,6 @@ export class SnapshotNewComponent {
   constructor(
     private payoutService: PayoutService,
     private fb: FormBuilder,
-    private router: RouterService,
-    private route: ActivatedRoute,
     private blockTimePipe: BlockTimePipe,
     private erc20Service: Erc20Service,
     private sessionQuery: SessionQuery,
@@ -62,7 +60,7 @@ export class SnapshotNewComponent {
     private dialogService: DialogService
   ) {
     this.newSnapshotForm = this.fb.group({
-      assetAddress: ['', Validators.required, [this.assetValidator.bind(this)]],
+      assetAddress: ['', Validators.required],
       ignoredHolderAddresses: [[]],
       excludeMyself: [true],
       blockNumber: [
@@ -123,7 +121,7 @@ export class SnapshotNewComponent {
     return combineLatest([this.state$]).pipe(
       debounceTime(100),
       take(1),
-      map(([data]) => (!data.tokenData ? { noToken: true } : null)),
+      map(([data]) => (!data.tokenData ? { noToken: false } : null)),
       tap(() => ɵmarkDirty(this))
     )
   }
@@ -132,10 +130,10 @@ export class SnapshotNewComponent {
     _control: AbstractControl
   ): Observable<ValidationErrors | null> {
     return combineLatest([this.state$]).pipe(
-      debounceTime(100),
+      debounceTime(200),
       take(1),
       map(([data]) =>
-        !data.blockTime ? { incorrectBlockNumber: true } : null
+        !data.blockTime ? { incorrectBlockNumber: false } : null
       ),
       tap(() => ɵmarkDirty(this))
     )
@@ -165,7 +163,7 @@ export class SnapshotNewComponent {
       tap((blockNumber) => {
         this.newSnapshotForm
           .get('blockNumber')
-          ?.setValue((blockNumber - 1).toString())
+          ?.setValue((blockNumber).toString())
       }),
       tap(() => ɵmarkDirty(this))
     )

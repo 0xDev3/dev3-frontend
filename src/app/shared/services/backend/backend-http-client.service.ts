@@ -99,6 +99,25 @@ export class BackendHttpClient {
     )
   }
 
+  patch<T>(
+    path: string,
+    body: any,
+    publicRoute = false,
+    shouldHandleErrors = true,
+    apiProtectedRoute = false
+  ): Observable<T> {
+    return (publicRoute ? of(undefined) : this.ensureAuth).pipe(
+      switchMap(() =>
+        this.http.patch<T>(
+          path,
+          body,
+          this.authHttpOptions(publicRoute, apiProtectedRoute)
+        )
+      ),
+      this.handleError(shouldHandleErrors)
+    )
+  }
+
   put<T>(
     path: string,
     body: any,

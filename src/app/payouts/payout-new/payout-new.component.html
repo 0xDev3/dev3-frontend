@@ -334,7 +334,7 @@
                     <div class="mt-4">
                       <button
                         app-action-button
-                        class="app-button"
+                        class="app-button uppercase w-full"
                         [hidden]="(shouldApprove$ | async) !== true"
                         [disabled]="newPayoutForm.invalid"
                         [onClick]="approveAmount(payoutState).bind(this)"

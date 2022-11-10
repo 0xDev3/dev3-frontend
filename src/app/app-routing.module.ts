@@ -67,7 +67,7 @@ const appRoutes: Routes = [
   { path: 'transfer', component: TransferComponent },
   { path: 'swap', component: SwapComponent },
   { path: 'request-authorization/:id/action', component: AuthorizationExecEnvComponent },
-  { path: 'deploy-contract/:id', component: ContractDeployExecEnvComponent }, 
+  { path: 'request-deploy/:id/action', component: ContractDeployExecEnvComponent }, 
   { path: 'request-function-call/:id/action', component: FunctionCallExecEnvComponent},
   { path: 'connect/:id', component: RequestWalletActionComponent },
   { path: 'request-send/:id/action', component: RequestSendActionComponent },

@@ -3,11 +3,12 @@ import { Location } from '@angular/common'
 import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { BehaviorSubject, combineLatest, filter, forkJoin, map, mergeMap, reduce, switchMap, tap, toArray } from 'rxjs'
+import { BehaviorSubject, combineLatest, filter, flatMap, forkJoin, map, mergeMap, of, reduce, switchMap, tap, toArray } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
 import { ProjectService } from 'src/app/shared/services/backend/project.service'
 import { ContractDeploymentService } from 'src/app/shared/services/blockchain/contract-deployment.service'
+import { IssuerService } from 'src/app/shared/services/blockchain/issuer/issuer.service'
 import { DialogService } from 'src/app/shared/services/dialog.service'
 import { easeInOutAnimation } from 'src/app/shared/utils/animations'
 
@@ -83,6 +84,8 @@ export class ContractsTableHolderComponent implements OnInit {
         })
   )
 
+  network$ = this.preferenceQuery.network$
+
   importContractForm = new FormGroup({
     alias: new FormControl('', [Validators.required]),
     contractAddress: new FormControl('', [Validators.required]),
@@ -107,13 +110,26 @@ export class ContractsTableHolderComponent implements OnInit {
       const controls = this.importContractForm.controls
       const manifest: string = controls.contractManifest.value
       return this.contractService.importDeployedContract(controls.alias.value, 
-        controls.contractAddress.value, manifest.length > 0 ? manifest : undefined).pipe(tap(_ => {
-          this.dialogService.success({
-            message: "You have successfully imported a smart contract"
+        controls.contractAddress.value, manifest.length > 0 ? manifest : undefined).pipe(
+          switchMap(res => combineLatest([this.contractService.fetchRecommendations(res.id), of(res.id)])),
+          tap(res => { console.log("RECOMMENDATION_HES: ", res[0]) }),
+          switchMap(res => this.contractService
+            .addInterfacesToContractImport(
+              res[1], 
+              res[0].manifests.map(x => x.id))),
+          tap(res => {
+            this.dialogService.success({
+              title: "Great success",
+              message: "Imported a custom contract. Bravo!"
+            })
           })
-          this.changeTab(Tab.Manage)
-        }))
+        )
     }
+  }
+
+  deleteRequestClicked(requestID: string, event: any) {
+    event.stopPropagation()
+    this.contractService.deleteContractDeploymentRequestID(requestID)
   }
 
   goBack() {

@@ -25,10 +25,11 @@
             </div>
             <div class="flex flex-row items-center w-full py-2">
                 <div class="w-24 uppercase text-xs font-semibold">Tags:</div>
-                <div class="w-9/12 pl-4 flex flex-row">
-                    <div class="bg-violet-200 text-violet-700 
-                    mr-2 px-2 py-1 text-xs font-medium rounded-lg" *ngFor="let tag of contract.tags">
-                        #{{tag}}
+                <div class="w-9/12 pl-4 flex flex-row flex-wrap">
+                    <div class="bg-violet-200 flex flex-row justify-center mb-1 text-violet-700 
+                    mr-2 px-2 py-1 text-xxs font-medium rounded-lg" *ngFor="let tag of contract.tags">
+                    <div class=" flex-nowrap whitespace-nowrap">#{{tag}}</div>
+                        
                     </div>
                 </div>
             </div>

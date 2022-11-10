@@ -40,7 +40,6 @@ export class ContractDeployExecEnvComponent {
     private preferenceQuery: PreferenceQuery,
     private issuerService: IssuerService,
     private manifestService: ContractManifestService,
-    private dialogService: DialogService,
     private signerService: SignerService,
     private sessionQuery: SessionQuery,
     private route: ActivatedRoute,

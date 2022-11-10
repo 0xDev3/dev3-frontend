@@ -78,7 +78,7 @@
     
 
     <div *ngIf="sectionsOpened$ | async" class="mt-3 flex flex-row w-full justify-start">
-        <a class="px-8 py-2 rounded-lg hover:bg-cyan-900 bg-cyan-700 text-xs uppercase font-semibold text-white"
+        <a target="_blank" class="px-8 py-2 rounded-lg hover:bg-cyan-900 bg-cyan-700 text-xs uppercase font-semibold text-white"
             *ngIf="actionLinkButton" [href]="actionLinkButton.href">
             {{actionLinkButton.title}}
         </a>

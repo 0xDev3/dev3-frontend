@@ -12,9 +12,8 @@ import { RequestSendService, SendRequests } from '../request-send.service'
 })
 export class RequestSendListComponent {
 
-  sendRequests$: Observable<SendRequests> = this.projectService.getProjectIdByChainAndAddress().pipe(
-    switchMap(project => this.requestSendService.getAllRequests(project.id))
-  )
+  sendRequests$: Observable<SendRequests> = this.requestSendService.getAllRequests(this.projectService.projectID)
+  
 
   assets$ = this.sendRequests$.pipe(
     map(requests => requests.requests.map(value => {

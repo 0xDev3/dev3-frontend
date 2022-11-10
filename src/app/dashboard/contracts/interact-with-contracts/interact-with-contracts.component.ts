@@ -19,21 +19,17 @@ import { easeInOutAnimation } from 'src/app/shared/utils/animations'
 })
 export class InteractWithContractsComponent {
 
-  contractManifestID = this.route.snapshot.params.manifestID
-  contractDeploymentID = this.route.snapshot.params.deployedID
+  contractManifestID =        this.route.snapshot.params.manifestID
+  contractDeploymentID =      this.route.snapshot.params.deployedID
+  selectedIndexSub =          new BehaviorSubject(-1)
+  selectedIndex$ =            this.selectedIndexSub.asObservable()
+  formFinishedLoadingSub =    new BehaviorSubject(false)
+  currentTab =                new BehaviorSubject<TabType>("contracts")
+  currentTab$ =               this.currentTab.asObservable()
+  contractTokenBalanceForm =  new FormGroup({})
 
-  selectedIndexSub = new BehaviorSubject(-1)
-  selectedIndex$ = this.selectedIndexSub.asObservable()
-
-
-  formFinishedLoadingSub = new BehaviorSubject(false)
-
-  currentTab = new BehaviorSubject<TabType>("contracts")
-  currentTab$ = this.currentTab.asObservable()
-
-  contractTokenBalanceForm = new FormGroup({})
+  
   formFinishedLoadingSubContractTokenBalance = new BehaviorSubject(false)
-
   deployedContract$ = this.deploymentService.getContractDeploymentRequest(this.contractDeploymentID)
 
   getERC20FunctionManifest: FunctionManifest = {

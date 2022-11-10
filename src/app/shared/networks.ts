@@ -6,6 +6,7 @@ import {
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export enum ChainID {
+  ETHEREUM_MAINNET = 1,
   MATIC_MAINNET = 137, // Polygon
   MUMBAI_TESTNET = 80001, // Polygon
   AURORA_MAINNET = 1313161554,
@@ -97,6 +98,42 @@ export const MaticNetwork: Network = {
   },
   ramp: {
     swapAsset: 'MATIC',
+  },
+}
+
+export const EthereumMainnet: Network = {
+  chainID: ChainID.ETHEREUM_MAINNET,
+  name: 'Ethereum',
+  shortName: 'eth',
+  iconURL: 'https://iconarchive.com/download/i109534/cjdowner/cryptocurrency-flat/Ethereum-ETH.ico',
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+  },
+  maxGasPrice: 20,
+  rpcURLs: ['https://eth-rpc.gateway.pokt.network'],
+  explorerURLs: ['https://goerli.etherscan.io/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0x041e15af5ecbc0c93f106b2f6a7f5ffa847ef9e4',
+    payoutService: '0xa3BFC3A48Ee93290bDa5a0eF0Ed22414262c3043',
+    payoutManager: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
+    nameRegistry: '0x6cbf0950e22ff08ba4a13ffd2443519e4cf56550',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0x4b13e95bc24e983E3F55B11aB608508CF7D31d35',
+    defaultStableCoin: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', // custom stablecoin issued by filip
   },
 }
 
@@ -552,6 +589,7 @@ export const GnosisNetwork: Network = {
 }
 
 export const Networks: { [key in ChainID]: Network } = {
+  [ChainID.ETHEREUM_MAINNET]: EthereumMainnet,
   [ChainID.MATIC_MAINNET]: MaticNetwork,
   [ChainID.MUMBAI_TESTNET]: MumbaiNetwork,
   [ChainID.GOERLI_TESTNET]: GoerliNetwork,

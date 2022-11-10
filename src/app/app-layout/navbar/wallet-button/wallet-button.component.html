@@ -1,4 +1,4 @@
-<div class="flex flex-row items-center">
+<div class="flex flex-col lg:flex-row lg:items-center">
 
   <span *ngIf="balance$ | async as balance" class="flex flex-col h-full justify-center mr-2">
     <div *ngIf="isLoggedIn$ | async" class="flex flex-row px-4 py-2 bg-violet-100 text-violet-800 rounded-lg">
@@ -15,7 +15,7 @@
     </div>
   </span>
 
-  <span *ngIf="address$ | async as address" class="flex flex-col justify-center mr-2">
+  <span *ngIf="address$ | async as address" class="flex mt-2 lg:mt-0 flex-col justify-center mr-2">
     <div class="flex flex-row px-4 py-2 bg-violet-100 text-violet-800 rounded-lg">
       <div class="text-xs flex font-sem flex-row items-center font-medium justify-center mr-2">
         <span class="font-medium text-xs uppercase text-gray-700">My address:</span>
@@ -28,7 +28,7 @@
     </div>
   </span>
 
-  <span *ngIf="isLoggedIn$ | async" class="flex flex-col justify-center mr-2 h-full">
+  <span *ngIf="isLoggedIn$ | async" class="flex mt-2 lg:mt-0 flex-col justify-center mr-2 h-full">
     <div class="flex flex-row px-4 py-3 bg-violet-100 text-violet-800 rounded-lg">
       <div class="text-xs flex font-sem flex-row items-center font-medium justify-center mr-2">
         <span class="font-medium text-gray-700 text-xs uppercase">Authorized with:</span>
@@ -39,7 +39,7 @@
     </div>
   </span>
 
-  <button *ngIf="isLoggedIn$ | async" (click)="logout()" class="h-full mx-6 text-xs uppercase font-semibold 
+  <button *ngIf="isLoggedIn$ | async" (click)="logout()" class="h-full mt-2 lg:mt-0 lg:mx-6 text-xs uppercase font-semibold 
   px-8 py-2 bg-violet-100 border-violet-200 border text-gray-700 rounded-full 
   hover:bg-violet-700 hover:text-white transition-all">Log out</button>
 

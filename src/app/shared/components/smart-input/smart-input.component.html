@@ -100,7 +100,7 @@
                 </button>
             </div>
             <ng-container *ngIf="inputTypeOrArraySubtypeIs('CONTRACT')">
-                <app-contract-smart-input [selectedSub]="selectedSub"></app-contract-smart-input>
+                <app-contract-smart-input [recommendedTypes]="recommendedTypes" [selectedSub]="selectedSub"></app-contract-smart-input>
             </ng-container>
             <ng-container *ngIf="inputTypeOrArraySubtypeIs('ADDRESS_BOOK')">
                 <app-address-smart-input [selectedSub]="selectedSub"></app-address-smart-input>
