@@ -198,7 +198,7 @@ text-gray-700 uppercase border-transparent cursor-pointer">
           <div class="w-2/12">
             {{request.created_at | date:'short'}}
           </div>
-          <a target="_blank" [routerLink]="'/deploy-contract/' + request.id | issuerPath"
+          <a target="_blank" [routerLink]="'/request-deploy/' + request.id + '/action' | issuerPath"
             class="w-3/12 px-2 cursor-pointer">
             <div class="w-full py-2 bg-gray-700 text-white rounded-full flex flex-row items-center justify-center
              text-center uppercase text-xs font-semibold hover:bg-violet-900 transition-all">
