@@ -464,7 +464,7 @@ export const ArbitrumNetwork: Network = {
     nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
     campaignFeeManager: '',
     defaultWalletApprover: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
-    defaultStableCoin: '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8', // custom stablecoin issued by filip
+    defaultStableCoin: '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1', // custom stablecoin issued by filip
   },
 }
 

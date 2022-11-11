@@ -26,7 +26,7 @@ export class FunctionCallExecEnvComponent {
   isWaitingForTx$ = this.isWaitingForTxSub.asObservable()
 
   functionRequest$ = this.deploymentService
-    .getFunctionCallRequest(this.route.snapshot.params.id).pipe(tap(res => console.log(res)))
+    .getFunctionCallRequest(this.route.snapshot.params.id)
 
   contract$ = this.functionRequest$
     .pipe(switchMap(result => this.deploymentService.getContractDeploymentRequest(result.deployed_contract_id)))
