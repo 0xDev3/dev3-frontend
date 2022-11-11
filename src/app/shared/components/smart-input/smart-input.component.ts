@@ -74,6 +74,11 @@ export class SmartInputComponent implements OnInit {
     this.rootForm.controls[this.controlName].setValue(unixSeconds)
   }
 
+  newBool(event: Event) {
+    const value: boolean = (event.target as any).value
+    this.rootForm.controls[this.controlName].setValue(Boolean(value))
+  }
+
   addToArrayBuffer() {
     let bufferValue = this.arrayBufferSub.getValue()
     bufferValue.unshift(this.arrayBufferForm.controls.arrayBufferInput.value)

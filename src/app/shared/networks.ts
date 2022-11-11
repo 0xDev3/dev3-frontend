@@ -439,7 +439,7 @@ export const ArbitrumNetwork: Network = {
   },
   maxGasPrice: 20,
   rpcURLs: [
-    'https://weathered-bitter-panorama.arbitrum-mainnet.quiknode.pro/6263c3e3ab2a9c81efd17e687344d9d5d049de68'
+    'https://weathered-bitter-panorama.arbitrum-mainnet.quiknode.pro/6263c3e3ab2a9c81efd17e687344d9d5d049de68/'
   ],
   wssRpcURLs: [
   ],

@@ -1,4 +1,4 @@
-<input *ngIf="(inputType !== 'DATE_TIME') && (inputType !== 'ARRAY')" id="smartInputElement" (click)="toggleInput()"
+<input *ngIf="(inputType !== 'DATE_TIME') && (inputType !== 'ARRAY') && (inputType !== 'BOOLEAN')" id="smartInputElement" (click)="toggleInput()"
     [formControl]="controlAsForm(controlName)"
     class="w-full border-gray-200 cursor-text rounded-lg text-sm flex flex-row justify-between text-gray-700"
     type="text" autocomplete="off" [value]="selected$ | async" />
@@ -11,6 +11,14 @@
 <div *ngIf="inputType === 'DATE_TIME'">
     <input class="w-full rounded-lg border-gray-200" autocomplete="off" (input)="newValue($event)"
         type="datetime-local">
+</div>
+
+<div *ngIf="inputType === 'BOOLEAN'">
+        <!-- Rounded switch -->
+        <label class="switch">
+            <input (input)="newBool($event)" type="checkbox">
+            <span class="slider round"></span>
+        </label>
 </div>
 
 <div *ngIf="inputType === 'ARRAY'">
