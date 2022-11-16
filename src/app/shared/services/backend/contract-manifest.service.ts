@@ -39,6 +39,10 @@ export interface ContractManifestsData {
   deployable_contracts: ContractManifestData[]
 }
 
+export interface ContractMultiData {
+  decorator: ContractManifestData
+}
+
 export interface ContractManifestData {
   id: string,
   binary: string,

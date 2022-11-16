@@ -4,7 +4,7 @@ import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { PreferenceStore } from 'src/app/preference/state/preference.store'
 import { environment } from 'src/environments/env.base'
 import { BackendHttpClient } from '../shared/services/backend/backend-http-client.service'
-import { ContractManifestData } from '../shared/services/backend/contract-manifest.service'
+import { ContractManifestData, ContractMultiData } from '../shared/services/backend/contract-manifest.service'
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class ContractExplorerService {
   }
 
   getContractPreview(contractAddress: string, chainID: string) {
-    return this.http.get<ContractManifestData>(`${this.path}/${chainID}/contract/${contractAddress}`, { }, true, false, false)
+    return this.http.get<ContractMultiData>(`${this.path}/${chainID}/contract/${contractAddress}`, { }, true, false, false)
   }
 
 }

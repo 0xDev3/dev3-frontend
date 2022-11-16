@@ -12,7 +12,7 @@
         class="w-full transition-width bg-violet-50 rounded-lg px-2 py-2 flex flex-col text-gray-700">
         <div class="w-full flex flex-row justify-between items-center">
             <div (click)="toggle()"
-                class="flex flex-row w-10/12 justify-between cursor-pointer hover:bg-violet-100 px-2 py-1 rounded-lg">
+                class="flex flex-row w-9/12 justify-between cursor-pointer hover:bg-violet-100 px-2 py-1 rounded-lg">
                 <div class="flex flex-col w-10/12">
                     <div class="text-sm mb-1 font-semibold text-violet-700">
                         {{functionManifest.name}}
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <span class="ml-2 w-2/12  items-center text-xxs font-medium
+            <span class="ml-2 w-3/12  items-center text-xxs font-medium
          bg-violet-200 rounded-md py-1 flex flex-row justify-center">
                 {{functionManifest.solidity_name}}
                 <app-value-copy class="ml-2" [value]="functionManifest.solidity_name"></app-value-copy>

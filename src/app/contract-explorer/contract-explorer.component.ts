@@ -19,25 +19,18 @@ import { ContractExplorerService } from './contract-explorer.service'
 })
 export class ContractExplorerComponent {
 
-
   contractFieldControl = new FormControl('', [
     Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')
   ])
   txLoadingSub = new BehaviorSubject(false)
   txLoading$ = this.txLoadingSub.asObservable()
-
-
   contract$: Observable<ContractManifestData | null> = of(null)
-  networks = Object.values(Networks).sort((x, y) => {
-    return (x.name > y.name) ? 1 : -1
-  })
+  networks = Object.values(Networks)
   currentNetwork = Networks[this.preferenceQuery.getValue().chainID]
 
   constructor(private explorerService: ContractExplorerService,
-    private route: ActivatedRoute,
     private dialogService: DialogService,
     private preferenceQuery: PreferenceQuery) { }
-
 
   searchClicked() {
     this.txLoadingSub.next(true)
@@ -55,7 +48,7 @@ export class ContractExplorerComponent {
       })
     ).subscribe(res => {
       this.txLoadingSub.next(false)
-      this.contract$ = of(res)
+      this.contract$ = of(res!.decorator)
     })
   }
 

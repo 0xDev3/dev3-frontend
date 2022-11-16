@@ -26,6 +26,8 @@ export class AddressSmartInputComponent {
     customAddressInput: new FormControl('', [Validators.required])
   })
 
+  address$ = this.preferenceQuery.address$
+
   // @ViewChild('customAddressInput') customAddressInput!: ElementRef<InputEleme>
 
   @Input() selectedSub?: BehaviorSubject<string | null>

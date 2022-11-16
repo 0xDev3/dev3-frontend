@@ -8,7 +8,7 @@ import { ProjectService } from '../../services/backend/project.service'
 import { ContractDeploymentRequestResponse, ContractDeploymentRequests, ContractDeploymentService } from '../../services/blockchain/contract-deployment.service'
 import { SmartInputDisplayService } from './smart-input-display.service'
 import 'tw-elements'
-import { Dev3SDK} from "dev3-sdk"
+import { Dev3SDK } from "dev3-sdk"
 import { easeInOutAnimation } from '../../utils/animations'
 
 @Component({
@@ -20,36 +20,36 @@ import { easeInOutAnimation } from '../../utils/animations'
 })
 export class SmartInputComponent implements OnInit {
 
-  isDialogOpenSub                                       = new BehaviorSubject(false)
-  isDialogOpen$                                         = this.isDialogOpenSub.asObservable()
-  @Input() inputIsArray                                 = false
-  @Input() formFinishedLoadingSub!:                     BehaviorSubject<boolean>
-  formFinishedLoading$!:                                Observable<boolean>
-  @Input() solidityType!:                               string
-  @ViewChild('smartInputElement') smartInputElement!:   ElementRef
-  onTouched: () => void                                 = () => {}
-  picker:                                               any
-  @Input() recommendedTypes:                            string[] = []
-  @Input() rootForm!:                                   FormGroup
-  @Input() controlName!:                                string
-  inputType:                                            InputType = "TEXT"
-  arraySubtype:                                         InputType = "TEXT"
-  arrayBufferSub                                        = new BehaviorSubject<string[]>([])
-  arrayBuffer$                                          = this.arrayBufferSub.asObservable()
-  selectedSub                                           = new BehaviorSubject<string | null>(null)
-  @Input() manifestID!:                                 FunctionManifest
+  isDialogOpenSub = new BehaviorSubject(false)
+  isDialogOpen$ = this.isDialogOpenSub.asObservable()
+  @Input() inputIsArray = false
+  @Input() formFinishedLoadingSub!: BehaviorSubject<boolean>
+  formFinishedLoading$!: Observable<boolean>
+  @Input() solidityType!: string
+  @ViewChild('smartInputElement') smartInputElement!: ElementRef
+  onTouched: () => void = () => { }
+  picker: any
+  @Input() recommendedTypes: string[] = []
+  @Input() rootForm!: FormGroup
+  @Input() controlName!: string
+  inputType: InputType = "TEXT"
+  arraySubtype: InputType = "TEXT"
+  arrayBufferSub = new BehaviorSubject<string[]>([])
+  arrayBuffer$ = this.arrayBufferSub.asObservable()
+  selectedSub = new BehaviorSubject<string | null>(null)
+  @Input() manifestID!: FunctionManifest
 
-  tupleArrayListBufferSub                               = new BehaviorSubject<string[][]>([])
-  tupleArrayListBuffer$                                 = this.tupleArrayListBufferSub.asObservable()
+  tupleArrayListBufferSub = new BehaviorSubject<string[][]>([])
+  tupleArrayListBuffer$ = this.tupleArrayListBufferSub.asObservable()
 
-  
+
   selected$ = this.selectedSub.asObservable().pipe(
     tap(() => this.isDialogOpenSub.next(false)),
-    tap((result) => { 
-      if(this.inputType === 'ARRAY') {
+    tap((result) => {
+      if (this.inputType === 'ARRAY') {
         this.arrayBufferForm.controls.arrayBufferInput.setValue(result)
       } else {
-        this.rootForm.get(this.controlName)?.setValue(result) 
+        this.rootForm.get(this.controlName)?.setValue(result)
       }
     }),
     tap(_ => this.onTouched()))
@@ -57,6 +57,8 @@ export class SmartInputComponent implements OnInit {
   arrayBufferForm = new FormGroup({
     arrayBufferInput: new FormControl('', [])
   })
+
+  address$ = this.preferenceQuery.address$
 
   constructor(private contractsService: ContractDeploymentService,
     private preferenceQuery: PreferenceQuery) { }
@@ -94,18 +96,18 @@ export class SmartInputComponent implements OnInit {
 
   generateInternalInputType(solidityType: string, recommendedTypes: string[]): InputType {
     console.log('TYPE', solidityType)
-    if(solidityType.endsWith('[]')) {
+    if (solidityType.endsWith('[]')) {
       this.arraySubtype = this.generateInternalInputType(solidityType.replace('[]', ''), recommendedTypes)
       return "ARRAY"
-    } else if(solidityType === 'address') {
+    } else if (solidityType === 'address') {
       return this.interpretAddressType(recommendedTypes)
-    } else if(solidityType.startsWith('uint')) {
+    } else if (solidityType.startsWith('uint')) {
       return this.interpretNumberType(recommendedTypes)
-    } else if(solidityType.startsWith('bool')) {
+    } else if (solidityType.startsWith('bool')) {
       return "BOOLEAN"
-    } else if(solidityType.startsWith('tuple')) {
+    } else if (solidityType.startsWith('tuple')) {
       return "TUPLE"
-    } else if(solidityType.startsWith('')) {
+    } else if (solidityType.startsWith('')) {
       return "TEXT"
     } else {
       return 'TEXT'
@@ -114,36 +116,36 @@ export class SmartInputComponent implements OnInit {
 
   interpretAddressType(recommendedTypes: string[]): InputType {
     const isContractCaller = recommendedTypes.some(res => res.startsWith('common.contract-caller'))
-    if(isContractCaller) { return "ADDRESS_BOOK" }
-    if(recommendedTypes.length > 0) { return "CONTRACT" }
+    if (isContractCaller) { return "ADDRESS_BOOK" }
+    if (recommendedTypes.length > 0) { return "CONTRACT" }
     return "ADDRESS_BOOK"
   }
 
   interpretNumberType(recommendedTypes: string[]): InputType {
     const hasType = recommendedTypes.some(res => res.startsWith('types.'))
-    if(!hasType) { return "TEXT" }
+    if (!hasType) { return "TEXT" }
     const type = recommendedTypes[0] as ManifestTypeOptions
-    if(type === "types.unixTimestamp") {
+    if (type === "types.unixTimestamp") {
       return "DATE_TIME"
-    } else if(type === "types.durationSeconds") {
+    } else if (type === "types.durationSeconds") {
       return "DURATION"
     } else {
       return "TEXT"
     }
   }
-  
+
   controlAsForm(name: string) {
     return this.rootForm.controls[name] as FormControl
   }
 
   toggleInput() {
-    if(this.inputType === 'ARRAY') { this.handleArrayToggle(); return }
-    if(this.inputType === 'DATE_TIME') { return }
-    if((this.inputType !== "TEXT")) { this.isDialogOpenSub.next(!this.isDialogOpenSub.getValue()) }
+    if (this.inputType === 'ARRAY') { this.handleArrayToggle(); return }
+    if (this.inputType === 'DATE_TIME') { return }
+    if ((this.inputType !== "TEXT")) { this.isDialogOpenSub.next(!this.isDialogOpenSub.getValue()) }
   }
 
   handleArrayToggle() {
-    if(this.arraySubtype !== 'TEXT') { this.isDialogOpenSub.next(!this.isDialogOpenSub.getValue()) }
+    if (this.arraySubtype !== 'TEXT') { this.isDialogOpenSub.next(!this.isDialogOpenSub.getValue()) }
   }
 
   inputTypeOrArraySubtypeIs(type: InputType) {
@@ -152,6 +154,6 @@ export class SmartInputComponent implements OnInit {
 
 }
 
-type InputType = "TEXT" | "ADDRESS_BOOK" | "CONTRACT" | "DATE_TIME" 
+type InputType = "TEXT" | "ADDRESS_BOOK" | "CONTRACT" | "DATE_TIME"
   | "DURATION" | "NUMBER" | "BOOLEAN" | "ARRAY" | "CONTRACT CALLER" | "TUPLE"
 type ManifestTypeOptions = "types.unixTimestamp" | "types.durationSeconds"

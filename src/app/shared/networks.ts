@@ -147,7 +147,7 @@ export const MumbaiNetwork: Network = {
     symbol: 'MATIC',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://convincing-bitter-firefly.matic-testnet.quiknode.pro/46db006faa171bdbc51fa9a478e7ac27fb559a4f'],
+  rpcURLs: ['https://polygontestapi.terminet.io/rpc'],
   wssRpcURLs: [
   ],
   explorerURLs: ['https://mumbai.polygonscan.com/'],
