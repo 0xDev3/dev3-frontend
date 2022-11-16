@@ -5,14 +5,6 @@
 
     <ng-container *ngIf="(isLoggedIn$ | async) === true; else notLoggedIn">
 
-      <app-info-snippet type="WARNING" [content]="{
-        title: 'This is a beta product!',
-        sections: [
-          'Dev3 is still in active development and a security audit has not been done on the product! Some features may not be working properly.',
-        ]
-      }"></app-info-snippet>
-
-
       <div class="flex flex-row justify-start items-center w-full">
         <h2 class="text-sm flex mb-2 flex-col items-center text-gray-700">
           <div class="flex flex-row items-center uppercase font-semibold w-full justify-between mt-5">

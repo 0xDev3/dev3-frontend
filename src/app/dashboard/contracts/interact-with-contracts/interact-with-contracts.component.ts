@@ -106,7 +106,6 @@ export class InteractWithContractsComponent {
 
   constructor(private manifestService: ContractManifestService,
     private deploymentService: ContractDeploymentService,
-    private sessionQuery: SessionQuery,
     private location: Location,
     private projectService: ProjectService,
     private preferenceQuery: PreferenceQuery,

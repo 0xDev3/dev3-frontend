@@ -89,7 +89,7 @@ export class ContractDeploymentService {
     }
 
     deleteContractDeploymentRequestID(id: string) {
-        return this.http.delete(`${this.path}/deploy/${id}`)
+        return this.http.delete(`${this.path}/deploy/${id}`, false, true, true)
     }
 
     attachTxInfoToRequest(requestId: string, txHash: string, deployer: string, txType: "CONTRACT" | "TRANSACTION" = "CONTRACT") {

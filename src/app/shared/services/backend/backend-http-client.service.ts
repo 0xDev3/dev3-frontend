@@ -134,17 +134,17 @@ export class BackendHttpClient {
 
   delete<T>(
     path: string,
-    params?: object,
     publicRoute = false,
-    shouldHandleErrors = true
-  ): Observable<T | unknown> {
+    shouldHandleErrors = true,
+    apiProtectedRoute = false
+  ): Observable<T> {
     return (publicRoute ? of(undefined) : this.ensureAuth).pipe(
-      switchMap(() => {
-        const httpOptions = this.authHttpOptions(publicRoute)
-        if (params) httpOptions.params = params
-
-        return this.http.delete<T>(path, httpOptions)
-      }),
+      switchMap(() =>
+        this.http.delete<T>(
+          path,
+          this.authHttpOptions(publicRoute, apiProtectedRoute)
+        )
+      ),
       this.handleError(shouldHandleErrors)
     )
   }

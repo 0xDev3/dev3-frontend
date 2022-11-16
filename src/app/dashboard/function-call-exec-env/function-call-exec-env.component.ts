@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { BehaviorSubject, combineLatest, delay, map, of, switchMap, tap, zip } from 'rxjs'
+import { ContractManifest } from 'dev3-sdk/dist/core/contracts/ContractManifest'
+import { BehaviorSubject, combineLatest, delay, map, Observable, of, switchMap, tap, zip } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { SessionQuery } from 'src/app/session/state/session.query'
 import { ChainID, Networks } from 'src/app/shared/networks'
 import { BackendHttpClient } from 'src/app/shared/services/backend/backend-http-client.service'
-import { ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
+import { ContractManifestData, ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
 import { ProjectService } from 'src/app/shared/services/backend/project.service'
 import { ContractDeploymentService, FunctionCallRequestResponse } from 'src/app/shared/services/blockchain/contract-deployment.service'
 import { IssuerService } from 'src/app/shared/services/blockchain/issuer/issuer.service'
@@ -21,7 +22,6 @@ import { UserService } from 'src/app/shared/services/user.service'
 export class FunctionCallExecEnvComponent {
 
   issuer$ = this.issuerService.issuer$
-
   isWaitingForTxSub = new BehaviorSubject(false)
   isWaitingForTx$ = this.isWaitingForTxSub.asObservable()
 
@@ -29,15 +29,30 @@ export class FunctionCallExecEnvComponent {
     .getFunctionCallRequest(this.route.snapshot.params.id)
 
   contract$ = this.functionRequest$
-    .pipe(switchMap(result => this.deploymentService.getContractDeploymentRequest(result.deployed_contract_id)))
+    .pipe(switchMap(result => 
+      { 
+        if(result.deployed_contract_id) {
+          return this.deploymentService.getContractDeploymentRequest(result.deployed_contract_id)
+        } else {
+          return of(null)
+        }
+        
+      }
+  ))
 
-  manifest$ = this.contract$.pipe(
-    switchMap(functionRequest => this.manifestService.getByID(functionRequest.contract_id))
+  manifest$: Observable<ContractManifestData | null> = this.contract$.pipe(
+    switchMap(functionRequest => {
+      if(functionRequest?.contract_id) {
+        return this.manifestService.getByID(functionRequest.contract_id, this.projectService.projectID)
+      } else {
+        return of(null)
+      }
+    })
   )
 
   functionManifest$ = zip(this.functionRequest$, this.manifest$).pipe(
     map(result => {
-      const res = result[1].functions.filter(func => { 
+      const res = result[1]?.functions.filter(func => { 
         return func.solidity_name === result[0].function_name 
       })
       return res
@@ -87,6 +102,7 @@ export class FunctionCallExecEnvComponent {
     private issuerService: IssuerService,
     private route: ActivatedRoute,
     private signerService: SignerService,
+    private projectService: ProjectService,
     private preferenceQuery: PreferenceQuery,
     private sessionQuery: SessionQuery,
     private manifestService: ContractManifestService,

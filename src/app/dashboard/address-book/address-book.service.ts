@@ -27,7 +27,7 @@ export class AddressBookService {
     }
 
     deleteAddressBookEntryByID(id: string) {
-        return this.http.delete(`${this.path}/${id}`, {}, false, true)
+        return this.http.delete(`${this.path}/${id}`, false, true)
     }
 
 }

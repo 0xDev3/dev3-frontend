@@ -49,7 +49,7 @@
                       </div>                          
                 <div class="ml-7 mt-1 text-sm">{{authRequest.screen_config.after_action_message ?? ''}}</div>
             </div>
-            <div class="text-xs uppercase font-medium text-gray-500 mt-4 text-center leading-6">{{issuer.infoData.name}} received the following info about you</div>
+            <div class="text-xs uppercase font-medium text-gray-500 mt-4 text-center leading-6">{{issuer.infoData.name}} <br> received the following info about you</div>
             <ng-container [ngTemplateOutlet]="addressHolder"></ng-container>
             
             <button (click)="closeTabClicked()"
@@ -72,7 +72,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
               </svg>
-            <div *ngIf="issuer$ | async as issuer">{{issuer.infoData.name}} will receive your address</div>                  
+            <div *ngIf="issuer$ | async as issuer">Address</div>                  
         </div>
         <div class="mt-1 w-full overflow-x-scroll ml-7 text-xs font-medium text-gray-700">{{address}}</div>  
     </div>

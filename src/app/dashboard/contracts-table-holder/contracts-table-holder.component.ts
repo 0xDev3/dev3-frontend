@@ -32,10 +32,14 @@ export class ContractsTableHolderComponent implements OnInit {
   allContracts$ = this.contractService.getContractDeploymentRequests(this.projectService.projectID)
   
   refreshRequests$ = new BehaviorSubject<boolean>(true)
-  pendingContractDeploymentRequests$ = this.refreshRequests$.pipe(
-    switchMap(_ => this.contractService.getContractDeploymentRequests(this.projectService.projectID).pipe(
-      map(contracts => contracts.requests.filter(contract => { return contract.status === 'PENDING' }))
-    )))
+  pendingContractDeploymentRequests$ = this.getPendingDeploymentRequests()
+
+  getPendingDeploymentRequests() {
+    return this.refreshRequests$.pipe(
+      switchMap(_ => this.contractService.getContractDeploymentRequests(this.projectService.projectID).pipe(
+        map(contracts => contracts.requests.filter(contract => { return contract.status === 'PENDING' }))
+      )))
+  }
 
   manifests$ = this.allContracts$.pipe(
     map(contracts => contracts.requests.filter(contract => contract.status === 'PENDING')),
@@ -112,7 +116,6 @@ export class ContractsTableHolderComponent implements OnInit {
       return this.contractService.importDeployedContract(controls.alias.value, 
         controls.contractAddress.value, manifest.length > 0 ? manifest : undefined).pipe(
           switchMap(res => combineLatest([this.contractService.fetchRecommendations(res.id), of(res.id)])),
-          tap(res => { console.log("RECOMMENDATION_HES: ", res[0]) }),
           switchMap(res => this.contractService
             .addInterfacesToContractImport(
               res[1], 
@@ -128,8 +131,10 @@ export class ContractsTableHolderComponent implements OnInit {
   }
 
   deleteRequestClicked(requestID: string, event: any) {
+    this.contractService.deleteContractDeploymentRequestID(requestID).subscribe(res => {
+      this.refreshRequests()
+    })
     event.stopPropagation()
-    this.contractService.deleteContractDeploymentRequestID(requestID)
   }
 
   goBack() {

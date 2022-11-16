@@ -56,10 +56,11 @@ import { InteractWithContractsComponent } from './dashboard/contracts/interact-w
 import { FunctionCallExecEnvComponent } from './dashboard/function-call-exec-env/function-call-exec-env.component'
 import { WorkflowsComponent } from './dashboard/workflows/workflows.component'
 import { AuthorizationExecEnvComponent } from './dashboard/authorizations/authorization-exec-env/authorization-exec-env.component'
+import { ContractExplorerComponent } from './contract-explorer/contract-explorer.component'
 
 const appRoutes: Routes = [
+  { path: 'explore', component: ContractExplorerComponent },
   { path: 'callback', component: AuthMagicOauthComponent },
-
   { path: '', pathMatch: 'full', redirectTo: 'admin/dashboard/contracts' },
   { path: 'offers', component: OffersComponent },
   { path: 'offers/:id', component: OfferComponent },
@@ -160,6 +161,7 @@ const networkRoutes: Routes = [
 ]
 
 const routes: Routes = [
+  { path: 'explore', component: ContractExplorerComponent },
   { path: 'callback', component: AuthMagicOauthComponent },
   {
     path: '',

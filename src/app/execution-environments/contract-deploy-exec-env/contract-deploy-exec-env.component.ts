@@ -25,7 +25,7 @@ export class ContractDeployExecEnvComponent {
   isLoggedIn$ = this.sessionQuery.isLoggedIn$
 
   contractDeploymentRequest$ = this.contractDeploymentService
-    .getContractDeploymentRequest(this.route.snapshot.params.id).pipe(tap(res => console.log(res)))
+    .getContractDeploymentRequest(this.route.snapshot.params.id)
 
   manifest$ = this.contractDeploymentRequest$.pipe(
     switchMap(result => this.manifestService.getByID(result.contract_id))

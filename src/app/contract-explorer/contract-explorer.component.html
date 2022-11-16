@@ -1,0 +1,72 @@
+<div class=" bg-blue-50">
+    <app-navbar></app-navbar>
+</div>
+<div class="w-screen min-h-screen mb-24 bg-blue-50 p-4 flex flex-col items-center pt-32">
+    <img class="h-12" src="../../assets/dev3-explore.png" alt="">
+    <div class="text-lg font-medium mb-4 text-gray-700 flex flex-row items-center">
+        <span>Interact with <span class="text-violet-700">any</span> smart contract.</span>
+    </div>
+    <ng-container *ngIf="(contract$ | async) === null">
+        
+
+        <div class="max-w-3xl w-full mb-4 mt-8 flex flex-col">
+            <div class="flex flex-row items-center justify-center flex-wrap gap-2">
+                <div [class.!bg-violet-700]="network === currentNetwork"
+                    [class.!text-white]="network === currentNetwork"
+                    [class.hover:bg-violet-300]="network !== currentNetwork" 
+                    class="text-xs py-2 pl-2 pr-4 font-medium text-violet-700
+                    cursor-pointer rounded-full uppercase
+                  bg-white flex flex-row items-center" *ngFor="let network of networks"
+                    (click)="networkSelected(network.chainID)">
+                    <img [src]="network.iconURL" class="w-4 h-4" alt="">
+                    <span class="ml-2">{{network.name}}</span>
+                </div>
+            </div>
+        </div>
+
+        <input [@inOutAnimation] [formControl]="contractFieldControl"
+            class="max-w-3xl w-full py-2 mt-8 mb-2 px-8 text-center text-sm text-gray-700 border-gray-200 rounded-full"
+            [placeholder]="'Paste ' + currentNetwork.name + ' Contract Address'" type="text">
+        <button [disabled]="!contractFieldControl.valid || (txLoading$ | async)"
+         [@inOutAnimation] (click)="searchClicked()"
+            loadingText="🤖 Decompiling & Parsing Contract" class="max-w-3xl px-8 rounded-full mt-4 hover:bg-violet-900 
+                    transition-all disabled:bg-gray-500 flex flex-row items-center justify-center
+                bg-violet-700 text-white font-semibold uppercase text-sm py-2">
+            <svg *ngIf="(txLoading$ | async) === false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <span *ngIf="(txLoading$ | async) === false" class="ml-2">Search</span>
+            <span *ngIf="(txLoading$ | async)" class="ml-2 flex flex-row items-center">
+                <app-spinner class="mr-2" type="inline-xs"></app-spinner>
+                Decompiling & Parsing Contract...
+            </span>
+        </button>
+    </ng-container>
+
+
+
+    <div [@inOutAnimation] class="flex flex-col w-full gap-2 max-w-5xl p-4 bg-white rounded-lg"
+        *ngIf="contract$ | async as contract">
+        <button class="px-4 py-2 mb-4 hover:bg-violet-900 font-semibold
+         text-xs uppercase text-white bg-violet-700 justify-center rounded-lg flex flex-row items-center"
+            (click)="searchAgainClicked()">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                    <path fill-rule="evenodd"
+                        d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"
+                        clip-rule="evenodd" />
+                </svg>
+            </span>
+            <span class="ml-2">
+                New Search
+            </span>
+
+        </button>
+        <div *ngFor="let functionManifest of contract.functions">
+            <app-contract-function-interaction-item [functionManifest]="functionManifest" [contractID]="'asd'">
+            </app-contract-function-interaction-item>
+        </div>
+    </div>
+</div>
