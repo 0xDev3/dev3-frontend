@@ -10,7 +10,7 @@
                 {{issuer.infoData.name}}</span>  <br>
                 is requesting you to authorize yourself.
             </div>
-            <div *ngIf="address$ | async as address" class="mt-4 text-sm">
+            <div *ngIf="address$ | async as address; else login" class="mt-4 text-sm">
                 <ng-container class="w-full" [ngTemplateOutlet]="addressHolder"></ng-container>
                 
                 <div *ngIf="authRequest.screen_config" class="p-4 w-full bg-violet-50 rounded-lg mt-2 flex flex-col">
@@ -25,6 +25,10 @@
                     <div class="ml-7 mt-1">{{authRequest.screen_config.before_action_message ?? ''}}</div>
                 </div>
             </div>
+
+            <ng-template #login>
+                <app-auth></app-auth>
+            </ng-template>
 
 
             <button [onClick]="authorizeButtonClicked(authRequest).bind(this)" *ngIf="address$ | async" app-action-button 
