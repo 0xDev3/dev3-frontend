@@ -161,7 +161,7 @@ const networkRoutes: Routes = [
 ]
 
 const routes: Routes = [
-  { path: 'explore', component: ContractExplorerComponent },
+  { path: 'xray', component: ContractExplorerComponent },
   { path: 'callback', component: AuthMagicOauthComponent },
   {
     path: '',

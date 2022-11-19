@@ -27,7 +27,7 @@
             <div class="bg-violet-50 border-t border-x rounded-tr-lg flex flex-row py-3 text-violet-700 
             text-xs uppercase font-semibold">
                 <div class="w-3/12 text-center">
-                    Date Created
+                    Created At (Request ID)
                 </div>
                 <div class="w-5/12 text-center">
                     Authorized Address
@@ -44,7 +44,10 @@
                 <div *ngFor="let authRequest of authRequests.requests" 
                 class="flex border-x flex-row items-center py-3 text-gray-700 text-sm font-medium border-b">
                 <div class="w-3/12 text-center text-xs font-semibold flex flex-row justify-center items-center">
-                    <div>{{authRequest.created_at | date:'medium'}}</div>
+                    <div>{{authRequest.created_at | date:'short'}}</div>
+                    <div class="flex flex-row items-center">
+                        <span class="ml-2">({{authRequest.id | addrShort}} <app-value-copy [value]="authRequest.id"></app-value-copy> )</span>
+                    </div>
                
                 </div>
                     <div class="w-5/12 text-center text-xs font-semibold flex flex-row justify-center items-center">

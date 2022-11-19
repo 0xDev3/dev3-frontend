@@ -17,7 +17,7 @@ import { ContractExplorerService } from './contract-explorer.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: easeInOutAnimation
 })
-export class ContractExplorerComponent {
+export class ContractExplorerComponent implements OnInit {
 
   contractFieldControl = new FormControl('', [
     Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')
@@ -31,6 +31,10 @@ export class ContractExplorerComponent {
   constructor(private explorerService: ContractExplorerService,
     private dialogService: DialogService,
     private preferenceQuery: PreferenceQuery) { }
+
+  ngOnInit(): void {
+    this.networkSelected(ChainID.ETHEREUM_MAINNET)
+  }
 
   searchClicked() {
     this.txLoadingSub.next(true)

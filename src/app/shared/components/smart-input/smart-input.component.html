@@ -90,41 +90,44 @@
 </div>
 
 
-<div [@inOutAnimation] *ngIf="isDialogOpen$ | async as isDialogOpened">
-    <div [hidden]="!isDialogOpened" [class.blurry]="isDialogOpened" class="fixed z-[1000] left-0 top-0 
-        backdrop-blur-0
-        w-screen h-screen bg-black/[.4] 
-        transition-backdrop flex flex-row items-center justify-center">
-        <div class="bg-white rounded-lg w-1/2 shadow-xl flex flex-col max-w-5xl p-4">
-            <div class="w-full flex flex-row justify-between items-center mb-4">
-                <div></div>
-                <div class="font-semibold text-gray-700 uppercase text-xs">Smart input</div>
-                <button class="hover:text-violet-800" (click)="toggleInput()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </button>
-            </div>
-            <ng-container *ngIf="inputTypeOrArraySubtypeIs('CONTRACT')">
-                <app-contract-smart-input [recommendedTypes]="recommendedTypes" [selectedSub]="selectedSub"></app-contract-smart-input>
-            </ng-container>
-            <ng-container *ngIf="inputTypeOrArraySubtypeIs('ADDRESS_BOOK')">
-                <ng-container *ngIf="address$ | async">
-                    <app-address-smart-input [selectedSub]="selectedSub"></app-address-smart-input>
+<ng-container *ngIf="address$ | async as address">
+    <div [@inOutAnimation] *ngIf="isDialogOpen$ | async as isDialogOpened">
+        <div [hidden]="!isDialogOpened" [class.blurry]="isDialogOpened" class="fixed z-[1000] left-0 top-0 
+            backdrop-blur-0
+            w-screen h-screen bg-black/[.4] 
+            transition-backdrop flex flex-row items-center justify-center">
+            <div class="bg-white rounded-lg w-1/2 shadow-xl flex flex-col max-w-5xl p-4">
+                <div class="w-full flex flex-row justify-between items-center mb-4">
+                    <div></div>
+                    <div class="font-semibold text-gray-700 uppercase text-xs">Smart input</div>
+                    <button class="hover:text-violet-800" (click)="toggleInput()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </div>
+                <ng-container *ngIf="inputTypeOrArraySubtypeIs('CONTRACT')">
+                    <app-contract-smart-input [recommendedTypes]="recommendedTypes" [selectedSub]="selectedSub"></app-contract-smart-input>
                 </ng-container>
-            </ng-container>
-            <ng-container *ngIf="inputTypeOrArraySubtypeIs('DURATION')">
-                <app-duration-smart-input [selectedSub]="selectedSub"></app-duration-smart-input>
-            </ng-container>
-            <ng-container *ngIf="inputTypeOrArraySubtypeIs('TUPLE')">
-                <app-array-tuple-smart-input [addedListItemSub]="tupleArrayListBufferSub"
-                 [manifest]="manifestID"></app-array-tuple-smart-input>
-            </ng-container>
+                <ng-container *ngIf="inputTypeOrArraySubtypeIs('ADDRESS_BOOK')">
+                    <ng-container *ngIf="address$ | async">
+                        <app-address-smart-input [selectedSub]="selectedSub"></app-address-smart-input>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="inputTypeOrArraySubtypeIs('DURATION')">
+                    <app-duration-smart-input [selectedSub]="selectedSub"></app-duration-smart-input>
+                </ng-container>
+                <ng-container *ngIf="inputTypeOrArraySubtypeIs('TUPLE')">
+                    <app-array-tuple-smart-input [addedListItemSub]="tupleArrayListBufferSub"
+                     [manifest]="manifestID"></app-array-tuple-smart-input>
+                </ng-container>
+            </div>
         </div>
     </div>
-</div>
+</ng-container>
+
 
 
 
