@@ -114,14 +114,14 @@
                                         d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                                 </svg>
                             </div>
-                            <div class="flex flex-col">
+                            <div class="flex flex-col w-full pr-12">
                                 <div class="flex flex-col w-full text-sm mb-4"
                                     *ngFor="let param of request.function_params; let i = index">
                                     <div class="flex flex-row">
                                         <div class="flex-col">
                                             <div class="font-semibold mr-1">{{manifest[0].inputs[i].name}}:</div>
                                         </div>
-                                        <div class="overflow-x-auto">
+                                        <div class="overflow-x-auto flex flex-row">
                                             <div *ngIf="param.type === 'address'; else regularParam">
                                                 {{param.value | addrShort}}
                                             </div>
@@ -130,7 +130,7 @@
                                             </ng-template>
                                         </div>
                                     </div>
-                                    <div class="text-sm text-gray-500">
+                                    <div class="text-sm text-gray-500 flex flex-row">
                                         {{manifest[0].inputs[i].description}}
                                     </div>
                                 </div>
