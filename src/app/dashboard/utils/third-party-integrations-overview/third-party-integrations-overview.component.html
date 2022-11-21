@@ -13,140 +13,19 @@
     
   </div>
 
-  <!-- RAMP NETWORK -->
-  <div class="w-1/2 p-2 opacity-25">
-    <div class="w-full h-full bg-white shadow-sm rounded-xl p-8 mx-4 my-2">
-      <form
-        class="flex flex-col text-gray-700"
-        [formGroup]="thirdPartyIntegrationsForm"
-      >
-        <label
-          class="mb-2 w-full font-semibold text-lg flex flex-row justify-between"
-          for="rampNetwork"
-          >Ramp Network
-          <label class="switch">
-            <input type="checkbox" />
-            <span class="slider round"></span>
-          </label>
-        </label>
-        <small class="mb-2"
-          >Ramp network is a service providing integrated fiat on and off ramps.
-          Visit
-          <a class="underline text-violet-800" href="https://ramp.network"
-            >their website</a
-          >
-          to learn more.</small
-        >
-        <input
-          disabled
-          placeholder="Ramp Network API Key"
-          class="border-gray-300 rounded-xl mt-2 text-sm"
-          id="rampNetwork"
-          type="text"
-        />
-      </form>
+  <div *ngIf="issuer$ | async as issuer" class="w-full p-4 flex flex-col font-semibold
+  text-gray-700 bg-white rounded-lg m-4">
+    <div>Magic Link API Key: <span *ngIf="apiKey$ | async as apiKey" class="font-light">{{apiKey}}</span> </div>
+    <input [formControl]="magicLinkAPIKeyForm"
+     class="w-full mt-2 rounded-lg font-light text-sm border-gray-200" type="text">
+    <div class="flex flex-row justify-end w-full">
+      <button app-action-button text="Update" [onClick]="updateMagicAPIKey(issuer).bind(this)"
+      [disabled]="!magicLinkAPIKeyForm.valid" class="bg-violet-700 disabled:bg-gray-500 px-12 py-2 rounded-full
+       text-xs uppercase font-semibold text-white mt-2"></button>
     </div>
+    
   </div>
 
-  <!-- MAGIC LINK -->
-  <div class="w-1/2 p-2 opacity-25">
-    <div class="w-full h-full bg-white shadow-sm rounded-xl p-8 mx-4 my-2">
-      <form
-        class="flex flex-col text-gray-700"
-        [formGroup]="thirdPartyIntegrationsForm"
-      >
-        <label
-          class="mb-2 w-full font-semibold text-lg flex flex-row justify-between"
-          for="rampNetwork"
-          >Magic Link
-          <label class="switch">
-            <input type="checkbox" />
-            <span class="slider round"></span>
-          </label>
-        </label>
-        <small class="mb-2"
-          >Magic link is a custodial wallet solution, enabling your users to
-          log-in with their email, phone or social netowrk. Visit
-          <a class="underline text-violet-800" href="https://magic.link"
-            >their website</a
-          >
-          to learn more.</small
-        >
-        <input
-          placeholder="Magic Link API key"
-          class="border-gray-300 rounded-xl mt-2 text-sm"
-          id="rampNetwork"
-          type="text"
-        />
-      </form>
-    </div>
-  </div>
 
-  <!-- CRISP CHAT -->
-  <div class="w-1/2 p-2 opacity-25">
-    <div class="w-full h-full bg-white shadow-sm rounded-xl p-8 mx-4 my-2">
-      <form
-        class="flex flex-col text-gray-700"
-        [formGroup]="thirdPartyIntegrationsForm"
-      >
-        <label
-          class="mb-2 w-full font-semibold text-lg flex flex-row justify-between"
-          for="rampNetwork"
-          >Crisp Chat
-          <label class="switch">
-            <input type="checkbox" />
-            <span class="slider round"></span>
-          </label>
-        </label>
-        <small class="mb-2"
-          >Crisp chat is a real-time chat support widget. It can help you
-          interact and get feedback from your customers. Visit
-          <a class="underline text-violet-800" href="https://magic.link"
-            >their website</a
-          >
-          to learn more.</small
-        >
-        <input
-          placeholder="Crisp Chat API Key"
-          class="border-gray-300 rounded-xl mt-2 text-sm"
-          id="rampNetwork"
-          type="text"
-        />
-      </form>
-    </div>
-  </div>
 
-  <!-- VERIFF KYC/AML -->
-  <div class="w-1/2 p-2 opacity-25">
-    <div class="w-full h-full bg-white shadow-sm rounded-xl p-8 mx-4 my-2">
-      <form
-        class="flex flex-col text-gray-700"
-        [formGroup]="thirdPartyIntegrationsForm"
-      >
-        <label
-          class="mb-2 w-full font-semibold text-lg flex flex-row justify-between"
-          for="rampNetwork"
-          >Veriff KYC/AML
-          <label class="switch">
-            <input type="checkbox" />
-            <span class="slider round"></span>
-          </label>
-        </label>
-        <small class="mb-2"
-          >Veriff enables you to perform KYC/AML checks for users of your app.
-          Visit
-          <a class="underline text-violet-800" href="https://magic.link"
-            >their website</a
-          >
-          to learn more.</small
-        >
-        <input
-          placeholder="Veriff API Key"
-          class="border-gray-300 rounded-xl mt-2 text-sm"
-          id="rampNetwork"
-          type="text"
-        />
-      </form>
-    </div>
-  </div>
 </div>

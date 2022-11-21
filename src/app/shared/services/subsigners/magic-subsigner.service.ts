@@ -43,7 +43,15 @@ export class MagicSubsignerService implements Subsigner<MagicLoginOpts> {
 
   DEFAULT_API_KEY = "pk_live_2675FA67C83167F9"
 
-  apiKey$: Observable<string> = of(this.DEFAULT_API_KEY)
+  apiKey$: Observable<string> = this.issuerService.issuer$.pipe(
+    switchMap(res => {
+      if(res.infoData.magicLinkApiKey.length > 0) {
+        return of(res.infoData.magicLinkApiKey) 
+      } else {
+        return of(this.DEFAULT_API_KEY) 
+      }
+    })
+  )
 
   isAvailable$: Observable<boolean> = defer(() =>
     this.apiKey$.pipe(map((apiKey) => !!apiKey))
