@@ -15,7 +15,11 @@ export class ThirdPartyIntegrationsOverviewComponent {
 
   magicLinkAPIKeyForm = new FormControl('', [Validators.required])
 
-  issuer$ = this.issuerService.issuer$
+  issuer$ = this.issuerService.issuer$.pipe(
+    tap(res => {
+      this.magicLinkAPIKeyForm.setValue(res.infoData.magicLinkApiKey)
+    })
+  )
   apiKey$ = this.magicSubsigner.apiKey$
 
   constructor(private issuerService: IssuerService,

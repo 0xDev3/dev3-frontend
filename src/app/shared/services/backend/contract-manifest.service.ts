@@ -74,4 +74,7 @@ export interface ParamsManifest {
   solidity_type: string,
   parameters?: ParamsManifest[]
   recommended_types: string[]
+  hints?: [{
+    decimals_fetcher: string
+  }]
 }

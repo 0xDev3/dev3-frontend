@@ -126,7 +126,13 @@
                                                 {{param.value | addrShort}}
                                             </div>
                                             <ng-template #regularParam>
-                                                {{param.value}}
+                                                <div *ngIf="contract$ | async as contract; else noContract">
+                                                    {{param.value | decimalsHint:manifest[0].inputs[i].hints?.[0]?.decimals_fetcher:contract.id | async}}
+                                                </div>
+                                                <ng-template #noContract>
+                                                    {{param.value}}
+                                                </ng-template>
+                                                
                                             </ng-template>
                                         </div>
                                     </div>

@@ -170,12 +170,16 @@ export class ContractDeploymentService {
     }
 
     getFunctionCallRequest(id: string) {
-        return this.http.get<FunctionCallRequestResponse>(`${this.path}/function-call/${id}`, { }, true, false, true)
+        if(id.startsWith('0x')) {
+            return this.http.get<FunctionCallRequestResponse>(`${this.path}/function-call/${id}`, { }, true, false, true)
+        } else {
+            return this.http.get<FunctionCallRequestResponse>(`${this.path}/function-call/${id}`, { }, true, false, true)
+        }
     }
 }
 
 export interface ReadOnlyFunctionCallData {
-    block_number: number,
+    block_number?: number,
     function_name: string,
     function_params: {
         type: FunctionArgumentType,

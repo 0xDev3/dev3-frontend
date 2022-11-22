@@ -147,6 +147,8 @@ import { WorkflowActionItemComponent } from './dashboard/workflows/workflow-acti
 import { ArrayTupleSmartInputComponent } from './shared/components/smart-input/array-tuple-smart-input/array-tuple-smart-input.component'
 import { AuthorizationExecEnvComponent } from './dashboard/authorizations/authorization-exec-env/authorization-exec-env.component'
 import { ContractExplorerComponent } from './contract-explorer/contract-explorer.component'
+import { DecimalsPipe } from './shared/services/backend/decimals-handler.service'
+import { DecimalsHintPipe } from './shared/pipes/decimals-hint.pipe'
 
 @NgModule({
   declarations: [
@@ -242,6 +244,7 @@ import { ContractExplorerComponent } from './contract-explorer/contract-explorer
     RequestSendNewComponent,
     RequestSendActionComponent,
     RequestSendShowComponent,
+    DecimalsHintPipe,
     RequestBalanceActionComponent,
     RequestWalletActionComponent,
     DashboardHolderComponent,
@@ -312,6 +315,7 @@ import { ContractExplorerComponent } from './contract-explorer/contract-explorer
     UnescapePipe,
     PercentPipe,
     FormatUnitPipe,
+    DecimalsHintPipe,
     DatePipe,
     DecimalPipe,
   ],

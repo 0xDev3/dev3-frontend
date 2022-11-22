@@ -1,29 +1,40 @@
-<div class="flex flex-row flex-wrap">
+<div *ngIf="issuer$ | async as issuer" class="flex flex-row flex-wrap gap-2 ml-4">
   <div class="w-full mt-1">
     <div
-      class="mx-4"
     >
       <app-info-snippet
         [hasBorderAndBackground]="true"
         [content]="{ title: 'Third party integrations', sections: [
           'Dev3 comes built-in with many third party plugins, enabling you to easily handle actions such as onboarding users with email, requesting users to purchase crypto with credit card, request KYC from users and more.',
-          'This feature is still under development. Our developers are working hard to bring third party integrations to you as soon as possible.'
         ]}"></app-info-snippet>
     </div>
     
   </div>
 
-  <div *ngIf="issuer$ | async as issuer" class="w-full p-4 flex flex-col font-semibold
-  text-gray-700 bg-white rounded-lg m-4">
-    <div>Magic Link API Key: <span *ngIf="apiKey$ | async as apiKey" class="font-light">{{apiKey}}</span> </div>
-    <input [formControl]="magicLinkAPIKeyForm"
+  <div class="w-1/2 p-8 flex flex-col font-semibold shadow-sm
+  text-gray-700 bg-white rounded-lg">
+    <div>Magic Link API Key</div>
+    <div class=" font-light text-xs text-gray-500 mb-2 mt-1">Magic Link is a custodial wallet provider. It enables your users to log-in with email, phone, social network accounts & more...</div>
+    <input [value]="issuer.infoData.magicLinkApiKey" [formControl]="magicLinkAPIKeyForm"
      class="w-full mt-2 rounded-lg font-light text-sm border-gray-200" type="text">
     <div class="flex flex-row justify-end w-full">
       <button app-action-button text="Update" [onClick]="updateMagicAPIKey(issuer).bind(this)"
       [disabled]="!magicLinkAPIKeyForm.valid" class="bg-violet-700 disabled:bg-gray-500 px-12 py-2 rounded-full
        text-xs uppercase font-semibold text-white mt-2"></button>
     </div>
-    
+  </div>
+
+  <div class="w-1/2 p-8 flex flex-col font-semibold shadow-sm
+  text-gray-700 bg-white rounded-lg">
+    <div>Magic Link API Key</div>
+    <div class=" font-light text-xs text-gray-500 mb-2 mt-1">Magic Link is a custodial wallet provider. It enables your users to log-in with email, phone, social network accounts & more...</div>
+    <input [value]="issuer.infoData.magicLinkApiKey" [formControl]="magicLinkAPIKeyForm"
+     class="w-full mt-2 rounded-lg font-light text-sm border-gray-200" type="text">
+    <div class="flex flex-row justify-end w-full">
+      <button app-action-button text="Update" [onClick]="updateMagicAPIKey(issuer).bind(this)"
+      [disabled]="!magicLinkAPIKeyForm.valid" class="bg-violet-700 disabled:bg-gray-500 px-12 py-2 rounded-full
+       text-xs uppercase font-semibold text-white mt-2"></button>
+    </div>
   </div>
 
 

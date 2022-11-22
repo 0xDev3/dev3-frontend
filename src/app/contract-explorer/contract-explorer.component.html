@@ -59,9 +59,7 @@
     </div>
     
 
-    <div class="mb-8 font-mono text-gray-500 text-sm">
-        Built with love by hackers @ Dev3. Open-source and free forever. 
-    </div>
+    
 
     <div [@inOutAnimation] class="flex flex-col w-full gap-2 max-w-5xl p-4 bg-white rounded-lg"
         *ngIf="contract$ | async as contract">
@@ -96,5 +94,9 @@
             <app-contract-function-interaction-item [functionManifest]="functionManifest" [contractID]="'asd'">
             </app-contract-function-interaction-item>
         </div>
+    </div>
+
+    <div class="mb-8 font-mono text-gray-500 text-sm">
+        Built with love by hackers @ Dev3. Open-source and free forever. 
     </div>
 </div>
