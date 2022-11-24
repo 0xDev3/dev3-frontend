@@ -14,6 +14,7 @@ import { MagicSubsignerService } from 'src/app/shared/services/subsigners/magic-
 export class ThirdPartyIntegrationsOverviewComponent {
 
   magicLinkAPIKeyForm = new FormControl('', [Validators.required])
+  rampApiKeyControl = new FormControl('', [Validators.required])
 
   issuer$ = this.issuerService.issuer$.pipe(
     tap(res => {
@@ -32,11 +33,24 @@ export class ThirdPartyIntegrationsOverviewComponent {
         crispWebsiteId: '',
         magicLinkApiKey: this.magicLinkAPIKeyForm.value,
         name: issuer.infoData.name,
-        rampApiKey: ''
+        rampApiKey: issuer.infoData.rampApiKey
       }).pipe(
         switchMap( res => this.issuerService.updateInfo(issuer.contractAddress, res.path)),
         tap(_ => this.dialogService.success({ title: 'Success!', message: 'Updated Magic API Key.' }))
       )
     } 
   }
+
+  updateRampAPIKey(issuer: IssuerWithInfo) {
+    return () => {
+      return this.issuerService.uploadInfo({
+        crispWebsiteId: '',
+        magicLinkApiKey: issuer.infoData.magicLinkApiKey,
+        name: issuer.infoData.name,
+        rampApiKey: this.rampApiKeyControl.value
+      })
+    }
+  }
+
+  
 }

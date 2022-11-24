@@ -34,7 +34,7 @@ export class DecimalsHintPipe implements PipeTransform {
             map(res => { return String(value / Math.pow(10, res.return_values[0])) } ),
         )
     }
-    return of('-1')
+    return of(value)
 
   }
   
@@ -42,6 +42,8 @@ export class DecimalsHintPipe implements PipeTransform {
     const splitQuery = query.split('.')
     if(splitQuery.at(0) === '$this') {
         return DecimalsOrigin.Self
+    } else if(splitQuery.at(0)?.includes('$arg')) {
+        return DecimalsOrigin.ByArgument
     }
     return DecimalsOrigin.Self
   }
@@ -50,6 +52,7 @@ export class DecimalsHintPipe implements PipeTransform {
 
 enum DecimalsOrigin {
     Self,
+    ByArgument,
     ByAddress,
     Fetch
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import {
+  BehaviorSubject,
   combineLatest,
   defer,
   from,
@@ -43,15 +44,10 @@ export class MagicSubsignerService implements Subsigner<MagicLoginOpts> {
 
   DEFAULT_API_KEY = "pk_live_2675FA67C83167F9"
 
-  apiKey$: Observable<string> = this.issuerService.issuer$.pipe(
-    switchMap(res => {
-      if(res.infoData.magicLinkApiKey.length > 0) {
-        return of(res.infoData.magicLinkApiKey) 
-      } else {
-        return of(this.DEFAULT_API_KEY) 
-      }
-    })
-  )
+  apiKeySub = new BehaviorSubject<string>(this.DEFAULT_API_KEY)
+  apiKey$: Observable<string> = this.apiKeySub.asObservable()
+
+  
 
   isAvailable$: Observable<boolean> = defer(() =>
     this.apiKey$.pipe(map((apiKey) => !!apiKey))
@@ -63,7 +59,15 @@ export class MagicSubsignerService implements Subsigner<MagicLoginOpts> {
     private issuerService: IssuerService,
     private matDialog: MatDialog,
     private router: RouterService
-  ) {}
+  ) {
+
+    this.issuerService.issuer$.subscribe(res => {
+      if(res.infoData.magicLinkApiKey.length > 0) {
+        this.apiKeySub.next(res.infoData.magicLinkApiKey)
+      }
+    })
+
+  }
 
   login(opts: MagicLoginOpts): Observable<providers.JsonRpcSigner> {
     return this.registerMagic.pipe(
