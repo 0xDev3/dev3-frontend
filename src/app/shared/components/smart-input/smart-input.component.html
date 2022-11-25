@@ -1,7 +1,11 @@
-<input *ngIf="(inputType !== 'DATE_TIME') && (inputType !== 'ARRAY') && (inputType !== 'BOOLEAN')" id="smartInputElement" (click)="toggleInput()"
+<ng-container *ngIf="(inputType !== 'DATE_TIME') && (inputType !== 'ARRAY') && (inputType !== 'BOOLEAN')">
+    <input id="smartInputElement" (click)="toggleInput()"
     [formControl]="controlAsForm(controlName)"
     class="w-full border-gray-200 cursor-text rounded-lg text-sm flex flex-row justify-between text-gray-700"
     type="text" autocomplete="off" [value]="selected$ | async" />
+</ng-container>
+
+
 
 <div *ngIf="inputType === 'DATE_TIME'">
     <input class="w-0 h-0 hidden rounded-lg border-gray-200" [formControl]="controlAsForm(controlName)"

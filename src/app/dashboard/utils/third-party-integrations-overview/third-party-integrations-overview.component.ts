@@ -15,10 +15,13 @@ export class ThirdPartyIntegrationsOverviewComponent {
 
   magicLinkAPIKeyForm = new FormControl('', [Validators.required])
   rampApiKeyControl = new FormControl('', [Validators.required])
+  crispApiKeyControl = new FormControl('', [Validators.required])
 
   issuer$ = this.issuerService.issuer$.pipe(
     tap(res => {
       this.magicLinkAPIKeyForm.setValue(res.infoData.magicLinkApiKey)
+      this.crispApiKeyControl.setValue(res.infoData.crispWebsiteId)
+      this.rampApiKeyControl.setValue(res.infoData.rampApiKey)
     })
   )
   apiKey$ = this.magicSubsigner.apiKey$
@@ -30,7 +33,7 @@ export class ThirdPartyIntegrationsOverviewComponent {
   updateMagicAPIKey(issuer: IssuerWithInfo) {
     return () => {
       return this.issuerService.uploadInfo({
-        crispWebsiteId: '',
+        crispWebsiteId: issuer.infoData.crispWebsiteId,
         magicLinkApiKey: this.magicLinkAPIKeyForm.value,
         name: issuer.infoData.name,
         rampApiKey: issuer.infoData.rampApiKey
@@ -44,11 +47,28 @@ export class ThirdPartyIntegrationsOverviewComponent {
   updateRampAPIKey(issuer: IssuerWithInfo) {
     return () => {
       return this.issuerService.uploadInfo({
-        crispWebsiteId: '',
+        crispWebsiteId: issuer.infoData.crispWebsiteId,
         magicLinkApiKey: issuer.infoData.magicLinkApiKey,
         name: issuer.infoData.name,
         rampApiKey: this.rampApiKeyControl.value
-      })
+      }).pipe(
+        switchMap(res => this.issuerService.updateInfo(issuer.contractAddress, res.path)),
+        tap(_ => this.dialogService.success({ title: 'Success!', message: 'Updated Ramp API Key'}))
+      )
+    }
+  }
+
+  updateCrispAPIKey(issuer: IssuerWithInfo) {
+    return () => {
+      return this.issuerService.uploadInfo({
+        crispWebsiteId: this.crispApiKeyControl.value,
+        magicLinkApiKey: issuer.infoData.magicLinkApiKey,
+        name: issuer.infoData.name,
+        rampApiKey: this.rampApiKeyControl.value
+      }).pipe(
+        switchMap(res => this.issuerService.updateInfo(issuer.contractAddress, res.path)),
+        tap(_ => this.dialogService.success({ title: 'Success!', message: 'Updated Ramp API Key'}))
+      )
     }
   }
 
