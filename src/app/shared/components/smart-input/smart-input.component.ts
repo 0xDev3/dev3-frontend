@@ -20,28 +20,29 @@ import { easeInOutAnimation } from '../../utils/animations'
 })
 export class SmartInputComponent implements OnInit {
 
-  isDialogOpenSub = new BehaviorSubject(false)
-  isDialogOpen$ = this.isDialogOpenSub.asObservable()
+  
   @Input() inputIsArray = false
   @Input() formFinishedLoadingSub!: BehaviorSubject<boolean>
-  formFinishedLoading$!: Observable<boolean>
-  @Input() solidityType!: string
-  @ViewChild('smartInputElement') smartInputElement!: ElementRef
-  onTouched: () => void = () => { }
-  picker: any
   @Input() recommendedTypes: string[] = []
   @Input() rootForm!: FormGroup
   @Input() controlName!: string
+  @Input() solidityType!: string
+  @Input() manifestID!: FunctionManifest
+  @ViewChild('smartInputElement') smartInputElement!: ElementRef
+
+  onTouched: () => void = () => { }
+  
   inputType: InputType = "TEXT"
   arraySubtype: InputType = "TEXT"
+
+  isDialogOpenSub = new BehaviorSubject(false)
+  isDialogOpen$ = this.isDialogOpenSub.asObservable().pipe()
+  formFinishedLoading$!: Observable<boolean>
   arrayBufferSub = new BehaviorSubject<string[]>([])
   arrayBuffer$ = this.arrayBufferSub.asObservable()
   selectedSub = new BehaviorSubject<string | null>(null)
-  @Input() manifestID!: FunctionManifest
-
   tupleArrayListBufferSub = new BehaviorSubject<string[][]>([])
   tupleArrayListBuffer$ = this.tupleArrayListBufferSub.asObservable()
-
 
   selected$ = this.selectedSub.asObservable().pipe(
     tap(() => this.isDialogOpenSub.next(false)),

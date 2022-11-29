@@ -19,17 +19,17 @@
               Paste the address of an ERC-20 compliant token, for which you plan on distributing airdrops or dividends.
             </small>
             <div class="w-full flex flex-row border border-gray-200 rounded-lg">
-              <!-- <input class="border-0 text-sm rounded-lg w-8/12" type="text"
-              formControlName="assetAddress" id="asset-address"
-              autocomplete="off"> -->
+
 
               <div class="w-2/3">
-                <app-smart-input [rootForm]="newSnapshotForm" 
-                [formFinishedLoadingSub]="formFinishedLoadingSub"
-                solidityType="address" [recommendedTypes]="['common.erc20']"
-                controlName="assetAddress"></app-smart-input>
-              </div>
-              
+                <app-smart-input 
+                  [rootForm]="newSnapshotForm" 
+                  [formFinishedLoadingSub]="formFinishedLoadingSub"
+                  solidityType="address" 
+                  [recommendedTypes]="['erc.erc-20']"
+                  controlName="assetAddress"
+                  ></app-smart-input>
+              </div>        
   
               <div class="flex" *ngIf="!state.tokenData">
                 <div class="flex items-center mt-2 flex-1">
@@ -53,11 +53,8 @@
                 <app-add-to-metamask [value]="state.tokenData.address">
                 </app-add-to-metamask>
               </div>
-            </div>
-            
+            </div>         
           </div>
-  
-          
   
           <div class="flex flex-col mt-4">
             <label class="text-sm uppercase font-semibold" for="block-number">
@@ -101,8 +98,6 @@
               </div>
             </div>
           </div>
-  
-         
   
           <form [formGroup]="ignoredAddressInputForm">
             <div class="flex flex-col mt-4">
