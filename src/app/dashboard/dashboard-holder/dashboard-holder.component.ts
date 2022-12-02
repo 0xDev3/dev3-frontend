@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { Router } from '@angular/router'
 import {
   BehaviorSubject,
+  catchError,
   map,
   Observable,
   of,
@@ -29,26 +30,23 @@ import { withStatus } from 'src/app/shared/utils/observables'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardHolderComponent {
+
   navbarSelectedIndex = 0
   issuer$ = this.issuerService.issuer$
   network$ = this.preferenceQuery.network$
   isBackendAuthorized$ = this.preferenceQuery.isBackendAuthorized$
-
-  
   screenSize$ = this.tailwindService.screenResize$
 
   refreshAPIKeySub = new BehaviorSubject<ApiKeyModel | null>(null)
   projectInfoHolderStateSub = new BehaviorSubject<ProjectInfoHolderState>('open')
   projectInfoHolderState$ = this.projectInfoHolderStateSub.asObservable()
 
-    projectID = this.projectService.projectID
+  projectID = this.projectService.projectID
 
   apiKey$ = this.refreshAPIKeySub.asObservable().pipe(
     switchMap(() => this.http.ensureAuth),
     switchMap(() => this.isBackendAuthorized$ ),
     switchMap(() => this.projectService.fetchApiKey()))
-
-
 
   constructor(
     private router: RouterService,
