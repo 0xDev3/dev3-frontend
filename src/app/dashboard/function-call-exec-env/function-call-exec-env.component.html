@@ -8,6 +8,16 @@
         [class.!w-full]="isInSDK"
         class="bg-white flex flex-col justify-center rounded-2xl w-11/12 px-6 pt-6 pb-4">
         
+        <div class="w-full flex flex-row justify-end mr-2">
+                <div (click)="closeTab()" 
+                    class="flex flex-row items-center cursor-pointer hover:text-violet-700">
+                    <div class="mr-2 uppercase font-semibold text-xs">Cancel Transaction</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>   
+        </div>
+        
         <img *ngIf="issuer.infoData.logo" class="mb-3 h-14 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
         
         <div class="leading-6 text-sm flex flex-col font-medium text-center">
@@ -153,7 +163,7 @@
 
             
 
-            <button *ngIf="request.status === 'PENDING'" (click)="toggleSeeMoreDetails()" class="mt-2 mb-2 border rounded-full py-1 w-full transition-all tracking-wide
+            <!-- <button *ngIf="request.status === 'PENDING'" (click)="toggleSeeMoreDetails()" class="mt-2 mb-2 border rounded-full py-1 w-full transition-all tracking-wide
                     text-gray-500 text-xxs hover:text-violet-800 hover:font-bold font-medium
                     uppercase flex flex-row items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -165,7 +175,7 @@
                 <ng-template #hideDetails>
                     <div class="ml-2">See advanced details</div>
                 </ng-template>
-            </button>
+            </button> -->
 
             
 
@@ -220,7 +230,7 @@
 
             <div *ngIf="request.status === 'PENDING'" [class.!hidden]="(isWaitingForTx$ | async)"
                 class="flex flex-col w-full">
-                <button app-action-button text="✅ &nbsp; Confirm Transaction" 
+                <button app-action-button text="✓ &nbsp; Confirm Transaction" 
                     class="bg-violet-700 text-white font-semibold disabled:shadow-none disabled:bg-gray-300
                     py-2 w-full rounded-full hover:bg-violet-800 shadow-md hover:shadow-xl uppercase"
                     [onClick]="executeFunction(request).bind(this)"

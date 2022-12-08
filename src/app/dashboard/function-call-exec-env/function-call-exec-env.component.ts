@@ -48,8 +48,6 @@ export class FunctionCallExecEnvComponent {
       } else {
         return of(null)
       }
-    }), tap(res => { 
-      console.log("MANIFEST DATA: ", res)
     })
   )
 
