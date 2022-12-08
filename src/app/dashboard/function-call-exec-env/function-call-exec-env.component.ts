@@ -28,6 +28,8 @@ export class FunctionCallExecEnvComponent {
   functionRequest$ = this.deploymentService
     .getFunctionCallRequest(this.route.snapshot.params.id)
 
+  isInSDK  = this.route.snapshot.queryParams.sdk
+
   contract$ = this.functionRequest$
     .pipe(switchMap(result => 
       { 

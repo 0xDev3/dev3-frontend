@@ -1,14 +1,18 @@
-<div *ngIf="issuer$ | async as issuer" class="w-full h-full mt-8 flex flex-col justify-center items-center text-gray-700">
+<div *ngIf="issuer$ | async as issuer" 
+    class="w-full h-full mt-8 flex flex-col 
+    justify-center items-center text-gray-700">
+
     <div *ngIf="functionRequest$ | async as request"
-        class="bg-white flex flex-col rounded-2xl shadow-sm max-w-lg w-11/12 px-6 pt-6 pb-4">
+        [class.shadow-sm]="!isInSDK"
+        [class.rounded-2xl]="!isInSDK"
+        [class.max-w-lg]="!isInSDK"
+        [class.!w-full]="isInSDK"
+        [class.!h-full]="isInSDK"
+        class="bg-white flex flex-col rounded-2xl w-11/12 px-6 pt-6 pb-4">
         <img *ngIf="issuer.infoData.logo" class="mb-3 h-14 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
         <div class="leading-6 text-sm font-medium text-center">
 
-            
-
             <span *ngIf="request.status === 'PENDING'" class="text-violet-700">{{issuer.infoData.name}}</span>
-
-            
 
             <div *ngIf="request.status === 'PENDING'" class="text-gray-500 font-normal">
                 is requesting you to execute a transaction

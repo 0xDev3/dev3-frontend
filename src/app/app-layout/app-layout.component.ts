@@ -5,6 +5,7 @@ import {
   HostListener,
   Inject,
 } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 import { CrispService } from '../shared/services/crisp.service'
 
 @Component({
@@ -14,7 +15,10 @@ import { CrispService } from '../shared/services/crisp.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppLayoutComponent {
-  constructor(@Inject(DOCUMENT) public crispService: CrispService) {}
+  constructor(@Inject(DOCUMENT) public crispService: CrispService,
+  private route: ActivatedRoute) {}
+
+  isInSDK = this.route.snapshot.queryParams.sdk
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

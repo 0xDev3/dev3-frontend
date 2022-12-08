@@ -1,5 +1,6 @@
-<div class="flex flex-col layout-bg min-h-screen">
-  <div
+<div [class.layout-bg]="!isInSDK"
+  class="flex flex-col min-h-screen">
+  <div *ngIf="!isInSDK"
     id="navbarHolder"
     class="flex justify-center top-0 left-0 z-30 sticky overflow-x-hidden"
   >
@@ -11,7 +12,7 @@
         <router-outlet></router-outlet>
       </main>
       <footer>
-        <app-footer></app-footer>
+        <app-footer *ngIf="!isInSDK"></app-footer>
       </footer>
     </div>
   </div>
