@@ -1,5 +1,6 @@
 <div *ngIf="issuer$ | async as issuer" 
-    class="w-full h-full mt-8 flex flex-col 
+    [class.mt-8]="!isInSDK"
+    class="w-full h-full flex flex-col 
     justify-center items-center text-gray-700">
 
     <div *ngIf="functionRequest$ | async as request"
