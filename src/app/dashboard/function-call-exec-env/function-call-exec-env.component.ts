@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ContractManifest } from 'dev3-sdk/dist/core/contracts/ContractManifest'
+import { network } from 'hardhat'
 import { BehaviorSubject, combineLatest, delay, map, Observable, of, switchMap, tap, zip } from 'rxjs'
+import { ContractExplorerService } from 'src/app/contract-explorer/contract-explorer.service'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { SessionQuery } from 'src/app/session/state/session.query'
 import { ChainID, Networks } from 'src/app/shared/networks'
@@ -46,7 +48,15 @@ export class FunctionCallExecEnvComponent {
       if(functionRequest?.contract_id) {
         return this.manifestService.getByID(functionRequest.contract_id, this.projectService.projectID)
       } else {
-        return of(null)
+      
+        const network = Networks[this.preferenceQuery.getValue().chainID].chainID.toString()
+        return this.functionRequest$.pipe(switchMap(res => 
+          this.contractExplorerService.getContractPreview(res.contract_address!, network).pipe(
+            tap(result => console.log("DECORATOR", result)),
+            map(result => result.decorator)
+          )
+        ))
+
       }
     })
   )
@@ -106,6 +116,7 @@ export class FunctionCallExecEnvComponent {
     private projectService: ProjectService,
     private preferenceQuery: PreferenceQuery,
     private sessionQuery: SessionQuery,
+    private contractExplorerService: ContractExplorerService,
     private manifestService: ContractManifestService,
     private deploymentService: ContractDeploymentService) { }
 
