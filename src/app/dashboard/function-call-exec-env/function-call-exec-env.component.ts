@@ -30,32 +30,31 @@ export class FunctionCallExecEnvComponent {
   functionRequest$ = this.deploymentService
     .getFunctionCallRequest(this.route.snapshot.params.id)
 
-  isInSDK  = this.route.snapshot.queryParams.sdk
+  isInSDK = this.route.snapshot.queryParams.sdk
 
   contract$ = this.functionRequest$
-    .pipe(switchMap(result => 
-      { 
-        if(result.deployed_contract_id) {
-          return this.deploymentService.getContractDeploymentRequest(result.deployed_contract_id)
-        } else {
-          return of(null)
-        }
+    .pipe(switchMap(result => {
+      if (result.deployed_contract_id) {
+        return this.deploymentService.getContractDeploymentRequest(result.deployed_contract_id)
+      } else {
+        return of(null)
       }
-  ))
+    }
+    ))
 
   manifest$: Observable<ContractManifestData | null> = this.contract$.pipe(
     switchMap(functionRequest => {
-      if(functionRequest?.contract_id) {
+      if (functionRequest?.contract_id) {
         return this.manifestService.getByID(functionRequest.contract_id, this.projectService.projectID)
       } else {
-      
         const network = Networks[this.preferenceQuery.getValue().chainID].chainID.toString()
-        return this.functionRequest$.pipe(switchMap(res => 
-          this.contractExplorerService.getContractPreview(res.contract_address!, network).pipe(
-            tap(result => console.log("DECORATOR", result)),
-            map(result => result.decorator)
-          )
-        ))
+        return this.functionRequest$.pipe(
+          switchMap(res => {
+            return this.contractExplorerService.getContractPreview(res.contract_address!, network).pipe(
+              map(result => result.decorator)
+            )
+          })
+        )
 
       }
     })
@@ -63,12 +62,17 @@ export class FunctionCallExecEnvComponent {
 
   functionManifest$ = zip(this.functionRequest$, this.manifest$).pipe(
     map(result => {
-      const res = result[1]?.functions.filter(func => { 
-        return func.solidity_name === result[0].function_name 
+      const res = result[1]?.functions.filter(func => {
+        return func.solidity_name === result[0].function_name
       })
       return res
     })
   )
+
+  network$ = this.preferenceQuery.network$
+  address$ = this.preferenceQuery.address$
+  authProvider$ = this.preferenceQuery.authProvider$
+  balance$ = this.userService.nativeTokenBalance$
 
   seeMoreDetailsToggledSub = new BehaviorSubject(false)
   seeMoreDetails$ = this.seeMoreDetailsToggledSub.asObservable()
@@ -116,6 +120,7 @@ export class FunctionCallExecEnvComponent {
     private projectService: ProjectService,
     private preferenceQuery: PreferenceQuery,
     private sessionQuery: SessionQuery,
+    private userService: UserService,
     private contractExplorerService: ContractExplorerService,
     private manifestService: ContractManifestService,
     private deploymentService: ContractDeploymentService) { }

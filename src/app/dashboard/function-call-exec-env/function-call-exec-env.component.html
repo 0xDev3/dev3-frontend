@@ -8,15 +8,30 @@
         [class.max-w-lg]="!isInSDK"
         [class.!w-full]="isInSDK"
         class="bg-white flex flex-col justify-center rounded-2xl w-11/12 px-6 pt-6 pb-4">
+
+        <div *ngIf="isInSDK" class="w-full py-2 px-4 text-sm flex flex-row items-center justify-between bg-gray-50 rounded-lg mb-4">
+            <div class="flex text-xs flex-col items-center w-1/3">
+                <div class=" font-light text-gray-500">Gas</div>
+                <div class="text-gray-500 font-medium">{{balance$ | async | formatUnit:'token':18}}</div>
+            </div>
+            <div class="flex text-xs flex-col items-center w-1/3">
+                <div class=" font-light text-gray-500">My address</div>
+                <div class="text-gray-500 font-medium">{{address$ | async | addrShort}}</div>
+            </div>
+            <div class="flex text-xs flex-col items-center w-1/3">
+                <div class=" font-light text-gray-500">Wallet provider</div>
+                <div class="text-gray-500 font-medium">{{authProvider$ | async}}</div>
+            </div>
+        </div>
         
-        <img *ngIf="issuer.infoData.logo" class="mb-3 h-14 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
+        <img *ngIf="issuer.infoData.logo" class="mb-3 h-8 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
         
         <div class="leading-6 text-sm flex flex-col font-medium text-center">
 
             <span *ngIf="request.status === 'PENDING'" class="text-violet-700">{{issuer.infoData.name}}</span>
 
             <div *ngIf="request.status === 'PENDING'" class="text-gray-500 font-normal">
-                is requesting you to execute a transaction
+                is requesting you to execute a transaction on {{(network$ | async)!.name}}
             </div>
 
             <div *ngIf="(request.status === 'PENDING') && (request.screen_config?.before_action_message)">
@@ -98,11 +113,11 @@
     
                     <div class="flex flex-col ml-4 text-sm">
                         <div class="font-semibold">{{functionManifest[0].name}}</div>
-                        <div class="font-light">{{functionManifest[0].description}}</div>
+                        <div class="text-xs text-gray-500">{{functionManifest[0].description}}</div>
                     </div>
                 </div>
     
-                <ng-container *ngIf="functionManifest$ | async as manifest">
+                <ng-container *ngIf="functionManifest$ | async as manifest; else detailsLoading">
                     <div *ngIf="request.function_params.length > 0">
                         <div class="w-full flex flex-row justify-center mt-4 items-center text-xs font-medium">
                             <hr class="w-3/12 border-gray-100">
@@ -141,7 +156,7 @@
                                             </ng-template>
                                         </div>
                                     </div>
-                                    <div class="text-sm text-gray-500 flex flex-row">
+                                    <div class="text-xs text-gray-500 flex flex-row">
                                         {{manifest[0].inputs[i].description}}
                                     </div>
                                 </div>
@@ -219,24 +234,16 @@
 
             <!-- END DISPLAY INFO ITEMS -->
 
+           
             <div *ngIf="request.status === 'PENDING'" [class.!hidden]="(isWaitingForTx$ | async)"
                 class="flex flex-col w-full">
                 <button app-action-button text="✓ &nbsp; Confirm Transaction" 
                     class="bg-violet-700 text-white font-semibold disabled:shadow-none disabled:bg-gray-300
-                    py-2 w-full rounded-full hover:bg-violet-800 shadow-md hover:shadow-xl uppercase"
+                    py-2 w-full rounded-full hover:bg-violet-800 shadow-md hover:shadow-xl uppercase mt-2"
+                    [disabled]="!functionManifest$"
                     [onClick]="executeFunction(request).bind(this)"
                     *ngIf="isLoggedIn$ | async; else notLoggedIn"></button>
 
-                <button (click)="closeTab()"
-                    class="w-full flex flex-row items-center justify-center
-                 mt-4 uppercase font-medium text-sm text-gray-500 hover:text-violet-700">
-                    <div class="mr-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>                          
-                    </div>
-                    <div>Cancel transaction</div>
-                </button>
 
                 <ng-template #notLoggedIn>
                     <button app-action-button class="mt-4 py-2 bg-violet-700 text-white rounded-lg hover:bg-violet-900"
@@ -247,9 +254,11 @@
             <div class="mt-8 w-full
              text-gray-500 text-xs justify-center flex flex-col items-center">
                 Transaction processing provided by 
-                <a class="mt-2" href="https://dev3.sh"><img class="h-4 ml-2" src="../../../assets/dev3-logo.png" alt=""></a>
+                <a target="_blank" class="mt-2" href="https://dev3.sh"><img class="h-4 ml-2" src="../../../assets/dev3-logo.png" alt=""></a>
                 
             </div>
+
+            
             
 
             <div *ngIf="isWaitingForTx$ | async">
