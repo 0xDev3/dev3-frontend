@@ -41,22 +41,12 @@ export class FunctionCallExecEnvComponent {
       }
     }))
 
-  manifest$: Observable<ContractManifestData | null> = this.contract$.pipe(
-    switchMap(functionRequest => {
-      if (functionRequest?.contract_id) {
-        return this.projectService.getProjectIdByChainAndAddress().pipe(
-          switchMap(projectID => this.manifestService.getByID(functionRequest.contract_id, projectID.id))
-        )
-      } else {
-        const network = Networks[this.preferenceQuery.getValue().chainID].chainID.toString()
-        return this.functionRequest$.pipe(
-          switchMap(res => {
-            return this.contractExplorerService.getContractPreview(res.contract_address!, network).pipe(
-              map(result => result.decorator)
-            )
-          })
-        )
-      }
+  manifest$: Observable<ContractManifestData | null> = this.functionRequest$.pipe(
+    switchMap(funcReq => {
+      const network = Networks[this.preferenceQuery.getValue().chainID].chainID.toString()
+      return this.contractExplorerService.getContractPreview(funcReq.contract_address!, network).pipe(
+        map(result => result.decorator)
+      )
     })
   )
 
