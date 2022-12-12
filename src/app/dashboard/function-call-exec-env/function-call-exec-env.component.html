@@ -11,15 +11,15 @@
 
         <div *ngIf="isInSDK" class="w-full py-2 px-4 text-sm flex flex-row items-center justify-between bg-gray-50 rounded-lg mb-4">
             <div class="flex text-xs flex-col items-center w-1/3">
-                <div class=" font-light text-gray-500">Gas</div>
+                <div class=" font-light text-gray-500 uppercase text-xxs">Available gas</div>
                 <div class="text-gray-500 font-medium">{{balance$ | async | formatUnit:'token':18}}</div>
             </div>
             <div class="flex text-xs flex-col items-center w-1/3">
-                <div class=" font-light text-gray-500">My address</div>
+                <div class=" font-light text-gray-500 uppercase text-xxs">My address</div>
                 <div class="text-gray-500 font-medium">{{address$ | async | addrShort}}</div>
             </div>
             <div class="flex text-xs flex-col items-center w-1/3">
-                <div class=" font-light text-gray-500">Wallet provider</div>
+                <div class=" font-light text-gray-500 uppercase text-xxs">Wallet provider</div>
                 <div class="text-gray-500 font-medium">{{authProvider$ | async}}</div>
             </div>
         </div>
@@ -31,7 +31,12 @@
             <span *ngIf="request.status === 'PENDING'" class="text-violet-700">{{issuer.infoData.name}}</span>
 
             <div *ngIf="request.status === 'PENDING'" class="text-gray-500 font-normal">
-                is requesting you to execute a transaction on {{(network$ | async)!.name}}
+                is requesting you to execute a transaction on <br>
+                <div class="flex flex-row items-center justify-center w-full">
+                    <img class="h-6 mr-1" *ngIf="network$ | async as network" [src]="network.iconURL"
+                    alt="" srcset="">
+                   <div>{{(network$ | async)!.name}}</div>  
+                </div>
             </div>
 
             <div *ngIf="(request.status === 'PENDING') && (request.screen_config?.before_action_message)">
@@ -251,16 +256,6 @@
                 </ng-template>
             </div>
 
-            <div class="mt-8 w-full
-             text-gray-500 text-xs justify-center flex flex-col items-center">
-                Transaction processing provided by 
-                <a target="_blank" class="mt-2" href="https://dev3.sh"><img class="h-4 ml-2" src="../../../assets/dev3-logo.png" alt=""></a>
-                
-            </div>
-
-            
-            
-
             <div *ngIf="isWaitingForTx$ | async">
                 <div class="w-full py-2 bg-violet-50 flex mt-2 flex-row items-center justify-center rounded-lg">
                     <span class="font-semibold text-violet-700 text-sm  flex flex-row items-center justify-center">
@@ -268,6 +263,12 @@
                         <div class="ml-2">Processing</div>
                     </span>
                 </div>
+            </div>
+
+            <div class="mt-8 w-full
+             text-gray-500 text-xs justify-center flex flex-col items-center">
+                Transaction processing provided by 
+                <a target="_blank" class="mt-2" href="https://dev3.sh"><img class="h-4 ml-2" src="../../../assets/dev3-logo.png" alt=""></a>
             </div>
 
         </div>

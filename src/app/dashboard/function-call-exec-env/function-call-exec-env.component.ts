@@ -39,13 +39,14 @@ export class FunctionCallExecEnvComponent {
       } else {
         return of(null)
       }
-    }
-    ))
+    }))
 
   manifest$: Observable<ContractManifestData | null> = this.contract$.pipe(
     switchMap(functionRequest => {
       if (functionRequest?.contract_id) {
-        return this.manifestService.getByID(functionRequest.contract_id, this.projectService.projectID)
+        return this.projectService.getProjectIdByChainAndAddress().pipe(
+          switchMap(projectID => this.manifestService.getByID(functionRequest.contract_id, projectID.id))
+        )
       } else {
         const network = Networks[this.preferenceQuery.getValue().chainID].chainID.toString()
         return this.functionRequest$.pipe(
@@ -55,7 +56,6 @@ export class FunctionCallExecEnvComponent {
             )
           })
         )
-
       }
     })
   )
