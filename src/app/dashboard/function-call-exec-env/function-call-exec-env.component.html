@@ -249,6 +249,13 @@
                     [onClick]="executeFunction(request).bind(this)"
                     *ngIf="isLoggedIn$ | async; else notLoggedIn"></button>
 
+                <button app-action-button [onClick]="logout.bind(this)"
+                    text="Logout / Change wallet provider"
+                    class="mt-4 justify-center hover:text-violet-700 hover:font-bold
+                    font-semibold text-sm uppercase flex flex-row items-center"
+                    *ngIf="isLoggedIn$ | async">
+                </button>
+
 
                 <ng-template #notLoggedIn>
                     <button app-action-button class="mt-4 py-2 bg-violet-700 text-white rounded-lg hover:bg-violet-900"

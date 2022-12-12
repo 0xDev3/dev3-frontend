@@ -75,6 +75,10 @@ export class FunctionCallExecEnvComponent {
     return this.signerService.ensureAuth
   }
 
+  logout() {
+    return this.signerService.logout()
+  }
+
   closeTab() {
     window.close()
   }
@@ -107,12 +111,10 @@ export class FunctionCallExecEnvComponent {
     private issuerService: IssuerService,
     private route: ActivatedRoute,
     private signerService: SignerService,
-    private projectService: ProjectService,
     private preferenceQuery: PreferenceQuery,
     private sessionQuery: SessionQuery,
     private userService: UserService,
     private contractExplorerService: ContractExplorerService,
-    private manifestService: ContractManifestService,
     private deploymentService: ContractDeploymentService) { }
 
 }
