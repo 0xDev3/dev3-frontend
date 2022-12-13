@@ -160,7 +160,7 @@
                                             </div>
                                             <ng-template #regularParam>
                                                 <div *ngIf="contract$ | async as contract; else noContract">
-                                                    {{param.value | decimalsHint:manifest[0].inputs[i].hints?.[0]?.decimals_fetcher:contract.id | async}}
+                                                    {{param.value}}
                                                 </div>
                                                 <ng-template #noContract>
                                                     {{param.value}}
