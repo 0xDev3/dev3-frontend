@@ -24,16 +24,15 @@
             </div>
         </div>
         
-        <img *ngIf="issuer.infoData.logo" class="mb-3 h-8 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
+        <img *ngIf="issuer.infoData.logo" class="mb-3 h-6 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
         
         <div class="leading-6 text-sm flex flex-col font-medium text-center">
 
-            <span *ngIf="request.status === 'PENDING'" class="text-violet-700">{{issuer.infoData.name}}</span>
-
             <div *ngIf="request.status === 'PENDING'" class="text-gray-500 font-normal">
-                is requesting you to execute a transaction on <br>
-                <div class="flex flex-row items-center justify-center w-full">
-                    <img class="h-6 mr-1" *ngIf="network$ | async as network" [src]="network.iconURL"
+                <span class="text-violet-700 font-medium">{{issuer.infoData.name}}</span>  
+                is requesting a transaction on <br>
+                <div class="flex flex-row items-center mt-1 justify-center w-full">
+                    <img class="h-4 mr-1" *ngIf="network$ | async as network" [src]="network.iconURL"
                     alt="" srcset="">
                    <div>{{(network$ | async)!.name}}</div>  
                 </div>
@@ -106,8 +105,8 @@
 
         <div class="border rounded-lg p-4 mt-2" *ngIf="(isLoggedIn$ | async) === false">
             <div class="w-full flex flex-row items-center
-             justify-center font-medium mt-4 text-sm">
-                Please log-in, sign-up or connect wallet to execute the transaction.
+             justify-center font-medium mt-4 text-sm text-center text-gray-500">
+                Please log-in, sign-up or connect wallet <br> to execute the transaction.
             </div>
             <app-auth></app-auth>
         </div>
