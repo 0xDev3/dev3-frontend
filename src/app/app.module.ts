@@ -149,6 +149,8 @@ import { AuthorizationExecEnvComponent } from './dashboard/authorizations/author
 import { ContractExplorerComponent } from './contract-explorer/contract-explorer.component'
 import { DecimalsPipe } from './shared/services/backend/decimals-handler.service'
 import { DecimalsHintPipe } from './shared/pipes/decimals-hint.pipe'
+import { BillingComponent } from './billing/billing.component'
+import { BillingCardComponent } from './billing/billing-card/billing-card.component'
 
 @NgModule({
   declarations: [
@@ -274,6 +276,8 @@ import { DecimalsHintPipe } from './shared/pipes/decimals-hint.pipe'
     ArrayTupleSmartInputComponent,
     AuthorizationExecEnvComponent,
     ContractExplorerComponent,
+    BillingComponent,
+    BillingCardComponent,
   ],
   imports: [
     BrowserModule,

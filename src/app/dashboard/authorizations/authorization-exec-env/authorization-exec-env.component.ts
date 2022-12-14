@@ -32,6 +32,12 @@ export class AuthorizationExecEnvComponent {
     )
   }
 
+  logout() {
+    return () => {
+      return this.signerService.logout()
+    }
+  }
+
   authorizeButtonClicked(request: WalletAuthData) {
     return () => {
       return this.signerService.signMessage(request.message_to_sign).pipe(

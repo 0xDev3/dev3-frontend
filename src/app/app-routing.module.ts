@@ -57,6 +57,7 @@ import { FunctionCallExecEnvComponent } from './dashboard/function-call-exec-env
 import { WorkflowsComponent } from './dashboard/workflows/workflows.component'
 import { AuthorizationExecEnvComponent } from './dashboard/authorizations/authorization-exec-env/authorization-exec-env.component'
 import { ContractExplorerComponent } from './contract-explorer/contract-explorer.component'
+import { BillingComponent } from './billing/billing.component'
 
 const appRoutes: Routes = [
   { path: 'explore', component: ContractExplorerComponent },
@@ -163,6 +164,7 @@ const networkRoutes: Routes = [
 const routes: Routes = [
   { path: 'xray', component: ContractExplorerComponent },
   { path: 'callback', component: AuthMagicOauthComponent },
+  { path: 'billing', component: BillingComponent }, 
   {
     path: '',
     pathMatch: 'full',
