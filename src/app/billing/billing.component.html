@@ -7,13 +7,42 @@
     <div class="mb-8 text-center text-gray-500 max-w-md">
         Buy a subscription to Dev3 and bring your Web3 app from prototype to production, faster than ever before.
     </div>
-    <div *ngIf="availableSubscriptions$ | async as availableSubscriptions"
+    <div class="text-gray-700 text-lg font-semibold">My subscriptions</div>
+
+    <!-- <div *ngIf="availableSubscriptions$ | async as availableSubscriptions">
+
+        <div *ngFor="let availableSubscription of availableSubscriptions.available_subscriptions">
+            <div *ngIf="userSubscriptions$ | async as userSubscriptions">
+                <div *ngFor="let subscription of userSubscriptions.subscriptions">
+                    <div *ngIf="subscription.id === availableSubscription.id">
+                        Active subscription: {{subscription.id}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div> -->
+
+    <div class="mb-8 text-gray-500"
+     *ngIf="userSubscriptions$ | async as userSubscriptions">
+        <div *ngFor="let subscription of userSubscriptions.subscriptions">
+            {{subscription.id}} - {{subscription.stripe_subscription_data.status}}
+        </div>
+    </div>
+    
+    <div *ngIf="availableSubscriptions$ | async as availableSubscriptions; else loadingSubscriptions"
      class="rounded-lg flex flex-row flex-wrap gap-4 justify-center w-full max-w-5xl">
         
         <div *ngFor="let subscription of availableSubscriptions.available_subscriptions">
             <app-billing-card [subscription]="subscription"></app-billing-card>
         </div>
     </div>
+    <ng-template #loadingSubscriptions>
+        <div class="w-full text-center text-xl text-gray-500">
+            <div>Loading subscriptions...</div>
+            <app-spinner></app-spinner>
+        </div>
+    </ng-template>
 </div>
 <ng-template #success>
     <div class="flex flex-col items-center pt-32 w-screen h-screen bg-gradient-to-b from-white to-blue-100">

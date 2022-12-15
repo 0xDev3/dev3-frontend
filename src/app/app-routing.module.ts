@@ -58,6 +58,7 @@ import { WorkflowsComponent } from './dashboard/workflows/workflows.component'
 import { AuthorizationExecEnvComponent } from './dashboard/authorizations/authorization-exec-env/authorization-exec-env.component'
 import { ContractExplorerComponent } from './contract-explorer/contract-explorer.component'
 import { BillingComponent } from './billing/billing.component'
+import { FunctionCautionScreenComponent } from './dashboard/function-call-exec-env/function-caution-screen/function-caution-screen.component'
 
 const appRoutes: Routes = [
   { path: 'explore', component: ContractExplorerComponent },
@@ -71,6 +72,7 @@ const appRoutes: Routes = [
   { path: 'request-authorization/:id/action', component: AuthorizationExecEnvComponent },
   { path: 'request-deploy/:id/action', component: ContractDeployExecEnvComponent }, 
   { path: 'request-function-call/:id/action', component: FunctionCallExecEnvComponent},
+  { path: 'request-function-call/:id/action/caution', component: FunctionCautionScreenComponent },
   { path: 'connect/:id', component: RequestWalletActionComponent },
   { path: 'request-send/:id/action', component: RequestSendActionComponent },
   {

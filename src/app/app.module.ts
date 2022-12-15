@@ -151,6 +151,7 @@ import { DecimalsPipe } from './shared/services/backend/decimals-handler.service
 import { DecimalsHintPipe } from './shared/pipes/decimals-hint.pipe'
 import { BillingComponent } from './billing/billing.component'
 import { BillingCardComponent } from './billing/billing-card/billing-card.component'
+import { FunctionCautionScreenComponent } from './dashboard/function-call-exec-env/function-caution-screen/function-caution-screen.component'
 
 @NgModule({
   declarations: [
@@ -278,6 +279,7 @@ import { BillingCardComponent } from './billing/billing-card/billing-card.compon
     ContractExplorerComponent,
     BillingComponent,
     BillingCardComponent,
+    FunctionCautionScreenComponent,
   ],
   imports: [
     BrowserModule,

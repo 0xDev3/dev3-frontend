@@ -30,6 +30,25 @@ export class BillingService {
     return this.http.post<any>(`${this.path}/subscriptions`, { price_id: priceID })
   }
 
+  getUserSubscriptions() : Observable<UserSubscriptions> {
+    return this.http.get<UserSubscriptions>(`${this.path}/subscriptions`, { }, false, false, false)
+  }
+
+}
+
+export interface UserSubscriptions {
+  subscriptions: UserSubscription[]
+}
+
+export interface UserSubscription {
+  id: string,
+  current_period_start: string,
+  current_period_end: string,
+  stripe_subscription_data: StripeSubscriptionData
+}
+
+export interface StripeSubscriptionData {
+  status: 'incomplete' | 'active'
 }
 
 export interface AvailableSubscriptions {

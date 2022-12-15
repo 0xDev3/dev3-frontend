@@ -63,6 +63,10 @@ export class BillingCardComponent {
     }
   }
 
+  createCustomer() {
+    
+  }
+
   elements: any
   options: any
 

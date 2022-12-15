@@ -16,10 +16,11 @@ import { BillingService } from './billing.service'
 })
 export class BillingComponent {
 
-
   availableSubscriptions$ = this.billingService.getAllSubscriptions()
-  
   paymentIntent: string = this.route.snapshot.queryParams.payment_intent
+  userSubscriptions$ = this.billingService.getUserSubscriptions().pipe(
+    tap(res => { console.log("USER SUBS", res.subscriptions) })
+  )
 
   constructor(private billingService: BillingService,
     private sessionQuery: SessionQuery,

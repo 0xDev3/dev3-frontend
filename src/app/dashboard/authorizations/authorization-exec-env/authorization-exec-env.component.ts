@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { switchMap, tap } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
+import { SessionQuery } from 'src/app/session/state/session.query'
 import { IssuerService } from 'src/app/shared/services/blockchain/issuer/issuer.service'
 import { SignerService } from 'src/app/shared/services/signer.service'
 import { UserService } from 'src/app/shared/services/user.service'
@@ -18,10 +19,13 @@ export class AuthorizationExecEnvComponent {
   issuer$ = this.issuerService.issuer$
   address$ = this.preferenceQuery.address$
   authRequest$ = this.getAuthRequest()
+  isLoggedIn$ = this.sessionQuery.isLoggedIn$
 
   constructor(private issuerService: IssuerService,
     private preferenceQuery: PreferenceQuery,
     private route: ActivatedRoute,
+    private sessionQuery: SessionQuery,
+    private userService: UserService,
     private signerService: SignerService,
     private authService: AuthorizationsService) { }
 
