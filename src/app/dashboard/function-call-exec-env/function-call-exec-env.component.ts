@@ -27,9 +27,11 @@ export class FunctionCallExecEnvComponent {
   isWaitingForTxSub = new BehaviorSubject(false)
   isWaitingForTx$ = this.isWaitingForTxSub.asObservable()
 
-  functionRequest$ = this.deploymentService
-    .getFunctionCallRequest(this.route.snapshot.params.id)
+  apiKey$ = this.projectService.updateAPIKey()
 
+  functionRequest$ = this.deploymentService
+  .getFunctionCallRequest(this.route.snapshot.params.id)
+  
   isInSDK = this.route.snapshot.queryParams.sdk
 
   contract$ = this.functionRequest$
@@ -119,6 +121,7 @@ export class FunctionCallExecEnvComponent {
   isLoggedIn$ = this.sessionQuery.isLoggedIn$
 
   constructor(
+    private projectService: ProjectService,
     private issuerService: IssuerService,
     private route: ActivatedRoute,
     private signerService: SignerService,

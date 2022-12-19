@@ -26,7 +26,7 @@
         
         <img *ngIf="issuer.infoData.logo" class="mb-3 h-6 object-contain" src="{{issuer.infoData.logo | toUrlIPFS}}" alt="">
         
-        <div class="leading-6 text-sm flex flex-col font-medium text-center">
+        <div *ngIf="apiKey$ | async" class="leading-6 text-sm flex flex-col font-medium text-center">
 
             <div *ngIf="request.status === 'PENDING'" class="text-gray-500 font-normal">
                 <span class="text-violet-700 font-medium">{{issuer.infoData.name}}</span>  
@@ -166,21 +166,23 @@
                                                 {{param.value}}
                                             </div>
                                             <ng-template #regularParam>
-                                                <div *ngIf="contract$ | async as contract; else noContract">
-                                                    <div class="mb-2"
+                                                <div class="w-full " *ngIf="contract$ | async as contract; else noContract">
+                                                    <div class="mb-2 w-full"
                                                      *ngIf="manifest[0].inputs[i].hints?.[0]?.decimals_fetcher as decimalsFetcher; else noDecimals">
-                                                        <div *ngFor="let item of param.value">
-                                                            {{item | decimalsHint:decimalsFetcher:contract.id:request.function_params| async | number:'1.2-18'}}
+                                                        <div class="mt-2 border-b border-slate-100 w-full" *ngFor="let item of param.value">
+                                                            {{item | decimalsHint:decimalsFetcher:contract.id:request.function_params | async | number:'1.2-18'}}
                                                         </div>
                                                         <div *ngIf="isString(param.value)">
                                                             {{ param.value | decimalsHint:decimalsFetcher:contract.id:request.function_params | async | number:'1.2-5' }}
                                                         </div>
                                                     </div>
                                                     <ng-template #noDecimals>
-                                                        <div *ngFor="let item of param.value">
+                                                        <div class="mt-2 border-b border-slate-100" *ngFor="let item of param.value">
                                                             {{item}}
                                                         </div>
-                                                        
+                                                        <div *ngIf="isString(param.value)">
+                                                            {{param.value}}
+                                                        </div>
                                                     </ng-template>
                                                 </div>
                                                 <ng-template #noContract>

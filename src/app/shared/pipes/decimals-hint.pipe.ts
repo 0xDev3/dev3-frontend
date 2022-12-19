@@ -1,7 +1,8 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core'
-import { map, Observable, of, tap } from 'rxjs'
+import { map, Observable, of, switchMap, tap } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { ContractDeploymentService, FunctionArgumentType } from '../services/blockchain/contract-deployment.service'
+import { SignerService } from '../services/signer.service'
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,8 @@ export class DecimalsHintPipe implements PipeTransform {
 
   constructor(
     private preferenceQuery: PreferenceQuery,
-    private contractService: ContractDeploymentService
+    private contractService: ContractDeploymentService,
+    private signerService: SignerService
   ) {}
 
 
@@ -43,14 +45,57 @@ export class DecimalsHintPipe implements PipeTransform {
   }
 
   private getAndParseDecimals(contractID: string, value: any) {
-    return this.contractService.callReadOnlyFunction(contractID, {
-      function_name: 'decimals',
-      caller_address: this.preferenceQuery.getValue().address,
-      function_params: [],
-      output_params: ['uint256']
-      }).pipe(
-      map(res => { return String(value / Math.pow(10, res.return_values[0])) } ),
+    return this.getDecimals(contractID).pipe(
+      map(decimals => {
+        const decimalsAsNumber = Number.parseInt(decimals)
+        return String(value / Math.pow(10, decimalsAsNumber))
+      })
     )
+  }
+
+  private getDecimals(contractID: string) {
+    if(contractID.startsWith('0x')) {
+      return this.signerService.provider$.pipe(
+        switchMap(contractAddress => {
+          return this.signerService.provider$.pipe(
+            switchMap(provider => {
+              return provider.call({
+                to: contractID,
+                from: this.preferenceQuery.getValue().address,
+                data: '0x313ce567'
+              })
+            })
+          )
+        })
+      )
+    } else {
+      return this.contractService.getContractDeploymentRequest(contractID).pipe(
+        map(res => { return res.contract_address }),
+        switchMap(contractAddress => {
+          return this.signerService.provider$.pipe(
+            switchMap(provider => {
+              return provider.call({ 
+                to: contractAddress,
+                from: this.preferenceQuery.getValue().address,
+                data: '0x313ce567'
+              })
+            })
+          )
+        })
+      )
+    }
+    // return this.contractService.callReadOnlyFunction(contractID, {
+    //     function_name: 'decimals',
+    //     caller_address: this.preferenceQuery.getValue().address,
+    //     function_params: [],
+    //     output_params: ['uint256']
+    //   }).pipe(
+    //     map(res => { return String(value / Math.pow(10, res.return_values[0])) } ),
+    //   )
+  }
+
+  getDecimalsByAddress() {
+
   }
   
   private parseQuery(query: string): DecimalsOrigin {
