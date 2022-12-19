@@ -59,6 +59,8 @@ export class FunctionCallExecEnvComponent {
     })
   )
 
+  activeDescriptionIndex = -1
+
   network$ = this.preferenceQuery.network$
   address$ = this.preferenceQuery.address$
   authProvider$ = this.preferenceQuery.authProvider$
@@ -83,6 +85,11 @@ export class FunctionCallExecEnvComponent {
     window.close()
   }
 
+  setActiveDescriptionIndex(index: number) {
+    if(this.activeDescriptionIndex === index) { this.activeDescriptionIndex = -1; return}
+    this.activeDescriptionIndex = index
+  }
+
   executeFunction(functionDeploymentRequest: FunctionCallRequestResponse) {
     return () => {
       return this.deploymentService.executeFunction(functionDeploymentRequest).pipe(
@@ -102,6 +109,10 @@ export class FunctionCallExecEnvComponent {
         })
       )
     }
+  }
+
+  isString(arg: any) {
+    return (typeof arg === 'string' || arg instanceof String)
   }
 
 

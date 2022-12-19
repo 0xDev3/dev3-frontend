@@ -18,8 +18,12 @@ export class BillingComponent {
 
   availableSubscriptions$ = this.billingService.getAllSubscriptions()
   paymentIntent: string = this.route.snapshot.queryParams.payment_intent
+
   userSubscriptions$ = this.billingService.getUserSubscriptions().pipe(
-    tap(res => { console.log("USER SUBS", res.subscriptions) })
+    tap(res => { 
+      console.log("USER SUBS", 
+        res.subscriptions[0].stripe_subscription_data.items.data[0].price.id) 
+    })
   )
 
   constructor(private billingService: BillingService,

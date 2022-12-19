@@ -147,11 +147,20 @@ export class ContractDeploymentService {
         )
     }
 
-    callReadOnlyFunction(deployedContractID: string, callData: ReadOnlyFunctionCallData) {
-        return this.http.post<ReadOnlyFunctionResponse>(`${this.path}/readonly-function-call`, {
-            ...callData,
-            deployed_contract_id: deployedContractID
-        }, true, true, true)
+    callReadOnlyFunction(contractQuery: string, callData: ReadOnlyFunctionCallData) {
+
+        if(contractQuery.startsWith('0x')) {
+            return this.http.post<ReadOnlyFunctionResponse>(`${this.path}/readonly-function-call`, {
+                ...callData,
+                contract_address: contractQuery
+            }, true, true, true)
+        } else {
+            return this.http.post<ReadOnlyFunctionResponse>(`${this.path}/readonly-function-call`, {
+                ...callData,
+                deployed_contract_id: contractQuery
+            }, true, true, true)
+        }
+        
     }
 
     createWriteFunctionCallRequest(deployedContractID: string, functionCallData: FunctionCallData, screenConfig?: { before_action_message: string, after_action_message: string }) {

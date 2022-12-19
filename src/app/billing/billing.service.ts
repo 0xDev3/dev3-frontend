@@ -49,6 +49,19 @@ export interface UserSubscription {
 
 export interface StripeSubscriptionData {
   status: 'incomplete' | 'active'
+  items: StripeSubscriptionDataItems
+}
+
+export interface StripeSubscriptionDataItems {
+  data: StripeSubscriptionDataItemsData[]
+}
+
+export interface StripeSubscriptionDataItemsData {
+  price: StripeSubscriptionDataItemsPrice
+}
+
+export interface StripeSubscriptionDataItemsPrice {
+  id: string
 }
 
 export interface AvailableSubscriptions {

@@ -137,6 +137,7 @@ export class HomeComponent implements OnInit {
   openCreateNewIssuer() {
     return this.router.navigateNetwork(['/admin/issuers/new'])
   }
+
 }
 
 interface IssuerItem {

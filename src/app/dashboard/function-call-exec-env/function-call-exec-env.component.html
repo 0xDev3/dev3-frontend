@@ -139,27 +139,49 @@
         
                         <div 
                             class="w-full flex flex-row mt-4">
-                            <div class="mr-4">
+                            <!-- <div class="mr-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor" class="w-6 h-6 text-violet-700">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                                 </svg>
-                            </div>
-                            <div class="flex flex-col w-full pr-12">
-                                <div class="flex flex-col w-full text-sm mb-4"
+                            </div> -->
+                            <div class="flex flex-col w-full">
+                                <div class="flex flex-col w-full text-sm mb-4 border border-slate-100
+                                 p-4 rounded-lg"
                                     *ngFor="let param of request.function_params; let i = index">
-                                    <div class="flex flex-row">
-                                        <div class="flex-col">
-                                            <div class="font-semibold mr-1">{{manifest[0].inputs[i].name}}:</div>
+                                    <div class="flex flex-row items-center justify-between">
+                                        <div class="font-semibold text-violet-700 mr-1">{{manifest[0].inputs[i].name}}</div>
+                                        <div (click)="setActiveDescriptionIndex(i)" class="text-xxs uppercase text-gray-500 hover:text-violet-700
+                                            cursor-pointer font-medium ml-2">
+                                            Expand description
                                         </div>
+                                    </div>
+                                    <div *ngIf="activeDescriptionIndex === i" class="text-sm mb-2 mt-1 flex flex-row">
+                                        {{manifest[0].inputs[i].description}}
+                                    </div>
+                                    <div class="flex flex-row ml-2 mt-1">
                                         <div class="overflow-x-auto flex flex-row">
                                             <div *ngIf="param.type === 'address'; else regularParam">
-                                                {{param.value | addrShort}}
+                                                {{param.value}}
                                             </div>
                                             <ng-template #regularParam>
                                                 <div *ngIf="contract$ | async as contract; else noContract">
-                                                    {{param.value}}
+                                                    <div class="mb-2"
+                                                     *ngIf="manifest[0].inputs[i].hints?.[0]?.decimals_fetcher as decimalsFetcher; else noDecimals">
+                                                        <div *ngFor="let item of param.value">
+                                                            {{item | decimalsHint:decimalsFetcher:contract.id:request.function_params| async | number:'1.2-18'}}
+                                                        </div>
+                                                        <div *ngIf="isString(param.value)">
+                                                            {{ param.value | decimalsHint:decimalsFetcher:contract.id:request.function_params | async | number:'1.2-5' }}
+                                                        </div>
+                                                    </div>
+                                                    <ng-template #noDecimals>
+                                                        <div *ngFor="let item of param.value">
+                                                            {{item}}
+                                                        </div>
+                                                        
+                                                    </ng-template>
                                                 </div>
                                                 <ng-template #noContract>
                                                     {{param.value}}
@@ -168,9 +190,7 @@
                                             </ng-template>
                                         </div>
                                     </div>
-                                    <div class="text-xs text-gray-500 flex flex-row">
-                                        {{manifest[0].inputs[i].description}}
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
