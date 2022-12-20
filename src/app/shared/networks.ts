@@ -18,6 +18,7 @@ export enum ChainID {
   MOONRIVER = 1285,
   OASIS_EMERALD = 42262,
   CELO_MAINNET = 42220,
+  CELO_TESTNET = 44787,
   GNOSIS_NETWORK = 100,
   FANTOM_NETWORK = 250,
 }
@@ -317,6 +318,43 @@ export const CeloChain: Network = {
   },
 }
 
+export const CeloTestChain: Network = {
+  chainID: ChainID.CELO_TESTNET,
+  name: 'Celo Alfajores',
+  shortName: 'celo-testnet',
+  iconURL: 'https://docs.celo.org/img/color-logo.png',
+  nativeCurrency: {
+    name: 'CELO',
+    symbol: 'CELO',
+  },
+  maxGasPrice: 20,
+  rpcURLs: ['https://alfajores-forno.celo-testnet.org'],
+  wssRpcURLs: [],
+  explorerURLs: ['https://alfajores.celoscan.io/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
+    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
+    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
+    defaultStableCoin: '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1', // custom stablecoin issued by filip
+  },
+}
+
 export const BSCNetwork: Network = {
   chainID: ChainID.BSC,
   name: 'Binance Smart Chain',
@@ -601,6 +639,7 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.MOONRIVER]: MoonriverNetwork,
   [ChainID.OASIS_EMERALD]: OasisEmeraldChain,
   [ChainID.CELO_MAINNET]: CeloChain,
+  [ChainID.CELO_TESTNET]: CeloTestChain,
   [ChainID.GNOSIS_NETWORK]: GnosisNetwork,
   [ChainID.FANTOM_NETWORK]: FantomNetwork,
 }
