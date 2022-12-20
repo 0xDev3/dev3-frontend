@@ -27,11 +27,9 @@ export class FunctionCallExecEnvComponent {
   isWaitingForTxSub = new BehaviorSubject(false)
   isWaitingForTx$ = this.isWaitingForTxSub.asObservable()
 
-  apiKey$ = this.projectService.updateAPIKey()
-
   functionRequest$ = this.deploymentService
-  .getFunctionCallRequest(this.route.snapshot.params.id)
-  
+    .getFunctionCallRequest(this.route.snapshot.params.id)
+
   isInSDK = this.route.snapshot.queryParams.sdk
 
   contract$ = this.functionRequest$
