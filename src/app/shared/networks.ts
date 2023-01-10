@@ -21,6 +21,7 @@ export enum ChainID {
   CELO_TESTNET = 44787,
   GNOSIS_NETWORK = 100,
   FANTOM_NETWORK = 250,
+  COINEX = 52,
 }
 
 export interface Network {
@@ -626,6 +627,43 @@ export const GnosisNetwork: Network = {
   },
 }
 
+export const CoinexChain: Network = {
+  chainID: ChainID.COINEX,
+  name: 'CoinEx Smart Chain',
+  shortName: 'coinex',
+  iconURL: 'https://assets.coingecko.com/coins/images/4817/small/coinex-token.png?1547040183',
+  nativeCurrency: {
+    name: 'CoinEx',
+    symbol: 'CET',
+  },
+  maxGasPrice: 600,
+  rpcURLs: ['https://rpc.coinex.net/'],
+  wssRpcURLs: [],
+  explorerURLs: ['https://www.coinex.net/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
+    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
+    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
+    defaultStableCoin: '0xF335B2440e62A953a42865aDf7bD73F4C6671A7b',
+  },
+}
+
 export const Networks: { [key in ChainID]: Network } = {
   [ChainID.ETHEREUM_MAINNET]: EthereumMainnet,
   [ChainID.MATIC_MAINNET]: MaticNetwork,
@@ -642,6 +680,7 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.CELO_TESTNET]: CeloTestChain,
   [ChainID.GNOSIS_NETWORK]: GnosisNetwork,
   [ChainID.FANTOM_NETWORK]: FantomNetwork,
+  [ChainID.COINEX]: CoinexChain,
 }
 
 const getEthersNetwork = (network: Network): providers.Network => ({
