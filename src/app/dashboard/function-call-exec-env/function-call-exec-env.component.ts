@@ -105,7 +105,7 @@ export class FunctionCallExecEnvComponent {
         delay(1000),
         tap(() => {
           this.functionRequest$ = this.deploymentService
-            .getFunctionCallRequest(this.route.snapshot.params.id)
+            .getFunctionCallRequest(this.route.snapshot.params.id, this.isArbitraryCall())
           this.isWaitingForTxSub.next(false)
         })
       )
