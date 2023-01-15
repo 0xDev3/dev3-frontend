@@ -92,9 +92,9 @@ export class ContractDeploymentService {
         return this.http.delete(`${this.path}/deploy/${id}`, false, true, true)
     }
 
-    attachTxInfoToRequest(requestId: string, txHash: string, deployer: string, txType: "CONTRACT" | "TRANSACTION" = "CONTRACT") {
+    attachTxInfoToRequest(requestId: string, txHash: string, deployer: string, txType: "CONTRACT" | "TRANSACTION" = "CONTRACT", isArbitraryCall: boolean = false) {
         
-        const pathSection = txType == "CONTRACT" ? "deploy" : "function-call"
+        const pathSection = txType == "CONTRACT" ? "deploy" : (isArbitraryCall ? "arbitrary-call" : "function-call") 
         
         return this.http
             .put<void>(`${this.path}/${pathSection}/${requestId}`, { 
@@ -125,26 +125,48 @@ export class ContractDeploymentService {
           )
     }
 
-    executeFunction(request: FunctionCallRequestResponse) {
-        return this.signerService.ensureNetwork$.pipe(
-            switchMap((signer) => 
-                of(request.function_call_tx).pipe(
-                    switchMap((func) => 
-                        combineLatest(([of(func), this.gasService.overrides]))
-                    ),
-                    switchMap(([func, overrides]) => {
-                        return signer.populateTransaction({
-                            value: func.value,
-                            data: func.data,
-                            from: func.from,
-                            to: func.to,
-                            ...overrides
-                        })
-                    }),
-                    switchMap((tx) => this.signerService.sendTransaction(tx))
-                )),
-                this.errorService.handleError(false, true)
-        )
+    executeFunction(request: FunctionCallRequestResponse | ArbitraryCallRequestResponse) {
+        if ('function_call_tx' in request) {
+            return this.signerService.ensureNetwork$.pipe(
+                switchMap((signer) => 
+                    of(request.function_call_tx).pipe(
+                        switchMap((func) => 
+                            combineLatest(([of(func), this.gasService.overrides]))
+                        ),
+                        switchMap(([func, overrides]) => {
+                            return signer.populateTransaction({
+                                value: func.value,
+                                data: func.data,
+                                from: func.from,
+                                to: func.to,
+                                ...overrides
+                            })
+                        }),
+                        switchMap((tx) => this.signerService.sendTransaction(tx))
+                    )),
+                    this.errorService.handleError(false, true)
+            )
+        } else {
+            return this.signerService.ensureNetwork$.pipe(
+                switchMap((signer) => 
+                    of(request.arbitrary_call_tx).pipe(
+                        switchMap((func) => 
+                            combineLatest(([of(func), this.gasService.overrides]))
+                        ),
+                        switchMap(([func, overrides]) => {
+                            return signer.populateTransaction({
+                                value: func.value,
+                                data: func.data,
+                                from: func.from,
+                                to: func.to,
+                                ...overrides
+                            })
+                        }),
+                        switchMap((tx) => this.signerService.sendTransaction(tx))
+                    )),
+                    this.errorService.handleError(false, true)
+            )
+        }
     }
 
     callReadOnlyFunction(contractQuery: string, callData: ReadOnlyFunctionCallData) {
@@ -178,11 +200,12 @@ export class ContractDeploymentService {
         })
     }
 
-    getFunctionCallRequest(id: string) {
-        if(id.startsWith('0x')) {
-            return this.http.get<FunctionCallRequestResponse>(`${this.path}/function-call/${id}`, { }, true, false, true)
+    getFunctionCallRequest(id: string, isArbitrary: boolean = false): Observable<FunctionCallRequestResponse | ArbitraryCallRequestResponse> {
+        const route = (isArbitrary) ? 'arbitrary-call' : 'function-call';
+        if (isArbitrary) {
+            return this.http.get<ArbitraryCallRequestResponse>(`${this.path}/${route}/${id}`, { }, true, false, true)
         } else {
-            return this.http.get<FunctionCallRequestResponse>(`${this.path}/function-call/${id}`, { }, true, false, true)
+            return this.http.get<FunctionCallRequestResponse>(`${this.path}/${route}/${id}`, { }, true, false, true)
         }
     }
 }
@@ -248,7 +271,35 @@ export interface FunctionCallRequestResponse {
         timestamp: string
     }
     screen_config?: ScreenConfig
+}
 
+export interface ArbitraryCallRequestResponse {
+    id: string,
+    status: string,
+    deployed_contract_id: string,
+    contract_address: string,
+    function_name: string,
+    function_params: {
+        type: FunctionArgumentType,
+        value: string
+    }[],
+    function_call_data: string,
+    eth_amount: string,
+    chain_id: string,
+    redirect_url: string,
+    project_id: string,
+    created_at: string,
+    caller_address: string,
+    arbitrary_call_tx: {
+        tx_hash: string,
+        from: string,
+        to: string,
+        data: string,
+        value: number,
+        block_confirmations: string,
+        timestamp: string
+    }
+    screen_config?: ScreenConfig
 }
 
 export interface ContractDeploymentRequests {

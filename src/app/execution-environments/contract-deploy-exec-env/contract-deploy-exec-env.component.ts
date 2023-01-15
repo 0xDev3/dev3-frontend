@@ -58,7 +58,7 @@ export class ContractDeployExecEnvComponent {
         switchMap(result => this.contractDeploymentService.attachTxInfoToRequest(
           contractDeploymentRequest.id,
           result.transactionHash,
-          this.preferenceQuery.getValue().address
+          this.preferenceQuery.getValue().address,
         )),
         delay(1000),
         tap(() => {

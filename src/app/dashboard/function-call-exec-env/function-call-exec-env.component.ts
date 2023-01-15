@@ -10,7 +10,7 @@ import { ChainID, Networks } from 'src/app/shared/networks'
 import { BackendHttpClient } from 'src/app/shared/services/backend/backend-http-client.service'
 import { ContractManifestData, ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
 import { ProjectService } from 'src/app/shared/services/backend/project.service'
-import { ContractDeploymentService, FunctionCallRequestResponse } from 'src/app/shared/services/blockchain/contract-deployment.service'
+import { ArbitraryCallRequestResponse, ContractDeploymentService, FunctionCallRequestResponse } from 'src/app/shared/services/blockchain/contract-deployment.service'
 import { IssuerService } from 'src/app/shared/services/blockchain/issuer/issuer.service'
 import { SignerService } from 'src/app/shared/services/signer.service'
 import { UserService } from 'src/app/shared/services/user.service'
@@ -26,9 +26,9 @@ export class FunctionCallExecEnvComponent {
   issuer$ = this.issuerService.issuer$
   isWaitingForTxSub = new BehaviorSubject(false)
   isWaitingForTx$ = this.isWaitingForTxSub.asObservable()
-
+  
   functionRequest$ = this.deploymentService
-    .getFunctionCallRequest(this.route.snapshot.params.id)
+    .getFunctionCallRequest(this.route.snapshot.params.id, this.isArbitraryCall());
 
   isInSDK = this.route.snapshot.queryParams.sdk
 
@@ -90,7 +90,7 @@ export class FunctionCallExecEnvComponent {
     this.activeDescriptionIndex = index
   }
 
-  executeFunction(functionDeploymentRequest: FunctionCallRequestResponse) {
+  executeFunction(functionDeploymentRequest: FunctionCallRequestResponse | ArbitraryCallRequestResponse) {
     return () => {
       return this.deploymentService.executeFunction(functionDeploymentRequest).pipe(
         tap(() => { this.isWaitingForTxSub.next(true) }),
@@ -99,7 +99,8 @@ export class FunctionCallExecEnvComponent {
           functionDeploymentRequest.id,
           result.transactionHash,
           this.preferenceQuery.getValue().address,
-          "TRANSACTION"
+          "TRANSACTION",
+          this.isArbitraryCall()
         )),
         delay(1000),
         tap(() => {
@@ -113,6 +114,10 @@ export class FunctionCallExecEnvComponent {
 
   isString(arg: any) {
     return (typeof arg === 'string' || arg instanceof String)
+  }
+
+  isArbitraryCall(): boolean {
+    return this.route.snapshot.url.toString().includes('arbitrary')
   }
 
 

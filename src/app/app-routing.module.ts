@@ -72,6 +72,7 @@ const appRoutes: Routes = [
   { path: 'request-authorization/:id/action', component: AuthorizationExecEnvComponent },
   { path: 'request-deploy/:id/action', component: ContractDeployExecEnvComponent }, 
   { path: 'request-function-call/:id/action', component: FunctionCallExecEnvComponent},
+  { path: 'request-arbitrary-call/:id/action', component: FunctionCallExecEnvComponent},
   { path: 'request-function-call/:id/action/caution', component: FunctionCautionScreenComponent },
   { path: 'connect/:id', component: RequestWalletActionComponent },
   { path: 'request-send/:id/action', component: RequestSendActionComponent },
