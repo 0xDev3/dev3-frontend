@@ -28,7 +28,7 @@ export class FunctionCallExecEnvComponent {
   isWaitingForTx$ = this.isWaitingForTxSub.asObservable()
   
   functionRequest$ = this.deploymentService
-    .getFunctionCallRequest(this.route.snapshot.params.id, this.isArbitraryCall());
+    .getFunctionCallRequest(this.route.snapshot.params.id, this.isArbitraryCall())
 
   isInSDK = this.route.snapshot.queryParams.sdk
 

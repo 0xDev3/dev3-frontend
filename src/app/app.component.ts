@@ -2,7 +2,6 @@ import {
   ApplicationRef,
   ChangeDetectionStrategy,
   Component,
-  OnInit,
 } from '@angular/core'
 import { filter, first, switchMap, tap } from 'rxjs/operators'
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker'
@@ -16,7 +15,7 @@ import { IssuerService } from './shared/services/blockchain/issuer/issuer.servic
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   constructor(
     public updates: SwUpdate,
     private appRef: ApplicationRef,
@@ -24,10 +23,6 @@ export class AppComponent implements OnInit {
     private title: Title,
     private dialog: DialogService
   ) {}
-
-  ngOnInit(): void { 
-    // attach()
-  }
 
   checkForUpdate$ = defer(() => {
     const appIsStable$ = this.appRef.isStable.pipe(

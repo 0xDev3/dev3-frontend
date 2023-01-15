@@ -201,7 +201,7 @@ export class ContractDeploymentService {
     }
 
     getFunctionCallRequest(id: string, isArbitrary: boolean = false): Observable<FunctionCallRequestResponse | ArbitraryCallRequestResponse> {
-        const route = (isArbitrary) ? 'arbitrary-call' : 'function-call';
+        const route = (isArbitrary) ? 'arbitrary-call' : 'function-call'
         if (isArbitrary) {
             return this.http.get<ArbitraryCallRequestResponse>(`${this.path}/${route}/${id}`, { }, true, false, true)
         } else {
