@@ -81,7 +81,7 @@ export const MaticNetwork: Network = {
   },
   maxGasPrice: 1500,
   rpcURLs: [
-    'https://convincing-hidden-road.matic.quiknode.pro/f58c6c37eb2ce3377edfcfd545a15bc825293eea/'
+    'https://polygon-rpc.com'
   ],
   wssRpcURLs: [
   ],
