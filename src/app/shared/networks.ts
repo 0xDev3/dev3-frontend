@@ -115,7 +115,7 @@ export const EthereumMainnet: Network = {
   },
   maxGasPrice: 20,
   rpcURLs: ['https://eth-rpc.gateway.pokt.network'],
-  explorerURLs: ['https://goerli.etherscan.io/'],
+  explorerURLs: ['https://etherscan.io/'],
   tokenizerConfig: {
     apxRegistry: '',
     issuerFactory: {
@@ -150,7 +150,7 @@ export const MumbaiNetwork: Network = {
     symbol: 'MATIC',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://convincing-bitter-firefly.matic-testnet.quiknode.pro/46db006faa171bdbc51fa9a478e7ac27fb559a4f/'],
+  rpcURLs: ['https://matic-mumbai.chainstacklabs.com'],
   wssRpcURLs: [
   ],
   explorerURLs: ['https://mumbai.polygonscan.com/'],
@@ -183,7 +183,7 @@ export const GoerliNetwork: Network = {
     symbol: 'ETH',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
+  rpcURLs: ['https://rpc.ankr.com/eth_goerli'],
   explorerURLs: ['https://goerli.etherscan.io/'],
   tokenizerConfig: {
     apxRegistry: '0x95e1F87B3E5EC566CC0676DED8Ce992cE0E51Ed7',
@@ -287,13 +287,13 @@ export const CeloChain: Network = {
   chainID: ChainID.CELO_MAINNET,
   name: 'Celo',
   shortName: 'celo',
-  iconURL: 'https://styles.redditmedia.com/t5_i05sx/styles/communityIcon_86ltnuoxy9541.png?width=256&s=ccd45317381cc1a1db9b3b90f301409d11d3a379',
+  iconURL: 'https://assets.coingecko.com/coins/images/11090/small/InjXBNx9_400x400.jpg?1674707499',
   nativeCurrency: {
     name: 'CELO',
     symbol: 'CELO',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://icy-morning-tree.celo-mainnet.quiknode.pro/8ed0d34e8954249bcd847e85e7a721cbf7a3f464'],
+  rpcURLs: ['https://forno.celo.org'],
   wssRpcURLs: [],
   explorerURLs: ['https://explorer.celo.org/'],
   tokenizerConfig: {
@@ -324,7 +324,7 @@ export const CeloTestChain: Network = {
   chainID: ChainID.CELO_TESTNET,
   name: 'Celo Alfajores',
   shortName: 'celo-testnet',
-  iconURL: 'https://docs.celo.org/img/color-logo.png',
+  iconURL: 'https://assets.coingecko.com/coins/images/11090/small/InjXBNx9_400x400.jpg?1674707499',
   nativeCurrency: {
     name: 'CELO',
     symbol: 'CELO',
@@ -441,7 +441,7 @@ export const OptimismNetwork: Network = {
     symbol: 'ETH',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://weathered-white-lambo.optimism.quiknode.pro/651498cb8884a1093894a149d1d44004a45fb5a6/'],
+  rpcURLs: ['https://mainnet.optimism.io'],
   wssRpcURLs: [],
   explorerURLs: ['https://optimistic.etherscan.io/'],
   tokenizerConfig: {
@@ -479,11 +479,11 @@ export const ArbitrumNetwork: Network = {
   },
   maxGasPrice: 20,
   rpcURLs: [
-    'https://weathered-bitter-panorama.arbitrum-mainnet.quiknode.pro/6263c3e3ab2a9c81efd17e687344d9d5d049de68/'
+    'https://endpoints.omniatech.io/v1/arbitrum/one/public'
   ],
   wssRpcURLs: [
   ],
-  explorerURLs: ['https://optimistic.etherscan.io/'],
+  explorerURLs: ['https://arbiscan.io/'],
   tokenizerConfig: {
     apxRegistry: '',
     issuerFactory: {
@@ -599,7 +599,7 @@ export const GnosisNetwork: Network = {
   },
   maxGasPrice: 20,
   rpcURLs: [
-    'https://wider-flashy-telescope.xdai.quiknode.pro/3032827d979350ef930fbaf0b041ca1c5262f962/'
+    'https://rpc.gnosischain.com'
   ],
   wssRpcURLs: [
   ],
