@@ -23,6 +23,7 @@ export enum ChainID {
   FANTOM_NETWORK = 250,
   COINEX = 52,
   COINEX_TESTNET = 53,
+  SEPOLIA = 11155111,
 }
 
 export interface Network {
@@ -137,6 +138,44 @@ export const EthereumMainnet: Network = {
     campaignFeeManager: '',
     defaultWalletApprover: '0x4b13e95bc24e983E3F55B11aB608508CF7D31d35',
     defaultStableCoin: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', // custom stablecoin issued by filip
+  },
+}
+
+export const SepoliaNetwork: Network = {
+  chainID: ChainID.SEPOLIA,
+  name: 'Sepolia Testnet',
+  shortName: 'sepolia',
+  iconURL: 'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ethereum-ETH-icon.png',
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+  },
+  maxGasPrice: 20,
+  rpcURLs: ['https://sepolia.infura.io/v3/'],
+  wssRpcURLs: [
+  ],
+  explorerURLs: ['https://sepolia.etherscan.io/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0x93Fd76914BfEE4D223fdd8fEB9Cc73Ce4B51AC24'
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0xaCeC98CD043f3b84F3272Bbc55A4d7A0dC8A0175',
+    payoutService: '0x0B3038562aCb5715254734E77C5Cb4064070Ab1f',
+    payoutManager: '0x71Af6221c6AdE382a872B7A7B1B8068688E16ae5',
+    nameRegistry: '0x3902035F05a5941FDaF87547Cca5cC7e17B1E909',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0x713D963569DC7157DE0C1D1815679c4f3A30e078',
+    defaultStableCoin: '0x51fCe89b9f6D4c530698f181167043e1bB4abf89',
   },
 }
 
@@ -720,6 +759,7 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.FANTOM_NETWORK]: FantomNetwork,
   [ChainID.COINEX]: CoinexChain,
   [ChainID.COINEX_TESTNET]: CoinexTestnetChain,
+  [ChainID.SEPOLIA]: SepoliaNetwork,
 }
 
 const getEthersNetwork = (network: Network): providers.Network => ({
