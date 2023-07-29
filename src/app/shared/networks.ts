@@ -151,7 +151,7 @@ export const SepoliaNetwork: Network = {
     symbol: 'ETH',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://sepolia.infura.io/v3/'],
+  rpcURLs: ['https://endpoints.omniatech.io/v1/eth/sepolia/public'],
   wssRpcURLs: [
   ],
   explorerURLs: ['https://sepolia.etherscan.io/'],
