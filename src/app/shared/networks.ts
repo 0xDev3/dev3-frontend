@@ -150,7 +150,7 @@ export const MumbaiNetwork: Network = {
     symbol: 'MATIC',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://polygon-mumbai-bor.publicnode.com'],
+  rpcURLs: ['https://polygon-testnet.public.blastapi.io/'],
   wssRpcURLs: [
   ],
   explorerURLs: ['https://mumbai.polygonscan.com/'],
