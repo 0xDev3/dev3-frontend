@@ -55,10 +55,10 @@ export class GasService {
     switch (this.preferenceQuery.network.chainID) {
       case ChainID.MATIC_MAINNET:
         return this.maticGasStation(
-          'https://gasstation-mainnet.matic.network/v2'
+          'https://gasstation.polygon.technology/v2'
         )
       case ChainID.MUMBAI_TESTNET:
-        return this.maticGasStation('https://gasstation-mumbai.matic.today/v2')
+        return this.maticGasStation('https://gasstation-testnet.polygon.technology/v2')
       default:
         return of({})
     }
