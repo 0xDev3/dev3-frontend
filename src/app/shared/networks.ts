@@ -185,7 +185,7 @@ export const OptimismGoerliNetwork: Network = {
   chainID: ChainID.OPTIMISM_GOERLI_TESTNET,
   name: 'Optimism Goerli Testnet',
   shortName: 'optimism-goerli',
-  iconURL: 'https://gateway.optimism.io/static/media/optimism.caeb9392.svg',
+  iconURL: 'https://assets.coingecko.com/coins/images/25244/small/Optimism.png?1660904599',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
@@ -515,7 +515,7 @@ export const OptimismNetwork: Network = {
   chainID: ChainID.OPTIMISM,
   name: 'Optimism',
   shortName: 'optimism',
-  iconURL: 'https://gateway.optimism.io/static/media/optimism.caeb9392.svg',
+  iconURL: 'https://assets.coingecko.com/coins/images/25244/small/Optimism.png?1660904599',
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
