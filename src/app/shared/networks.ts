@@ -24,6 +24,8 @@ export enum ChainID {
   COINEX = 52,
   COINEX_TESTNET = 53,
   SEPOLIA = 11155111,
+  OPTIMISM_GOERLI_TESTNET = 420,
+  ARBITRUM_GOERLI_TESTNET = 421613,
 }
 
 export interface Network {
@@ -178,6 +180,45 @@ export const SepoliaNetwork: Network = {
     defaultStableCoin: '0x51fCe89b9f6D4c530698f181167043e1bB4abf89',
   },
 }
+
+export const OptimismGoerliNetwork: Network = {
+  chainID: ChainID.OPTIMISM_GOERLI_TESTNET,
+  name: 'Optimism Goerli Testnet',
+  shortName: 'optimism-goerli',
+  iconURL: 'https://gateway.optimism.io/static/media/optimism.caeb9392.svg',
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+  },
+  maxGasPrice: 20,
+  rpcURLs: ['https://optimism-goerli.public.blastapi.io'],
+  wssRpcURLs: [
+  ],
+  explorerURLs: ['https://goerli-optimism.etherscan.io/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0x6da35932606866801762cBEC8698BD684d9D1699'
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0x6Cbf0950E22ff08BA4a13FFD2443519e4cF56550',
+    payoutService: '0x041e15aF5ecBc0C93F106B2F6a7F5fFa847eF9e4',
+    payoutManager: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
+    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0xa3BFC3A48Ee93290bDa5a0eF0Ed22414262c3043',
+    defaultStableCoin: '0xC108c33731a62781579A28F33b0Ce6AF28a090D2',
+  },
+}
+
 
 export const MumbaiNetwork: Network = {
   chainID: ChainID.MUMBAI_TESTNET,
@@ -547,6 +588,46 @@ export const ArbitrumNetwork: Network = {
   },
 }
 
+export const ArbitrumGoerliNetwork: Network = {
+  chainID: ChainID.ARBITRUM_GOERLI_TESTNET,
+  name: 'Arbitrum Goerli Testnet',
+  shortName: 'arbitrum-goerli',
+  iconURL: 'https://www.xdefi.io/wp-content/uploads/2022/05/logo-9.png',
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+  },
+  maxGasPrice: 20,
+  rpcURLs: [
+    'https://arbitrum-goerli.publicnode.com'
+  ],
+  wssRpcURLs: [
+  ],
+  explorerURLs: ['https://testnet.arbiscan.io/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0xa3BFC3A48Ee93290bDa5a0eF0Ed22414262c3043',
+    payoutService: '0x4b13e95bc24e983E3F55B11aB608508CF7D31d35',
+    payoutManager: '0x7da52848edA4Ae10af06e88Adf7DA8960FA92b8E',
+    nameRegistry: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0xc50CDD22f65538A2e6C15Eee7638873e659a4877',
+    defaultStableCoin: '0xF784F65ea6FcBCbd36850E924D92620f9105924b', // custom stablecoin issued by filip
+  },
+}
+
 export const MoonriverNetwork: Network = {
   chainID: ChainID.MOONRIVER,
   name: 'Moonriver',
@@ -760,6 +841,8 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.COINEX]: CoinexChain,
   [ChainID.COINEX_TESTNET]: CoinexTestnetChain,
   [ChainID.SEPOLIA]: SepoliaNetwork,
+  [ChainID.OPTIMISM_GOERLI_TESTNET]: OptimismGoerliNetwork,
+  [ChainID.ARBITRUM_GOERLI_TESTNET]: ArbitrumGoerliNetwork,
 }
 
 const getEthersNetwork = (network: Network): providers.Network => ({
