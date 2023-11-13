@@ -26,6 +26,7 @@ export enum ChainID {
   SEPOLIA = 11155111,
   OPTIMISM_GOERLI_TESTNET = 420,
   ARBITRUM_GOERLI_TESTNET = 421613,
+  OTP_TESTNET = 20430,
 }
 
 export interface Network {
@@ -178,6 +179,44 @@ export const SepoliaNetwork: Network = {
     campaignFeeManager: '',
     defaultWalletApprover: '0x713D963569DC7157DE0C1D1815679c4f3A30e078',
     defaultStableCoin: '0x51fCe89b9f6D4c530698f181167043e1bB4abf89',
+  },
+}
+
+export const OtpTestnetNetwork: Network = {
+  chainID: ChainID.OTP_TESTNET,
+  name: 'OriginTrail Parachain Testnet',
+  shortName: 'otp-testnet',
+  iconURL: 'https://assets.coingecko.com/coins/images/32029/standard/otp.png?1696530826',
+  nativeCurrency: {
+    name: 'MOTP',
+    symbol: 'MOTP',
+  },
+  maxGasPrice: 1,
+  rpcURLs: ['https://lofar-testnet.origin-trail.network/'],
+  wssRpcURLs: [
+  ],
+  explorerURLs: ['https://origintrail-testnet.subscan.io/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0xf712B587Bfb9B9804A4594D414A1A410eC3775f5'
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0xbf1fAF8b14A6929158Df795CdB50a24B8e67a5b2',
+    payoutService: '0x41C94446B15E60e76513521e7EE3EB81A3Aa0158',
+    payoutManager: '0xf75E704Dde2E35568F8bf18F37ce1130380eA638',
+    nameRegistry: '0x2061a48238cFa98F23173c84A668A57bc206A743',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0x8f700F56408A4780D0340E24edD52992aeFF5527',
+    defaultStableCoin: '0xffffffff00000000000000000000000000000001',
   },
 }
 
@@ -843,6 +882,7 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.SEPOLIA]: SepoliaNetwork,
   [ChainID.OPTIMISM_GOERLI_TESTNET]: OptimismGoerliNetwork,
   [ChainID.ARBITRUM_GOERLI_TESTNET]: ArbitrumGoerliNetwork,
+  [ChainID.OTP_TESTNET]: OtpTestnetNetwork,
 }
 
 const getEthersNetwork = (network: Network): providers.Network => ({
