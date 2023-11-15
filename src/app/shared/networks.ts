@@ -114,7 +114,7 @@ export const EthereumMainnet: Network = {
     symbol: 'ETH',
   },
   maxGasPrice: 20,
-  rpcURLs: ['https://eth-rpc.gateway.pokt.network'],
+  rpcURLs: ['https://ethereum.publicnode.com'],
   explorerURLs: ['https://etherscan.io/'],
   tokenizerConfig: {
     apxRegistry: '',
