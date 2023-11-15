@@ -16,13 +16,7 @@ export enum ChainID {
   AVALANCHE = 43114,
   BSC = 56,
   MOONRIVER = 1285,
-  OASIS_EMERALD = 42262,
-  CELO_MAINNET = 42220,
-  CELO_TESTNET = 44787,
   GNOSIS_NETWORK = 100,
-  FANTOM_NETWORK = 250,
-  COINEX = 52,
-  COINEX_TESTNET = 53,
   SEPOLIA = 11155111,
   OPTIMISM_GOERLI_TESTNET = 420,
   ARBITRUM_GOERLI_TESTNET = 421613,
@@ -61,6 +55,7 @@ interface TokenizerConfig {
     vesting: string
   }
   queryService: string
+  issuerQueryService: string
   payoutService: string
   payoutManager: string
   nameRegistry: string
@@ -96,6 +91,7 @@ export const MaticNetwork: Network = {
     assetFactory: TPMatic.assetFactory,
     cfManagerFactory: TPMatic.cfManagerFactory,
     queryService: TPMatic.queryService,
+    issuerQueryService: TPMatic.issuerQueryService,
     payoutService: TPMatic.payoutService,
     payoutManager: TPMatic.payoutManager,
     nameRegistry: TPMatic.nameRegistry.address,
@@ -135,6 +131,7 @@ export const EthereumMainnet: Network = {
       vesting: '',
     },
     queryService: '0x041e15af5ecbc0c93f106b2f6a7f5ffa847ef9e4',
+    issuerQueryService: '0xf5da0fd34d931610a68ac28e8256fe089c28edfc',
     payoutService: '0xa3BFC3A48Ee93290bDa5a0eF0Ed22414262c3043',
     payoutManager: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     nameRegistry: '0x6cbf0950e22ff08ba4a13ffd2443519e4cf56550',
@@ -173,6 +170,7 @@ export const SepoliaNetwork: Network = {
       vesting: '',
     },
     queryService: '0xaCeC98CD043f3b84F3272Bbc55A4d7A0dC8A0175',
+    issuerQueryService: '0x9DFC2e793a3e88ae61766aaC24F7167501953dC9',
     payoutService: '0x0B3038562aCb5715254734E77C5Cb4064070Ab1f',
     payoutManager: '0x71Af6221c6AdE382a872B7A7B1B8068688E16ae5',
     nameRegistry: '0x3902035F05a5941FDaF87547Cca5cC7e17B1E909',
@@ -211,6 +209,7 @@ export const OtpTestnetNetwork: Network = {
       vesting: '',
     },
     queryService: '0xbf1fAF8b14A6929158Df795CdB50a24B8e67a5b2',
+    issuerQueryService: '0x1064eF502Bf494d1895aA23Ab79E6f65Cb2DA36F',
     payoutService: '0x41C94446B15E60e76513521e7EE3EB81A3Aa0158',
     payoutManager: '0xf75E704Dde2E35568F8bf18F37ce1130380eA638',
     nameRegistry: '0x2061a48238cFa98F23173c84A668A57bc206A743',
@@ -249,6 +248,7 @@ export const OptimismGoerliNetwork: Network = {
       vesting: '',
     },
     queryService: '0x6Cbf0950E22ff08BA4a13FFD2443519e4cF56550',
+    issuerQueryService: '0x9910B2e1e70ad4557FaC1A307B42c5eBD4C2144f',
     payoutService: '0x041e15aF5ecBc0C93F106B2F6a7F5fFa847eF9e4',
     payoutManager: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
@@ -279,6 +279,7 @@ export const MumbaiNetwork: Network = {
     assetFactory: TPMumbai.assetFactory,
     cfManagerFactory: TPMumbai.cfManagerFactory,
     queryService: TPMumbai.queryService,
+    issuerQueryService: TPMumbai.issuerQueryService,
     payoutService: TPMumbai.payoutService,
     payoutManager: TPMumbai.payoutManager,
     nameRegistry: TPMumbai.nameRegistry.address,
@@ -319,6 +320,7 @@ export const GoerliNetwork: Network = {
       vesting: '0x64F09Cc15d9359a68A75cfEB4711701160EA5178',
     },
     queryService: '0x5A22bc3a5078801CB0e8B5C61bb8361D16C8Ed73',
+    issuerQueryService: '0x21ecd3CA6a9da73AeCe67e1ca295b90F2A62C5D2',
     payoutService: '',
     payoutManager: '',
     nameRegistry: '0x41b90C4C84f6388c29835CBA03Cd50D92fB24e8E',
@@ -356,123 +358,13 @@ export const AuroraNetwork: Network = {
       vesting: '',
     },
     queryService: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
+    issuerQueryService: '0x523b6DFb454c75cbc12e4D0c28394A30efA9bAA7',
     payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
     payoutManager: '0x041e15aF5ecBc0C93F106B2F6a7F5fFa847eF9e4',
     nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
     campaignFeeManager: '',
     defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     defaultStableCoin: '0xb12bfca5a55806aaf64e99521918a4bf0fc40802', // custom stablecoin issued by filip
-  },
-}
-
-export const OasisEmeraldChain: Network = {
-  chainID: ChainID.OASIS_EMERALD,
-  name: 'Oasis Emerald',
-  shortName: 'oasis_emerald',
-  iconURL: 'https://avatars.githubusercontent.com/u/52803776?s=280&v=4',
-  nativeCurrency: {
-    name: 'ROSE',
-    symbol: 'ROSE',
-  },
-  maxGasPrice: 20,
-  rpcURLs: ['https://emerald.oasis.dev'],
-  wssRpcURLs: [''],
-  explorerURLs: ['https://explorer.emerald.oasis.dev/'],
-  tokenizerConfig: {
-    apxRegistry: '',
-    issuerFactory: {
-      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
-    },
-    assetFactory: {
-      basic: '',
-      transferable: '',
-      simple: '',
-    },
-    cfManagerFactory: {
-      basic: '',
-      vesting: '',
-    },
-    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
-    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
-    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
-    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
-    campaignFeeManager: '',
-    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
-    defaultStableCoin: '0x3cA9dbbb1C64b5AbCb35B283441E817129c15544', // custom stablecoin issued by filip
-  },
-}
-
-export const CeloChain: Network = {
-  chainID: ChainID.CELO_MAINNET,
-  name: 'Celo',
-  shortName: 'celo',
-  iconURL: 'https://assets.coingecko.com/coins/images/11090/small/InjXBNx9_400x400.jpg?1674707499',
-  nativeCurrency: {
-    name: 'CELO',
-    symbol: 'CELO',
-  },
-  maxGasPrice: 20,
-  rpcURLs: ['https://forno.celo.org'],
-  wssRpcURLs: [],
-  explorerURLs: ['https://explorer.celo.org/'],
-  tokenizerConfig: {
-    apxRegistry: '',
-    issuerFactory: {
-      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
-    },
-    assetFactory: {
-      basic: '',
-      transferable: '',
-      simple: '',
-    },
-    cfManagerFactory: {
-      basic: '',
-      vesting: '',
-    },
-    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
-    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
-    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
-    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
-    campaignFeeManager: '',
-    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
-    defaultStableCoin: '0x73a210637f6F6B7005512677Ba6B3C96bb4AA44B', // custom stablecoin issued by filip
-  },
-}
-
-export const CeloTestChain: Network = {
-  chainID: ChainID.CELO_TESTNET,
-  name: 'Celo Alfajores',
-  shortName: 'celo-testnet',
-  iconURL: 'https://assets.coingecko.com/coins/images/11090/small/InjXBNx9_400x400.jpg?1674707499',
-  nativeCurrency: {
-    name: 'CELO',
-    symbol: 'CELO',
-  },
-  maxGasPrice: 20,
-  rpcURLs: ['https://alfajores-forno.celo-testnet.org'],
-  wssRpcURLs: [],
-  explorerURLs: ['https://alfajores.celoscan.io/'],
-  tokenizerConfig: {
-    apxRegistry: '',
-    issuerFactory: {
-      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
-    },
-    assetFactory: {
-      basic: '',
-      transferable: '',
-      simple: '',
-    },
-    cfManagerFactory: {
-      basic: '',
-      vesting: '',
-    },
-    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
-    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
-    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
-    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
-    campaignFeeManager: '',
-    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
-    defaultStableCoin: '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1', // custom stablecoin issued by filip
   },
 }
 
@@ -504,6 +396,7 @@ export const BSCNetwork: Network = {
       vesting: '',
     },
     queryService: '0x041e15aF5ecBc0C93F106B2F6a7F5fFa847eF9e4',
+    issuerQueryService: '0xAD6E573a7236F2fb4329254967C84E99f2Bb0AbF',
     payoutService: '0xa3BFC3A48Ee93290bDa5a0eF0Ed22414262c3043',
     payoutManager: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     nameRegistry: '0x6Cbf0950E22ff08BA4a13FFD2443519e4cF56550',
@@ -541,6 +434,7 @@ export const AvalancheNetwork: Network = {
       vesting: '',
     },
     queryService: '0x0B3038562aCb5715254734E77C5Cb4064070Ab1f',
+    issuerQueryService: '0xc933Cfc667CB1bC813dD3637E12251bBeaceF205',
     payoutService: '0x713D963569DC7157DE0C1D1815679c4f3A30e078',
     payoutManager: '0x71Af6221c6AdE382a872B7A7B1B8068688E16ae5',
     nameRegistry: '0xaCeC98CD043f3b84F3272Bbc55A4d7A0dC8A0175',
@@ -578,6 +472,7 @@ export const OptimismNetwork: Network = {
       vesting: '',
     },
     queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    issuerQueryService: '0x7da52848edA4Ae10af06e88Adf7DA8960FA92b8E',
     payoutService: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
     nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
@@ -618,6 +513,7 @@ export const ArbitrumNetwork: Network = {
       vesting: '',
     },
     queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    issuerQueryService: '0xaCeC98CD043f3b84F3272Bbc55A4d7A0dC8A0175',
     payoutService: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
     nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
@@ -658,6 +554,7 @@ export const ArbitrumGoerliNetwork: Network = {
       vesting: '',
     },
     queryService: '0xa3BFC3A48Ee93290bDa5a0eF0Ed22414262c3043',
+    issuerQueryService: '0x92c642e55Bdb58c67dE7e35a3DA7568cC7CCEA18',
     payoutService: '0x4b13e95bc24e983E3F55B11aB608508CF7D31d35',
     payoutManager: '0x7da52848edA4Ae10af06e88Adf7DA8960FA92b8E',
     nameRegistry: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
@@ -698,52 +595,13 @@ export const MoonriverNetwork: Network = {
       vesting: '',
     },
     queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    issuerQueryService: '0x9cB7c63d9790aBDB5f174fB9DB74eA48cFe77c5D',
     payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
     payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
     nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
     campaignFeeManager: '',
     defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     defaultStableCoin: '0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D', // custom stablecoin issued by filip
-  },
-}
-
-export const FantomNetwork: Network = {
-  chainID: ChainID.FANTOM_NETWORK,
-  name: 'Fantom Opera',
-  shortName: 'fantom',
-  iconURL: 'https://pbs.twimg.com/profile_images/1292932673384714241/_BSnTr5s_400x400.png',
-  nativeCurrency: {
-    name: 'FTM',
-    symbol: 'FTM',
-  },
-  maxGasPrice: 20,
-  rpcURLs: [
-    'https://rpc.ankr.com/fantom/'
-  ],
-  wssRpcURLs: [
-  ],
-  explorerURLs: ['https://ftmscan.com'],
-  tokenizerConfig: {
-    apxRegistry: '',
-    issuerFactory: {
-      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
-    },
-    assetFactory: {
-      basic: '',
-      transferable: '',
-      simple: '',
-    },
-    cfManagerFactory: {
-      basic: '',
-      vesting: '',
-    },
-    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
-    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
-    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
-    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
-    campaignFeeManager: '',
-    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
-    defaultStableCoin: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', // custom stablecoin issued by filip
   },
 }
 
@@ -778,86 +636,13 @@ export const GnosisNetwork: Network = {
       vesting: '',
     },
     queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
+    issuerQueryService: '0x0B3038562aCb5715254734E77C5Cb4064070Ab1f',
     payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
     payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
     nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
     campaignFeeManager: '',
     defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
     defaultStableCoin: '0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83', // custom stablecoin issued by filip
-  },
-}
-
-export const CoinexChain: Network = {
-  chainID: ChainID.COINEX,
-  name: 'CoinEx Smart Chain',
-  shortName: 'coinex',
-  iconURL: 'https://assets.coingecko.com/coins/images/4817/small/coinex-token.png?1547040183',
-  nativeCurrency: {
-    name: 'CoinEx',
-    symbol: 'CET',
-  },
-  maxGasPrice: 600,
-  rpcURLs: ['https://rpc.coinex.net/'],
-  wssRpcURLs: [],
-  explorerURLs: ['https://www.coinex.net/'],
-  tokenizerConfig: {
-    apxRegistry: '',
-    issuerFactory: {
-      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
-    },
-    assetFactory: {
-      basic: '',
-      transferable: '',
-      simple: '',
-    },
-    cfManagerFactory: {
-      basic: '',
-      vesting: '',
-    },
-    queryService: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
-    payoutService: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
-    payoutManager: '0x7a21F1618bb0F5EaD292292d441e646E0DB9bf3e',
-    nameRegistry: '0x1f57044153fb762dbc35168CE5e29d32E958BD52',
-    campaignFeeManager: '',
-    defaultWalletApprover: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
-    defaultStableCoin: '0xF335B2440e62A953a42865aDf7bD73F4C6671A7b',
-  },
-}
-
-export const CoinexTestnetChain: Network = {
-  chainID: ChainID.COINEX_TESTNET,
-  name: 'CoinEx Smart Chain Testnet',
-  shortName: 'coinex-testnet',
-  iconURL: 'https://assets.coingecko.com/coins/images/4817/small/coinex-token.png?1547040183',
-  nativeCurrency: {
-    name: 'CoinEx',
-    symbol: 'CETT',
-  },
-  maxGasPrice: 600,
-  rpcURLs: ['https://testnet-rpc.coinex.net'],
-  wssRpcURLs: [],
-  explorerURLs: ['https://testnet.coinex.net/'],
-  tokenizerConfig: {
-    apxRegistry: '',
-    issuerFactory: {
-      basic: '0x6da35932606866801762cBEC8698BD684d9D1699',
-    },
-    assetFactory: {
-      basic: '',
-      transferable: '',
-      simple: '',
-    },
-    cfManagerFactory: {
-      basic: '',
-      vesting: '',
-    },
-    queryService: '0x6Cbf0950E22ff08BA4a13FFD2443519e4cF56550',
-    payoutService: '0xa61AD00d16d2f40b7C3CC5339B8cBB8fD23972F5',
-    payoutManager: '0x6556Bf8Ed99161eD58753994006E7Ef9CE188ac5',
-    nameRegistry: '0xCaf30A0B45B8E9A5f7310274f0FAec83cF307936',
-    campaignFeeManager: '',
-    defaultWalletApprover: '0xa3BFC3A48Ee93290bDa5a0eF0Ed22414262c3043',
-    defaultStableCoin: '0x6bb92A5E17e28E9D3f7Eb2B58E9DA4E5278Da0bC',
   },
 }
 
@@ -872,13 +657,7 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.AVALANCHE]: AvalancheNetwork,
   [ChainID.BSC]: BSCNetwork,
   [ChainID.MOONRIVER]: MoonriverNetwork,
-  [ChainID.OASIS_EMERALD]: OasisEmeraldChain,
-  [ChainID.CELO_MAINNET]: CeloChain,
-  [ChainID.CELO_TESTNET]: CeloTestChain,
   [ChainID.GNOSIS_NETWORK]: GnosisNetwork,
-  [ChainID.FANTOM_NETWORK]: FantomNetwork,
-  [ChainID.COINEX]: CoinexChain,
-  [ChainID.COINEX_TESTNET]: CoinexTestnetChain,
   [ChainID.SEPOLIA]: SepoliaNetwork,
   [ChainID.OPTIMISM_GOERLI_TESTNET]: OptimismGoerliNetwork,
   [ChainID.ARBITRUM_GOERLI_TESTNET]: ArbitrumGoerliNetwork,

@@ -102,6 +102,14 @@ export class ContractDeploymentService {
                 caller_address: deployer
             }, true, true)
     }
+    
+    attachTxInfoToArbitraryRequest(requestId: string, txHash: string, deployer: string) {
+        return this.http
+            .put<void>(`${this.path}/arbitrary-call/${requestId}`, { 
+                tx_hash: txHash,
+                caller_address: deployer
+            }, true, true)
+    }
 
     deployContract(request: ContractDeploymentRequestResponse) {
         return this.signerService.ensureNetwork$.pipe(
@@ -145,6 +153,32 @@ export class ContractDeploymentService {
                 )),
                 this.errorService.handleError(false, true)
         )
+    }
+
+    executeArbitraryFunction(request: ArbitraryCallRequestResponse) {
+        return this.signerService.ensureNetwork$.pipe(
+            switchMap((signer) => 
+                of(request.arbitrary_call_tx).pipe(
+                    switchMap((func) => 
+                        combineLatest(([of(func), this.gasService.overrides]))
+                    ),
+                    switchMap(([func, overrides]) => {
+                        return signer.populateTransaction({
+                            value: func.value,
+                            data: func.data,
+                            from: func.from,
+                            to: func.to,
+                            ...overrides
+                        })
+                    }),
+                    switchMap((tx) => this.signerService.sendTransaction(tx))
+                )),
+                this.errorService.handleError(false, true)
+        )
+    }
+
+    getArbitraryCallRequest(id: string) {
+        return this.http.get<ArbitraryCallRequestResponse>(`${this.path}/arbitrary-call/${id}`, { }, true, false, true)
     }
 
     callReadOnlyFunction(contractQuery: string, callData: ReadOnlyFunctionCallData) {
@@ -249,6 +283,35 @@ export interface FunctionCallRequestResponse {
     }
     screen_config?: ScreenConfig
 
+}
+
+export interface ArbitraryCallRequestResponse {
+    id: string,
+    status: string,
+    deployed_contract_id?: string,
+    contract_address: string,
+    function_name?: string,
+    function_params: {
+        type: FunctionArgumentType,
+        value: string
+    }[],
+    arbitrary_data?: any,
+    eth_amount: string,
+    chain_id: string,
+    redirect_url: string,
+    project_id: string,
+    created_at: string,
+    caller_address?: string,
+    arbitrary_call_tx: {
+        tx_hash?: string,
+        from?: string,
+        to: string,
+        data?: string,
+        value: number,
+        block_confirmations?: string,
+        timestamp?: string
+    }
+    screen_config?: ScreenConfig
 }
 
 export interface ContractDeploymentRequests {

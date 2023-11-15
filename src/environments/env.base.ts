@@ -6,7 +6,7 @@ const preBuildEnv = process.env as unknown as PreBuildEnv
 const postBuildEnv = getWindow().env as PostBuildEnv
 
 export const environment = {
-  production: false,
+  production: true,
   commitHash: preBuildEnv.COMMIT_HASH,
   appVersion: preBuildEnv.APP_VERSION,
   ipfs: {

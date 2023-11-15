@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { QueryService__factory } from '../../../../../types/ethers-contracts'
+import { QueryService__factory, IssuerQueryService__factory } from '../../../../../types/ethers-contracts'
 import { SessionQuery } from '../../../session/state/session.query'
 import { filter, map, switchMap } from 'rxjs/operators'
 import { PreferenceQuery } from '../../../preference/state/preference.query'
@@ -27,13 +27,27 @@ export class QueryService {
     )
   )
 
-  issuers$: Observable<IssuerCommonStateWithName[]> = combineLatest([
-    this.contract$,
+  issuerQueryService$ = combineLatest([
+    this.preferenceQuery.network$,
+    this.preferenceQuery.address$,
+    this.sessionQuery.provider$,
   ]).pipe(
-    switchMap(([contract]) =>
-      contract.getIssuers(
+    map(([network, _address, provider]) =>
+      IssuerQueryService__factory.connect(
+        network.tokenizerConfig.issuerQueryService,
+        provider
+      )
+    )
+  )
+
+  issuers$: Observable<IssuerCommonStateWithName[]> = combineLatest([
+    this.issuerQueryService$, this.preferenceQuery.address$
+  ]).pipe(
+    switchMap(([issuerQueryService, walletAddress]) =>
+      issuerQueryService.getIssuersForOwner(
         this.preferenceQuery.issuerFactories,
-        this.preferenceQuery.network.tokenizerConfig.nameRegistry
+        this.preferenceQuery.network.tokenizerConfig.nameRegistry,
+        walletAddress
       )
     )
   )
