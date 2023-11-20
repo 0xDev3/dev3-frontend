@@ -45,13 +45,24 @@
       Log out
     </button>
 
-    <button
-      *ngIf="isConnectedWithMetamask$ | async"
-      (click)="changeNetwork()"
-      class="app-button !p-2 !text-sm flex-1"
-    >
-      Switch network
-    </button>
+    <ng-container *ngIf="isConnectedWithMetamask$ | async">
+      <button
+        (click)="changeNetworkMetamask()"
+        class="app-button !p-2 !text-sm flex-1"
+      >
+        Switch network
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="isConnectedWithWeb3Auth$ | async">
+      <button
+        (click)="changeNetworkWeb3Auth()"
+        class="app-button !p-2 !text-sm flex-1"
+      >
+        Switch network
+      </button>
+    </ng-container>
+    
   </div>
 </div>
 

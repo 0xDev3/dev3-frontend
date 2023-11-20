@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core'
 import { EMPTY, from, Observable, of, throwError } from 'rxjs'
 import { providers } from 'ethers'
-import { Networks } from '../../networks'
-import { concatMap, map, tap } from 'rxjs/operators'
+import { ChainID } from '../../networks'
+import { concatMap, map, tap, switchMap } from 'rxjs/operators'
 import {
   AuthProvider,
   PreferenceStore,
 } from '../../../preference/state/preference.store'
 import { SignerLoginOpts, Subsigner } from '../signer-login-options'
 import { switchMapTap } from '../../utils/observables'
+import EthereumProvider from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
 
 @Injectable({
   providedIn: 'root',
@@ -24,32 +25,19 @@ export class WalletConnectSubsignerService
     return from(
       import(
         /* webpackChunkName: "@walletconnect/web3-provider" */
-        '@walletconnect/web3-provider'
+        '@walletconnect/ethereum-provider'
       )
     ).pipe(
-      map((lib) => {
-        this.wcProvider = new lib.default({
-          chainId: this.preferenceStore.getValue().chainID,
-          rpc: Object.fromEntries(
-            Object.entries(Networks).map((entry) => [
-              entry[0],
-              entry[1].rpcURLs[0],
-            ])
-          ),
-        }) as WalletConnectProvider
-
-        // TODO: using this for debugging purposes. remove after finished with investigation.
-        // [
-        //   'connect', 'disconnect', 'session_update', 'session_request',
-        //   'call_request', 'wc_sessionRequest', 'wc_sessionUpdate',
-        // ].forEach(e => {
-        //   this.wcProvider?.connector.on(e, (...args: any[]) => {
-        //     console.log(e, 'payload', args)
-        //   })
-        // })
-        // getWindow().wcc = this.wcProvider
-
-        return this.wcProvider
+      switchMap((lib) => {
+        return lib.EthereumProvider.init({
+          projectId: '8623a856c6a82453b88d82a14c331003', // required
+          chains: [1,137,80001,1313161554,5,10,42161,43114,56,1285,100,11155111,420,421613,20430],
+          showQrModal: true // requires @walletconnect/modal
+        })
+      }),
+      map((provider) => {
+        this.wcProvider = provider
+        return provider as WalletConnectProvider
       })
     )
   }
@@ -87,18 +75,6 @@ interface WalletConnectProvider {
   enable: () => Promise<string[]>
   connected: boolean
   accounts: string[]
-  connector: any
-  send: (payload: any, callback?: any) => Promise<any>
-  walletMeta: WalletMeta
-
-  getWalletConnector(opts: { disableSessionCreation?: boolean }): Promise<any>
-
+  sendAsync: (payload: any, callback?: any) => void
   disconnect(): Promise<void>
-}
-
-interface WalletMeta {
-  name: string
-  description: string
-  url: string
-  icons: string[]
 }

@@ -9,6 +9,7 @@ import { ChainID, Network, Networks } from '../../networks'
 import { MetamaskSubsignerService } from '../../services/subsigners/metamask-subsigner.service'
 import { AuthProvider } from '../../../preference/state/preference.store'
 import { MatDialogRef } from '@angular/material/dialog'
+import { Web3AuthSubsignerService } from '../../services/subsigners/web3auth-subsigner.service'
 
 @Component({
   selector: 'app-wrong-network',
@@ -51,11 +52,16 @@ export class WrongNetworkComponent {
     )
   )
 
+  isConnectedWithWeb3Auth$: Observable<boolean> = from(
+    this.preferenceQuery.authProvider$
+  ).pipe(map((authProvider) => authProvider === AuthProvider.WEB3AUTH))
+
   constructor(
     private preferenceQuery: PreferenceQuery,
     private sessionQuery: SessionQuery,
     private userService: UserService,
     private metamaskSubsignerService: MetamaskSubsignerService,
+    private web3AuthSubsignerService: Web3AuthSubsignerService,
     private signerService: SignerService,
     @Optional() private dialogRef: MatDialogRef<WrongNetworkComponent>
   ) {}
@@ -67,7 +73,11 @@ export class WrongNetworkComponent {
       .subscribe()
   }
 
-  changeNetwork() {
+  changeNetworkMetamask() {
     this.metamaskSubsignerService.switchEthereumChain().subscribe()
+  }
+
+  changeNetworkWeb3Auth() {
+    this.web3AuthSubsignerService.switchEthereumChain().subscribe()
   }
 }

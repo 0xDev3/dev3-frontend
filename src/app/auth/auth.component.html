@@ -125,6 +125,18 @@
       </app-spinner>
     </ng-template>
   </button>
+
+  <button app-action-button class="border border-gray-200 w-full px-4 py-3 mt-2 rounded-full hover:bg-gray-50"
+  [onClick]="connectWeb3Auth.bind(this)">
+  <ng-template #content>
+    <ng-container *ngTemplateOutlet="metamaskIcon"></ng-container>
+  </ng-template>
+
+  <ng-template #loadingContent>
+    <app-spinner class="flex justify-center items-center h-5 my-1">
+    </app-spinner>
+  </ng-template>
+</button>
 </div>
 
 <ng-template #metamaskIcon>

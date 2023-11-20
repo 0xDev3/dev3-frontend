@@ -12,6 +12,7 @@ import { getWindow } from '../shared/utils/browser'
 import { IssuerService } from '../shared/services/blockchain/issuer/issuer.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MagicSubsignerService } from '../shared/services/subsigners/magic-subsigner.service'
+import { Web3AuthSubsignerService } from '../shared/services/subsigners/web3auth-subsigner.service'
 
 @Component({
   selector: 'app-auth',
@@ -32,6 +33,7 @@ export class AuthComponent {
     private metamaskSubsignerService: MetamaskSubsignerService,
     private magicSubsignerService: MagicSubsignerService,
     private walletConnectSubsignerService: WalletConnectSubsignerService,
+    private web3AuthSubsignerService: Web3AuthSubsignerService,
     private preferenceQuery: PreferenceQuery,
     private router: RouterService,
     private issuerService: IssuerService,
@@ -71,6 +73,12 @@ export class AuthComponent {
   connectWalletConnect(): Observable<unknown> {
     return this.signer
       .login(this.walletConnectSubsignerService)
+      .pipe(tap(() => this.afterLoginActions()))
+  }
+
+  connectWeb3Auth(): Observable<unknown> {
+    return this.signer
+      .login(this.web3AuthSubsignerService)
       .pipe(tap(() => this.afterLoginActions()))
   }
 }

@@ -163,7 +163,11 @@ export class SignerService {
           changeNetworkCompleted
             ? of(true)
             : throwError(() => 'CHANGE_NETWORK_MODAL_DISMISSED')
-        )
+        ),
+        catchError((err) => {
+          console.log("err", err)
+          return err
+        })
       )
   }
 

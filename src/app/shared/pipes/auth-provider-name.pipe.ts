@@ -24,6 +24,8 @@ export class AuthProviderNamePipe implements PipeTransform {
         return 'WalletConnect'
       case AuthProvider.GNOSIS_SAFE:
         return 'Gnosis Safe'
+      case AuthProvider.WEB3AUTH:
+        return 'Web3Auth'
     }
   }
 }
