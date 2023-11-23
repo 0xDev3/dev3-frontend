@@ -25,7 +25,7 @@ import {
 } from 'rxjs/operators'
 import { SessionStore } from '../../session/state/session.store'
 import { SessionQuery } from '../../session/state/session.query'
-import { PreferenceStore } from '../../preference/state/preference.store'
+import { AuthProvider, PreferenceStore } from '../../preference/state/preference.store'
 import { MetamaskSubsignerService } from './subsigners/metamask-subsigner.service'
 import { AuthComponent } from '../../auth/auth.component'
 import { RouterService } from './router.service'
@@ -39,6 +39,7 @@ import {
   Subsigner,
 } from './signer-login-options'
 import { WrongNetworkComponent } from '../components/wrong-network/wrong-network.component'
+import { Web3AuthSubsignerService } from './subsigners/web3auth-subsigner.service'
 
 @Injectable({
   providedIn: 'root',
@@ -53,6 +54,7 @@ export class SignerService {
   private disconnectedSub = new Subject<void>()
   private listenersSub = new Subject<any>()
 
+  w3aChainChanged$ = this.web3AuthSubsignerService.chainChanged$
   accountsChanged$ = this.accountsChangedSub.asObservable()
   chainChanged$ = this.chainChangedSub.asObservable()
   disconnected$ = this.disconnectedSub.asObservable()
@@ -67,10 +69,21 @@ export class SignerService {
         ),
         fromEvent<void>(provider, 'disconnect').pipe(
           map(() => () => this.disconnectedSub.next())
-        )
+        ),
       )
     ),
     tap((action) => this.ngZone.run(() => action()))
+  )
+
+  w3aObservable$ = this.w3aChainChanged$.pipe(
+    switchMap((provider) => {
+      const signer = provider.getSigner()
+      this.setSigner(signer)
+      return from(signer.getChainId())
+    }),
+    tap((chainId) => {
+      this.chainChangedSub.next(chainId.toString())
+    })
   )
 
   networkMismatch$: Observable<boolean> = combineLatest([
@@ -95,7 +108,7 @@ export class SignerService {
     private sessionQuery: SessionQuery,
     private preferenceQuery: PreferenceQuery,
     private preferenceStore: PreferenceStore,
-    private metamaskSubsignerService: MetamaskSubsignerService,
+    private web3AuthSubsignerService: Web3AuthSubsignerService,
     private ngZone: NgZone,
     private router: RouterService,
     private dialogService: DialogService,
@@ -118,10 +131,13 @@ export class SignerService {
   }
 
   get ensureNetwork(): Observable<providers.JsonRpcSigner> {
-    return combineLatest([this.networkMismatch$]).pipe(
+    return combineLatest([this.networkMismatch$, this.preferenceQuery.authProvider$]).pipe(
       take(1),
-      concatMap(([isMismatch]) =>
-        isMismatch ? defer(() => this.changeNetworkDialog()) : of(undefined)
+      concatMap(([isMismatch, authProvider]) =>
+        isMismatch ? defer(
+          () => (authProvider === AuthProvider.WEB3AUTH) ?
+            this.web3AuthSubsignerService.switchEthereumChain() : this.changeNetworkDialog() 
+        ) : of(undefined)
       ),
       map(() => this.sessionQuery.signer!)
     )
@@ -251,6 +267,7 @@ export class SignerService {
       .subscribe()
 
     this.listeners$.subscribe()
+    this.w3aObservable$.subscribe()
   }
 
   private logoutNavToOffers(): Observable<unknown> {

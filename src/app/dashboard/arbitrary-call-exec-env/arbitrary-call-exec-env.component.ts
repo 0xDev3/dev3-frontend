@@ -5,7 +5,7 @@ import { BehaviorSubject, catchError, combineLatest, delay, map, Observable, of,
 import { ContractExplorerService } from 'src/app/contract-explorer/contract-explorer.service'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
 import { SessionQuery } from 'src/app/session/state/session.query'
-import { ChainID, Networks } from 'src/app/shared/networks'
+import { ChainID, Networks, toChainID } from 'src/app/shared/networks'
 import { BackendHttpClient } from 'src/app/shared/services/backend/backend-http-client.service'
 import { ContractManifestData, ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
 import { ProjectService } from 'src/app/shared/services/backend/project.service'
@@ -13,6 +13,7 @@ import { ArbitraryCallRequestResponse, ContractDeploymentService, FunctionCallRe
 import { IssuerService } from 'src/app/shared/services/blockchain/issuer/issuer.service'
 import { SignerService } from 'src/app/shared/services/signer.service'
 import { UserService } from 'src/app/shared/services/user.service'
+import { PreferenceStore } from 'src/app/preference/state/preference.store'
 
 @Component({
   selector: 'app-arbitrary-call-exec-env',
@@ -46,7 +47,16 @@ export class ArbitraryCallExecEnvComponent {
   }
 
   login() {
-    return this.signerService.ensureAuth
+    return this.functionRequest$.pipe(
+      switchMap((func) => {
+        return this.preferenceStore.update({
+          chainID: toChainID(func.chain_id)
+        })
+      }),
+      switchMap(() => {
+        return this.signerService.ensureAuth
+      })
+    )
   }
 
   logout() {
@@ -95,6 +105,7 @@ export class ArbitraryCallExecEnvComponent {
     private route: ActivatedRoute,
     private signerService: SignerService,
     private preferenceQuery: PreferenceQuery,
+    private preferenceStore: PreferenceStore,
     private sessionQuery: SessionQuery,
     private userService: UserService,
     private contractExplorerService: ContractExplorerService,

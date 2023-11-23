@@ -2,7 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { BehaviorSubject, delay, from, merge, of, switchMap, tap } from 'rxjs'
 import { PreferenceQuery } from 'src/app/preference/state/preference.query'
+import { PreferenceStore } from 'src/app/preference/state/preference.store'
 import { SessionQuery } from 'src/app/session/state/session.query'
+import { toChainID } from 'src/app/shared/networks'
 import { ContractManifestService } from 'src/app/shared/services/backend/contract-manifest.service'
 import { ContractDeploymentRequests, ContractDeploymentRequestResponse, ContractDeploymentService } from 'src/app/shared/services/blockchain/contract-deployment.service'
 import { GasService } from 'src/app/shared/services/blockchain/gas.service'
@@ -42,12 +44,22 @@ export class ContractDeployExecEnvComponent {
     private manifestService: ContractManifestService,
     private signerService: SignerService,
     private sessionQuery: SessionQuery,
+    private preferenceStore: PreferenceStore,
     private route: ActivatedRoute,
     private contractDeploymentService: ContractDeploymentService
   ) { }
 
   login() {
-      this.signerService.ensureAuth
+      return this.contractDeploymentRequest$.pipe(
+        switchMap((req) => {
+          return this.preferenceStore.update({
+            chainID: toChainID(req.chain_id)
+          })
+        }),
+        switchMap(() => {
+          return this.signerService.ensureAuth
+        })
+      )
   }
 
   deployContract(contractDeploymentRequest: ContractDeploymentRequestResponse) {

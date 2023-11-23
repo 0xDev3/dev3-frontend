@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { from, map, switchMap, of, tap, concatMap, Subject } from "rxjs"
-import { SignerLoginOpts, Subsigner } from '../signer-login-options'
+import { Subsigner } from '../signer-login-options'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import {
     AuthProvider,
@@ -17,13 +17,15 @@ import { Network, Networks } from '../../networks'
 export class Web3AuthSubsignerService implements Subsigner<Web3AuthLoginOpts> {
 
     web3Auth: Web3Auth | undefined
-    modalDismissed$ = new Subject<void>()
 
+    private chainChangedSub = new Subject<providers.Web3Provider>()
+    chainChanged$ = this.chainChangedSub.asObservable()
+    
     constructor(
       private preferenceStore: PreferenceStore,
     ) {}
     
-    login(opts: Web3AuthLoginOpts | SignerLoginOpts): Observable<JsonRpcSigner> {
+    login(): Observable<JsonRpcSigner> {
         this.web3Auth = new Web3Auth({
             clientId: "BE2O_wXH_vln5-7jscLbHkn8nV4Uhdy9W4ylKIRxDvTG-AWjSAIUB4HcCveQmLRonAA21yW3HLwBt0CUMc8wYO8", // get it from Web3Auth Dashboard
             web3AuthNetwork: "sapphire_mainnet",
@@ -38,20 +40,15 @@ export class Web3AuthSubsignerService implements Subsigner<Web3AuthLoginOpts> {
             },
         })
 
-        // user dismissed modal without connecting wallet
-        this.web3Auth.on("MODAL_VISIBILITY", (visible) => {
-            if (!visible && !this.preferenceStore.getValue().address) {
-                console.log("modal dismissed!") // what to do here
-                this.modalDismissed$.next()
-            }
-        })
-        
         return from(this.web3Auth.initModal()).pipe(
+            switchMap(() => {
+              return this.switchEthereumChain()
+            }),
             switchMap(() => {
                 return this.web3Auth!.connect()
             }),
             switchMap((result) => {
-                return of((new providers.Web3Provider(result!)))
+              return of((new providers.Web3Provider(result!)))
             }),
             concatMap((provider) => {
                 return this.setAddress(provider.getSigner())
@@ -60,12 +57,11 @@ export class Web3AuthSubsignerService implements Subsigner<Web3AuthLoginOpts> {
     }
 
     logout(): Observable<unknown> {
-        return of(null)
+        return of(this.web3Auth?.clearCache())
     }
 
-    switchEthereumChain(opts: Web3AuthLoginOpts = {}) {
+    switchEthereumChain() {
         const chainDef = Web3AuthNetworks[this.preferenceStore.getValue().chainID]
-        console.log("Switch eth chain called. Chain def: ", chainDef)
         return from(
           this.web3Auth!.addChain({
             chainNamespace: 'eip155',
@@ -75,7 +71,18 @@ export class Web3AuthSubsignerService implements Subsigner<Web3AuthLoginOpts> {
           switchMap(() => {
             return from(this.web3Auth!.switchChain({
               chainId: chainDef.chainId
-            }))
+            })).pipe(
+              switchMap(() => {
+                return from(this.web3Auth!.connect()).pipe(
+                  switchMap((provider) => {
+                    return of(new providers.Web3Provider(provider!))
+                  }),
+                  tap((provider) => {
+                    this.chainChangedSub.next(provider)
+                  })
+                )
+              })
+            )
           })
         )
     }

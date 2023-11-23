@@ -23,6 +23,27 @@ export enum ChainID {
   OTP_TESTNET = 20430,
 }
 
+export function toChainID(chainId: string): ChainID {
+  switch (Number(chainId)) {
+    case ChainID.ETHEREUM_MAINNET: return ChainID.ETHEREUM_MAINNET
+    case ChainID.MATIC_MAINNET: return ChainID.MATIC_MAINNET
+    case ChainID.MUMBAI_TESTNET: return ChainID.MUMBAI_TESTNET
+    case ChainID.AURORA_MAINNET: return ChainID.AURORA_MAINNET
+    case ChainID.GOERLI_TESTNET: return ChainID.GOERLI_TESTNET
+    case ChainID.OPTIMISM: return ChainID.OPTIMISM
+    case ChainID.ARBITRUM: return ChainID.ARBITRUM
+    case ChainID.AVALANCHE: return ChainID.AVALANCHE
+    case ChainID.BSC: return ChainID.BSC
+    case ChainID.MOONRIVER: return ChainID.MOONRIVER
+    case ChainID.GNOSIS_NETWORK: return ChainID.GNOSIS_NETWORK
+    case ChainID.SEPOLIA: return ChainID.SEPOLIA
+    case ChainID.OPTIMISM_GOERLI_TESTNET: return ChainID.OPTIMISM_GOERLI_TESTNET
+    case ChainID.ARBITRUM_GOERLI_TESTNET: return ChainID.ARBITRUM_GOERLI_TESTNET
+    case ChainID.OTP_TESTNET: return ChainID.OTP_TESTNET
+    default: throw new Error("Unsupported chain!")
+  }
+}
+
 export interface Network {
   chainID: ChainID
   name: string
