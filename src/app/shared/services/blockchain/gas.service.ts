@@ -59,6 +59,11 @@ export class GasService {
         )
       case ChainID.MUMBAI_TESTNET:
         return this.maticGasStation('https://gasstation-testnet.polygon.technology/v2')
+      case ChainID.OTP_TESTNET:
+        return of({
+          maxFeePerGas: "0x3E8",
+          maxPriorityFeePerGas: "0x3E8"
+        })
       default:
         return of({})
     }

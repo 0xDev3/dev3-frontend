@@ -16,6 +16,7 @@ import { MagicSubsignerService } from '../../shared/services/subsigners/magic-su
 import { getWindow } from '../../shared/utils/browser'
 import { GnosisSubsignerService } from '../../shared/services/subsigners/gnosis-subsigner.service'
 import { providers } from 'ethers'
+import { Web3AuthSubsignerService } from 'src/app/shared/services/subsigners/web3auth-subsigner.service'
 
 @Injectable({ providedIn: 'root' })
 export class PreferenceService {
@@ -26,6 +27,7 @@ export class PreferenceService {
     private magicSubsignerService: MagicSubsignerService,
     private gnosisSubsignerService: GnosisSubsignerService,
     private walletConnectSubsignerService: WalletConnectSubsignerService,
+    private web3AuthSubsignerService: Web3AuthSubsignerService,
     private signer: SignerService
   ) {}
 
@@ -64,6 +66,8 @@ export class PreferenceService {
             return this.signer.login(this.walletConnectSubsignerService, {
               force: false,
             })
+          case AuthProvider.WEB3AUTH:
+            return this.signer.login(this.web3AuthSubsignerService)
           default:
             return EMPTY
         }
