@@ -254,6 +254,7 @@ export const OtpMainnetNetwork: Network = {
   maxGasPrice: 1,
   rpcURLs: ['https://astrosat-parachain-rpc.origin-trail.network/'],
   wssRpcURLs: [
+    
   ],
   explorerURLs: ['https://origintrail.subscan.io/'],
   tokenizerConfig: {
