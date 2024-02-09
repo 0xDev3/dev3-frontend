@@ -21,6 +21,7 @@ export enum ChainID {
   OPTIMISM_GOERLI_TESTNET = 420,
   ARBITRUM_GOERLI_TESTNET = 421613,
   OTP_TESTNET = 20430,
+  OTP_MAINNET = 2043,
 }
 
 export function toChainID(chainId: string): ChainID {
@@ -40,6 +41,7 @@ export function toChainID(chainId: string): ChainID {
     case ChainID.OPTIMISM_GOERLI_TESTNET: return ChainID.OPTIMISM_GOERLI_TESTNET
     case ChainID.ARBITRUM_GOERLI_TESTNET: return ChainID.ARBITRUM_GOERLI_TESTNET
     case ChainID.OTP_TESTNET: return ChainID.OTP_TESTNET
+    case ChainID.OTP_MAINNET: return ChainID.OTP_MAINNET
     default: throw new Error("Unsupported chain!")
   }
 }
@@ -236,6 +238,45 @@ export const OtpTestnetNetwork: Network = {
     nameRegistry: '0x2061a48238cFa98F23173c84A668A57bc206A743',
     campaignFeeManager: '',
     defaultWalletApprover: '0x8f700F56408A4780D0340E24edD52992aeFF5527',
+    defaultStableCoin: '0xffffffff00000000000000000000000000000001',
+  },
+}
+
+export const OtpMainnetNetwork: Network = {
+  chainID: ChainID.OTP_MAINNET,
+  name: 'OriginTrail Parachain Mainnet',
+  shortName: 'otp-mainnet',
+  iconURL: 'https://assets.coingecko.com/coins/images/32029/standard/otp.png?1696530826',
+  nativeCurrency: {
+    name: 'MOTP',
+    symbol: 'MOTP',
+  },
+  maxGasPrice: 1,
+  rpcURLs: ['https://astrosat-parachain-rpc.origin-trail.network/'],
+  wssRpcURLs: [
+  ],
+  explorerURLs: ['https://origintrail.subscan.io/'],
+  tokenizerConfig: {
+    apxRegistry: '',
+    issuerFactory: {
+      basic: '0xf3ac73CA43B73D5bA969a891256D2F942315c325'
+    },
+    assetFactory: {
+      basic: '',
+      transferable: '',
+      simple: '',
+    },
+    cfManagerFactory: {
+      basic: '',
+      vesting: '',
+    },
+    queryService: '0x85F52298af83638F0878462C2ef837196f763766',
+    issuerQueryService: '0xfc5448ef722EFA6C786e2eFc5faA1b5765b1C07B',
+    payoutService: '0x5305Eb8992B6959d411654e81DD89f080C08948D',
+    payoutManager: '0x8d91CAC1c892539Df29b47fA91950A1342a9dbD1',
+    nameRegistry: '0xcc1e2b70B7e65db1C2311bCFd0886CACF9e5C182',
+    campaignFeeManager: '',
+    defaultWalletApprover: '0x58C1e775aF21c0Cd53855B2e7DdD53c6D366Cf3b',
     defaultStableCoin: '0xffffffff00000000000000000000000000000001',
   },
 }
@@ -683,6 +724,7 @@ export const Networks: { [key in ChainID]: Network } = {
   [ChainID.OPTIMISM_GOERLI_TESTNET]: OptimismGoerliNetwork,
   [ChainID.ARBITRUM_GOERLI_TESTNET]: ArbitrumGoerliNetwork,
   [ChainID.OTP_TESTNET]: OtpTestnetNetwork,
+  [ChainID.OTP_MAINNET]: OtpMainnetNetwork,
 }
 
 const getEthersNetwork = (network: Network): providers.Network => ({
