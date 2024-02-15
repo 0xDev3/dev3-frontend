@@ -205,12 +205,12 @@ export const SepoliaNetwork: Network = {
 
 export const OtpTestnetNetwork: Network = {
   chainID: ChainID.OTP_TESTNET,
-  name: 'OriginTrail Parachain Testnet',
+  name: 'NeuroWeb Testnet',
   shortName: 'otp-testnet',
-  iconURL: 'https://assets.coingecko.com/coins/images/32029/standard/otp.png?1696530826',
+  iconURL: 'https://assets.coingecko.com/coins/images/34896/standard/CMC_NeuroWeb_logo_black.png?1706580651',
   nativeCurrency: {
-    name: 'MOTP',
-    symbol: 'MOTP',
+    name: 'NEURO',
+    symbol: 'NEURO',
   },
   maxGasPrice: 1,
   rpcURLs: ['https://lofar-testnet.origin-trail.network/'],
@@ -244,12 +244,12 @@ export const OtpTestnetNetwork: Network = {
 
 export const OtpMainnetNetwork: Network = {
   chainID: ChainID.OTP_MAINNET,
-  name: 'OriginTrail Parachain Mainnet',
+  name: 'NeuroWeb Mainnet',
   shortName: 'otp-mainnet',
-  iconURL: 'https://assets.coingecko.com/coins/images/32029/standard/otp.png?1696530826',
+  iconURL: 'https://assets.coingecko.com/coins/images/34896/standard/CMC_NeuroWeb_logo_black.png?1706580651',
   nativeCurrency: {
-    name: 'MOTP',
-    symbol: 'MOTP',
+    name: 'NEURO',
+    symbol: 'NEURO',
   },
   maxGasPrice: 1,
   rpcURLs: ['https://astrosat-parachain-rpc.origin-trail.network/'],
